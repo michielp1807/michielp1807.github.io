@@ -1,0 +1,316 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>QR-Codes</title>
+	<script language="javascript" src="libraries/p5.js"></script>
+	<script language="javascript" src="libraries/p5.dom.js"></script>
+	<style>
+		body {
+			font-family: Arial;
+			padding: 30px;
+		}
+		
+		h1, h2 {
+			text-align: center;
+		}
+		
+		#section1, #section2, #section3 {
+			display: inline-block;
+			width: 33%;
+			text-align: center;
+		}
+		
+		canvas {
+			padding: 15px;
+		}
+	</style>
+</head>
+<body>
+	<h1>QR-Codes</h1>
+	<script>
+		var version = 1;
+		var width = 17 + 4*version;
+		var canvasWidth = window.innerWidth/5;
+		var maskNumber = 1;
+		var mask = [];
+		var qrCode = [];
+		var qrCodeOverlay = [];
+		
+		var versionNumberElement;
+		
+		window.onload = function() { // improve styling for small screens
+			if (window.innerWidth<1000) { 
+				canvasWidth = window.innerWidth/3;
+				document.getElementById("section1").style.display = "block";
+				document.getElementById("section2").style.display = "block";
+				document.getElementById("section3").style.display = "block";
+				document.getElementById("section1").style.width = "100%";
+				document.getElementById("section2").style.width = "100%";
+				document.getElementById("section3").style.width = "100%";
+			}
+		}
+		
+		// section 1 - QR-Code
+		var funcSection1 = function(p) {
+			p.setup = function() {
+				p.createCanvas(canvasWidth+1, canvasWidth+1);
+				p.noLoop();
+				for (var i=0; i<width; i++) {
+					qrCode[i] = [];
+					qrCodeOverlay[i] = [];
+					for (var j=0; j<width; j++) {
+						qrCode[i][j]=255;
+						qrCodeOverlay[i][j] = false;
+					}
+				}
+				versionNumberElement = document.getElementById("versionNumber");
+				
+				// Generate basic elements of qr-code
+				
+				p.setFinderPatterns(0,0); // generate finder patterns
+				p.setFinderPatterns(width-7,0);
+				p.setFinderPatterns(0,width-7);
+				if (version > 1) { // generate alignment patterns
+					p.setAlignmentPatterns(width-7,width-7); 
+				}
+				
+				for (i=0; i<9; i++) { // generate formating cells top left
+					qrCodeOverlay[i][8] = [117,193,255];
+				} 
+				for (j=0; j<9; j++) { // generate formating cells top left
+					qrCodeOverlay[8][j] = [117,193,255];
+				} 
+				for (j=0; j<8; j++) { // generate formating cells bottom left
+					qrCodeOverlay[8][width-j] = [117,193,255];
+				} 
+				for (i=1; i<9; i++) { // generate formating cells top right
+					qrCodeOverlay[width-i][8] = [117,193,255];
+				} 
+				
+				qrCodeOverlay[8][6] = [0,0,0]; // timing patterns horizontal
+				for (var i=0; i<width-15; i+=2) {
+					qrCodeOverlay[9+i][6] = [255,255,255];
+					qrCodeOverlay[10+i][6] = [0,0,0];
+				}
+				qrCodeOverlay[6][8] = [0,0,0]; // timing patterns vertical
+				for (var j=0; j<width-15; j+=2) {
+					qrCodeOverlay[6][9+j] = [255,255,255];
+					qrCodeOverlay[6][10+j] = [0,0,0];
+				}
+				
+				qrCodeOverlay[8][width-8] = [0,0,0]; // dark module 
+			};
+			
+			p.reload = function() {
+				version = parseInt(versionNumberElement.value);
+				width = 17 + 4*version;
+				﻿section1.setup();
+				section2.setup();
+				section3.setup();
+				﻿section1.draw();
+				section2.draw();
+				section3.draw();
+			}
+			
+			p.setFinderPatterns = function(x,y) {
+				for (i=-1; i<8; i++) { // outer white border
+					if (x+i>-1 && x+i<width) {
+						for (j=-1; j<8; j++) {
+							if (y+j>-1 && y+j<width) qrCodeOverlay[x+i][y+j] = [255,255,255];
+						}
+					}
+				}
+				
+				for (i=0; i<7; i++) { // outer black box
+					for (j=0; j<7; j++) qrCodeOverlay[x+i][y+j] = [0,0,0];
+				}
+				
+				for (i=1; i<6; i++) { // inner white border
+					for (j=1; j<6; j++) qrCodeOverlay[x+i][y+j] = [255,255,255];
+				}
+				
+				for (i=2; i<5; i++) { // inner black box
+					for (j=2; j<5; j++) qrCodeOverlay[x+i][y+j] = [0,0,0];	
+				}
+			}
+			
+			p.setAlignmentPatterns = function(x,y) {
+				for (i=-2; i<3; i++) { // outer black border
+					for (j=-2; j<3; j++) {
+						qrCodeOverlay[x+i][y+j] = [0,0,0];
+					}
+				}
+				
+				for (i=-1; i<2; i++) { // outer white border
+					for (j=-1; j<2; j++) {
+						qrCodeOverlay[x+i][y+j] = [255,255,255];
+					}
+				}
+				
+				qrCodeOverlay[x][y] = [0,0,0]; // inner black dot
+			}
+					
+			p.draw = function() {
+				p.background(0);
+				p.stroke(200);
+				p.strokeWeight(1);
+				var rectWidth = canvasWidth/width;
+				for (var i=0; i<width; i++) {
+					for (var j=0; j<width; j++) {
+						if (qrCodeOverlay[i][j]) {
+							p.fill(qrCodeOverlay[i][j]);
+						} else {
+							p.fill(qrCode[i][j]);
+						}
+						p.rect(i*rectWidth,j*rectWidth,i*rectWidth+rectWidth,j*rectWidth+rectWidth);
+					}
+				}
+			};
+		};
+		var section1 = new p5(funcSection1, 'section1-canvas');
+		
+		// section 2 - Mask
+		var maskNumberElement;
+		var funcSection2 = function(p) {
+			
+			p.setup = function() {
+				p.createCanvas(canvasWidth+1, canvasWidth+1);
+				p.noLoop();
+				maskNumberElement = document.getElementById("maskNumber");
+				p.generateMask();
+
+			};
+			
+			p.generateMask = function() {
+				maskNumber = maskNumberElement.value;
+				for (var i=0; i<width; i++) {
+					mask[i] = [];
+					for (var j=0; j<width; j++) {
+						mask[i][j]=p.calcMask(i,j);
+					}
+				}
+				p.draw();
+				if(section3._setupDone)section3.draw();
+			};
+						
+			p.draw = function() {
+				p.background(0);
+				p.stroke(200);
+				p.strokeWeight(1);
+				var rectWidth = canvasWidth/width;
+				for (var i=0; i<width; i++) {
+					for (var j=0; j<width; j++) {
+						p.fill(mask[i][j]*255);
+						p.rect(i*rectWidth,j*rectWidth,i*rectWidth+rectWidth,j*rectWidth+rectWidth);
+					}
+				}
+			};
+			
+			p.isInFiveByFiveSquareAround = function(x,y,i,j) {
+				return (i<x+3 && j<y+3 && i>x-3 && j>y-3);
+			}
+			
+			p.calcMask = function(i,j) {
+				i++; // coordinates start at 1 not at zero
+				j++;
+
+				if (i == 7 || j == 7) return 0.9; // timing patterns
+				if (i>7) i--; // continue pattern after timing pattern
+				if (j>7) j--;
+			
+				switch(maskNumber) {
+					case "0":
+						if ((i + j) % 2 == 0) return 0;
+						else return 1;
+					case "1":
+						if ((j) % 2 == 0) return 0;
+						else return 1;
+					case "2":
+						if ((i) % 3 == 0) return 0;
+						else return 1;
+					case "3":
+						if ((i + j) % 3 == 0) return 0;
+						else return 1;
+					case "4":
+						if ((Math.floor(j/2) + Math.floor(i/3)) % 2 == 0) return 0;
+						else return 1;
+					case "5":
+						if (((i * j) % 2) + ((i * j) % 3) == 0) return 0;
+						else return 1;
+					case "6":
+						if ((((i * j) % 2) + ((i * j) % 3)) % 2 == 0) return 0;
+						else return 1;
+					case "7":
+						if ((((i + j) % 2) + ((i * j) % 3)) % 2 == 0) return 0;
+						else return 1;
+				}
+			};
+		};
+		var section2 = new p5(funcSection2, 'section2-canvas');
+		
+		// section 3 - Data
+		var funcSection3 = function(p) {
+			p.setup = function() {
+				p.createCanvas(canvasWidth+1, canvasWidth+1);
+				p.noLoop();
+			};
+			
+			p.draw = function() {
+				p.background(0);
+				p.stroke(200);
+				p.strokeWeight(1);
+				var rectWidth = canvasWidth/width;
+				for (var i=0; i<width; i++) {
+					for (var j=0; j<width; j++) {
+						if (qrCodeOverlay[i][j]) {
+							p.fill(qrCodeOverlay[i][j]); // draw from overlay
+						} else {
+							if (mask[i][j] != 0) {
+								p.fill(qrCode[i][j]); // draw from qr code
+							}  else {
+								if (qrCode[i][j] == 255) { // draw inverted from qr code
+									p.fill(0);
+								} else {
+									p.fill(255);
+								}
+							}
+						}
+						p.rect(i*rectWidth,j*rectWidth,i*rectWidth+rectWidth,j*rectWidth+rectWidth);
+					}
+				}
+			};
+		};
+		var section3 = new p5(funcSection3, 'section3-canvas');
+	</script>
+	<div id="section1">
+		<h2>QR-Code</h2>
+		<div id="section1-canvas"></div>
+		Version (1-5): <select id="versionNumber" onchange="section1.reload()">
+			<option value="1">1 (21x21)</option>
+			<option value="2">2 (25x25)</option>
+			<option value="3">3 (29x29)</option>
+			<option value="4">4 (31x31)</option>
+			<option value="5">5 (37x37)</option>
+		</select>
+	</div>
+	<div id="section2">
+		<h2>Mask</h2>
+		<div id="section2-canvas"></div>
+		Mask Number (0-7): <select id="maskNumber" onchange="section2.generateMask()">
+			<option value="0">0</option>
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+			<option value="6">6</option>
+			<option value="7">7</option>
+		</select>
+	</div>
+	<div id="section3">
+		<h2>Data</h2>
+		<div id="section3-canvas"></div>
+		<br>
+	</div>
+</body>
+</html>
