@@ -149,7 +149,13 @@
 				
 				qrCodeOverlay[x][y] = [0,0,0]; // inner black dot
 			}
-					
+			
+			p.mouseClicked = function(m) {
+				var x = Math.floor(m.offsetX/(canvasWidth/width));
+				var y = Math.floor(m.offsetY/(canvasWidth/width));
+				console.log("(" + x + "," + y + ")");
+			}
+			
 			p.draw = function() {
 				p.background(0);
 				p.stroke(200);
