@@ -7,323 +7,491 @@
 	<style>
 		body {
 			font-family: Arial;
-			padding: 30px;
-		}
-		
-		h1, h2 {
 			text-align: center;
+			background-color: #FFFFC1;
 		}
 		
-		#section1, #section2, #section3 {
+		#content {
+			width: 800px;
+			margin: 40px auto 80px auto;
+			padding: 40px;
+			background-color: #FFFFFF;
+			text-align: left;
+			box-shadow: 0px 0px 12px #92926E;
+		}
+		
+		h1 {
+			font-size: 4.5em;
+			padding-bottom: 0px;
+			margin: 0px;
+		}
+		
+		h2 {
+			padding-top: 5px;
+			padding-bottom: 5px;
+			font-size: 1.6em;
+			margin: 0px
+		}
+		
+		h3 {
+			font-size: 2.5em;
+			background-color: #C1E9FF;
+			padding: 20px 40px 20px 40px;
+			margin-left: -40px;
+			margin-right: -40px;
+		}
+		
+		p {
+			margin: 0px 0px 1em 0px;
+		}
+		
+		.wrapper {
+			display: block;
+			overflow: hidden; 
+			width: 100%;
+		}
+				
+		.collumn {
 			display: inline-block;
-			width: 33%;
-			text-align: center;
+			position: relative;
+			float: left;
+			width: 40%;
 		}
 		
-		canvas {
-			padding: 15px;
+		.QRCodes {
+			text-align: right;
 		}
-	</style>
+			
+		canvas {
+			width: 380px;
+			height: 380px;
+			border-top: 1px solid #C8C8C8;
+			border-right: 2px solid #C8C8C8;
+			border-bottom: 2px solid #C8C8C8;
+			border-left: 1px solid #C8C8C8;
+			margin-bottom: 1em;
+		}
+		
+		img {
+			float: right;
+			margin-left: 20px;
+		}
+	</style> 
 </head>
 <body>
-	<h1>QR-Codes</h1>
-	<script>
-		var version = 1;
-		var width = 17 + 4*version;
-		var canvasWidth = window.innerWidth/4;
-		var rectWidth = canvasWidth/width;
-		var maskNumber = 1;
-		var mask = [];
-		var qrCode = [];
-		var qrCodeOverlay = [];
-		
-		var versionNumberElement;
-		
-		window.onload = function() { // improve styling for small screens
-			if (window.innerWidth<1000) { 
-				canvasWidth = window.innerWidth/2;
-				rectWidth = canvasWidth/width;
-				document.getElementById("section1").style.display = "block";
-				document.getElementById("section2").style.display = "block";
-				document.getElementById("section3").style.display = "block";
-				document.getElementById("section1").style.width = "100%";
-				document.getElementById("section2").style.width = "100%";
-				document.getElementById("section3").style.width = "100%";
+	<!-- Improve Styling --> <script>
+		var previousWidth = 0;
+		var collumnElements;
+		var qrCodeElements;
+		window.onload = function() {
+			setTimeout(function() {
+				collumnElements = document.getElementsByClassName('collumn');
+				qrCodeElements = document.getElementsByClassName('QRCodes');
+				setStyling();
+				setInterval(setStyling, 400);
+			},200);
+		}
+		function setStyling() {
+			if (window.innerWidth != previousWidth) {
+				previousWidth = window.innerWidth;
+				if (window.innerWidth<960) { 
+					document.getElementById("content").style.width = window.innerWidth - 160 + "px";
+					for(var i = 0; i < collumnElements.length; i++) { 
+					  collumnElements[i].style.width='100%';
+					}
+					for(var i = 0; i < qrCodeElements.length; i++) { 
+					  qrCodeElements[i].style.textAlign='center';
+					}
+				} else {
+					document.getElementById("content").style.width = "800px";
+					for(var i = 0; i < collumnElements.length; i++) { 
+					  collumnElements[i].style.width='50%';
+					}
+					for(var i = 0; i < qrCodeElements.length; i++) { 
+					  qrCodeElements[i].style.textAlign='right';
+					}
+				}
 			}
 		}
-		
-		// section 1 - QR-Code
-		var funcSection1 = function(p) {
-			p.setup = function() {
-				p.createCanvas(canvasWidth+1, canvasWidth+1);
-				p.noLoop();
-				for (var i=0; i<width; i++) {
-					qrCode[i] = [];
-					qrCodeOverlay[i] = [];
-					for (var j=0; j<width; j++) {
-						qrCode[i][j]=false;
-						qrCodeOverlay[i][j] = false;
-					}
-				}
-				versionNumberElement = document.getElementById("versionNumber");
-				
-				// Generate basic elements of qr-code
-				
-				p.setFinderPatterns(0,0); // generate finder patterns
-				p.setFinderPatterns(width-7,0);
-				p.setFinderPatterns(0,width-7);
-				if (version > 1) { // generate alignment patterns
-					p.setAlignmentPatterns(width-7,width-7); 
-				}
-				
-				for (i=0; i<9; i++) { // generate formating cells top left
-					qrCodeOverlay[i][8] = [117,193,255];
-				} 
-				for (j=0; j<9; j++) { // generate formating cells top left
-					qrCodeOverlay[8][j] = [117,193,255];
-				} 
-				for (j=0; j<8; j++) { // generate formating cells bottom left
-					qrCodeOverlay[8][width-j] = [117,193,255];
-				} 
-				for (i=1; i<9; i++) { // generate formating cells top right
-					qrCodeOverlay[width-i][8] = [117,193,255];
-				} 
-				
-				qrCodeOverlay[8][6] = [0,0,0]; // timing patterns horizontal
-				for (var i=0; i<width-15; i+=2) {
-					qrCodeOverlay[9+i][6] = [255,255,255];
-					qrCodeOverlay[10+i][6] = [0,0,0];
-				}
-				qrCodeOverlay[6][8] = [0,0,0]; // timing patterns vertical
-				for (var j=0; j<width-15; j+=2) {
-					qrCodeOverlay[6][9+j] = [255,255,255];
-					qrCodeOverlay[6][10+j] = [0,0,0];
-				}
-				
-				qrCodeOverlay[8][width-8] = [0,0,0]; // dark module 
-			};
-			
-			p.reload = function() {
-				version = parseInt(versionNumberElement.value);
-				width = 17 + 4*version;
-				rectWidth = canvasWidth/width;
-				﻿section1.setup();
-				section2.setup();
-				section3.setup();
-				﻿section1.draw();
-				section2.draw();
-				section3.draw();
-			}
-			
-			p.drawAll = function() {
-				﻿section1.draw();
-				section2.draw();
-				section3.draw();
-			}
-			
-			p.setFinderPatterns = function(x,y) {
-				for (i=-1; i<8; i++) { // outer white border
-					if (x+i>-1 && x+i<width) {
-						for (j=-1; j<8; j++) {
-							if (y+j>-1 && y+j<width) qrCodeOverlay[x+i][y+j] = [255,255,255];
-						}
-					}
-				}
-				
-				for (i=0; i<7; i++) { // outer black box
-					for (j=0; j<7; j++) qrCodeOverlay[x+i][y+j] = [0,0,0];
-				}
-				
-				for (i=1; i<6; i++) { // inner white border
-					for (j=1; j<6; j++) qrCodeOverlay[x+i][y+j] = [255,255,255];
-				}
-				
-				for (i=2; i<5; i++) { // inner black box
-					for (j=2; j<5; j++) qrCodeOverlay[x+i][y+j] = [0,0,0];	
-				}
-			}
-			
-			p.setAlignmentPatterns = function(x,y) {
-				for (i=-2; i<3; i++) { // outer black border
-					for (j=-2; j<3; j++) {
-						qrCodeOverlay[x+i][y+j] = [0,0,0];
-					}
-				}
-				
-				for (i=-1; i<2; i++) { // outer white border
-					for (j=-1; j<2; j++) {
-						qrCodeOverlay[x+i][y+j] = [255,255,255];
-					}
-				}
-				
-				qrCodeOverlay[x][y] = [0,0,0]; // inner black dot
-			}
-			
-			p.mouseClicked = function(m) {
-				var x = Math.floor(m.offsetX/(canvasWidth/width))-1;
-				var y = Math.floor(m.offsetY/(canvasWidth/width))-1;
-				if (x>=0 && y>=0 && x<=width && y<=width) qrCode[x][y] = !qrCode[x][y];
-				p.drawAll();
-				console.log("("+x+","+y+")");
-			}
+	</script>
+	<div id="content">
+		<h1>Hoe Lees Je QR-Codes</h1>
+		<h2>Interactieve digitale handleiding door Britt en Michiel</h2>
+		<h3>Stap 1: Hoe groot is de QR-Code?</h3>
+		<div class="wrapper">
+			<div class="collumn">
+				<p>Er bestaan veel schillende groottes QR-Codes, deze worden ook wel <i>"versions"</i> genoemd. Version 1 is de kleinste, 21 bij 21 vakjes groot, en de grootste is version 40, met 177 bij 177 vakjes.</p>
+				<p>Kies een version: <select id="versionNumber" onchange="QRCode1.reload()">
+						<option value="1">1 (21x21)</option>
+						<option value="2">2 (25x25)</option>
+						<option value="3">3 (29x29)</option>
+						<option value="4">4 (31x31)</option>
+						<option value="5">5 (37x37)</option>
+						<option value="6">6 (41x41)</option>
+						<option value="7">7 (45x45)</option>
+						<option value="8">8 (49x49)</option>
+						<option value="9">9 (53x53)</option>
+						<option value="10">10 (57x57)</option>
+						<option value="11">11 (61x61)</option>
+						<option value="12">12 (65x65)</option>
+						<option value="13">13 (69x69)</option>
+					</select>
+				</p>
+				<p>De drie grote vierkanten in de hoeken van de QR-Code zijn de <i>"Finder Patterns"</i>, door deze patronen herkent de scanner de QR-Code.</p>
+				<p>De Finder Patterns worden met elkaar verbonden door een stippellijn, deze lijnen zijn de <i>"Timing Patterns"</i>, deze helpen de scanner de positie van de andere vakjes te herkennen.</p>
+				<p> Bij alle versions behalve de aller kleinste zie je ook een kleiner vierkant van 3 bij 3 vakjes in de hoek rechts onder, dit is zijn <i>"Alignment Patterns"</i>, deze zorgen ervoor dat de scanner de code beter kan uitlijnen. Bij grotere codes komen er vaak meerdere Alignment Patterns voor.</p>
+			</div>
+			<div class="collumn">
+				<div id="QRCode1" class="QRCodes"></div>
+				<!-- QR-Code Preview --> <script>
+					var version = 1;
+					var width = 17 + 4*version;
+					var canvasWidth = 380;
+					var rectWidth = canvasWidth/width;
+					var mask = [];
+					var qrCode = [];
+					var qrCodeOverlay = [];
 					
-			p.draw = function() {
-				p.background(0);
-				p.stroke(200);
-				p.strokeWeight(1);
-				for (var i=0; i<width; i++) {
-					for (var j=0; j<width; j++) {
-						if (qrCodeOverlay[i][j]) {
-							p.fill(qrCodeOverlay[i][j]);
-						} else {
-							if (qrCode[i][j]) p.fill(0);
-							else p.fill(255);
-						}
-						p.rect(i*rectWidth,j*rectWidth,i*rectWidth+rectWidth,j*rectWidth+rectWidth);
-					}
-				}
-			};
-		};
-		var section1 = new p5(funcSection1, 'section1-canvas');
-		
-		// section 2 - Mask
-		var maskNumberElement;
-		var funcSection2 = function(p) {
-			
-			p.setup = function() {
-				p.createCanvas(canvasWidth+1, canvasWidth+1);
-				p.noLoop();
-				maskNumberElement = document.getElementById("maskNumber");
-				p.generateMask();
-
-			};
-			
-			p.generateMask = function() {
-				maskNumber = maskNumberElement.value;
-				for (var i=0; i<width; i++) {
-					mask[i] = [];
-					for (var j=0; j<width; j++) {
-						mask[i][j]=p.calcMask(i,j);
-					}
-				}
-				p.draw();
-				if(section3._setupDone)section3.draw();
-			};
+					var versionNumberElement;
+					
+					var fQRCode1 = function(p) {
+						p.setup = function() {
+							p.createCanvas(canvasWidth, canvasWidth);
+							p.noLoop();
+							for (var i=0; i<width; i++) { // Setup qrCode[][]
+								qrCode[i] = [];
+								qrCodeOverlay[i] = [];
+								for (var j=0; j<width; j++) {
+									qrCode[i][j]=false;
+									qrCodeOverlay[i][j] = false;
+								}
+							}
+							
+							versionNumberElement = document.getElementById("versionNumber");
+							
+							// Generate basic elements of qr-code
+														
+							for (i=0; i<9; i++) { // generate formating cells top left
+								qrCodeOverlay[i][8] = [140,191,255];
+							} 
+							for (j=0; j<9; j++) { // generate formating cells top left
+								qrCodeOverlay[8][j] = [140,191,255];
+							} 
+							for (j=0; j<8; j++) { // generate formating cells bottom left
+								qrCodeOverlay[8][width-j] = [140,191,255];
+							} 
+							for (i=1; i<9; i++) { // generate formating cells top right
+								qrCodeOverlay[width-i][8] = [140,191,255];
+							} 
+							
+							if (version > 6) { // Version Information Area
+								for (var i=0; i<6; i++) {
+									for (var j=0; j<3; j++) {
+										qrCodeOverlay[i][width-11+j] = [140,255,140];
+										qrCodeOverlay[width-11+j][i] = [140,255,140];
+									}
+								}
+							}
+							
+							
+							qrCodeOverlay[8][6] = [0,0,0]; // timing patterns horizontal
+							for (var i=0; i<width-15; i+=2) {
+								qrCodeOverlay[9+i][6] = [255,255,255];
+								qrCodeOverlay[10+i][6] = [0,0,0];
+							}
+							qrCodeOverlay[6][8] = [0,0,0]; // timing patterns vertical
+							for (var j=0; j<width-15; j+=2) {
+								qrCodeOverlay[6][9+j] = [255,255,255];
+								qrCodeOverlay[6][10+j] = [0,0,0];
+							}
+							
+							p.setFinderPatterns(0,0); // generate finder patterns
+							p.setFinderPatterns(width-7,0);
+							p.setFinderPatterns(0,width-7);
+							if (version > 1) { // generate alignment patterns
+								p.setAlignmentPatterns(width-7,width-7); 
+								if (version > 6) {
+									var middle = Math.round(width/2);
+									p.setAlignmentPatterns(middle,6);
+									p.setAlignmentPatterns(6,middle);
+									p.setAlignmentPatterns(middle,middle);
+									p.setAlignmentPatterns(width-7,middle);
+									p.setAlignmentPatterns(middle,width-7);
+								}
+							}
+							
+							qrCodeOverlay[8][width-8] = [0,0,0]; // dark module 
+							
+							setTimeout(QRCode2.generateMask,200);
+						};
 						
-			p.draw = function() {
-				p.background(0);
-				p.stroke(200);
-				p.strokeWeight(1);
-				for (var i=0; i<width; i++) {
-					for (var j=0; j<width; j++) {
-						p.fill(mask[i][j]*255);
-						p.rect(i*rectWidth,j*rectWidth,i*rectWidth+rectWidth,j*rectWidth+rectWidth);
-					}
-				}
-			};
-			
-			p.isInFiveByFiveSquareAround = function(x,y,i,j) {
-				return (i<x+3 && j<y+3 && i>x-3 && j>y-3);
-			}
-			
-			p.calcMask = function(i,j) {
-				i++; // coordinates start at 1 not at zero
-				j++;
-
-				if (i == 7 || j == 7) return 0.9; // timing patterns
-				if (i>7) i--; // continue pattern after timing pattern
-				if (j>7) j--;
-			
-				switch(maskNumber) {
-					case "0":
-						if ((i + j) % 2 == 0) return 0;
-						else return 1;
-					case "1":
-						if ((j) % 2 == 0) return 0;
-						else return 1;
-					case "2":
-						if ((i) % 3 == 0) return 0;
-						else return 1;
-					case "3":
-						if ((i + j) % 3 == 0) return 0;
-						else return 1;
-					case "4":
-						if ((Math.floor(j/2) + Math.floor(i/3)) % 2 == 0) return 0;
-						else return 1;
-					case "5":
-						if (((i * j) % 2) + ((i * j) % 3) == 0) return 0;
-						else return 1;
-					case "6":
-						if ((((i * j) % 2) + ((i * j) % 3)) % 2 == 0) return 0;
-						else return 1;
-					case "7":
-						if ((((i + j) % 2) + ((i * j) % 3)) % 2 == 0) return 0;
-						else return 1;
-				}
-			};
-		};
-		var section2 = new p5(funcSection2, 'section2-canvas');
-		
-		// section 3 - Data
-		var funcSection3 = function(p) {
-			p.setup = function() {
-				p.createCanvas(canvasWidth+1, canvasWidth+1);
-				p.noLoop();
-			};
-			
-			p.draw = function() {
-				p.background(0);
-				p.stroke(200);
-				p.strokeWeight(1);
-				for (var i=0; i<width; i++) {
-					for (var j=0; j<width; j++) {
-						if (qrCodeOverlay[i][j]) {
-							p.fill(qrCodeOverlay[i][j]); // draw from overlay
-						} else {
-							if (mask[i][j] != 0) {
-								if (qrCode[i][j]) p.fill(0); // draw from qr code
-								else p.fill(255);
-							}  else {
-								if (qrCode[i][j]) p.fill(255); // draw from qr code inverted
-								else p.fill(0);
+						p.reload = function() {
+							version = parseInt(versionNumberElement.value);
+							width = 17 + 4*version;
+							rectWidth = canvasWidth/width;
+							QRCode1.setup();
+							QRCode2.setup();
+							QRCode3.setup();
+							﻿QRCode1.draw();
+							QRCode2.draw();
+							QRCode3.draw();
+						}
+						
+						p.drawAll = function() {
+							﻿QRCode1.draw();
+							QRCode2.draw();
+							QRCode3.draw();
+						}
+						
+						p.setFinderPatterns = function(x,y) {
+							for (i=-1; i<8; i++) { // outer white border
+								if (x+i>-1 && x+i<width) {
+									for (j=-1; j<8; j++) {
+										if (y+j>-1 && y+j<width) qrCodeOverlay[x+i][y+j] = [255,255,255];
+									}
+								}
+							}
+							
+							for (i=0; i<7; i++) { // outer black box
+								for (j=0; j<7; j++) qrCodeOverlay[x+i][y+j] = [0,0,0];
+							}
+							
+							for (i=1; i<6; i++) { // inner white border
+								for (j=1; j<6; j++) qrCodeOverlay[x+i][y+j] = [255,255,255];
+							}
+							
+							for (i=2; i<5; i++) { // inner black box
+								for (j=2; j<5; j++) qrCodeOverlay[x+i][y+j] = [0,0,0];	
 							}
 						}
-						p.rect(i*rectWidth,j*rectWidth,i*rectWidth+rectWidth,j*rectWidth+rectWidth);
+						
+						p.setAlignmentPatterns = function(x,y) {
+							for (i=-2; i<3; i++) { // outer black border
+								for (j=-2; j<3; j++) {
+									qrCodeOverlay[x+i][y+j] = [0,0,0];
+								}
+							}
+							
+							for (i=-1; i<2; i++) { // outer white border
+								for (j=-1; j<2; j++) {
+									qrCodeOverlay[x+i][y+j] = [255,255,255];
+								}
+							}
+							
+							qrCodeOverlay[x][y] = [0,0,0]; // inner black dot
+						}
+						
+						// Mouse Interaction
+						/*p.mouseClicked = function(m) {
+							var x = Math.floor(m.offsetX/rectWidth)-1;
+							var y = Math.floor(m.offsetY/rectWidth)-1;
+							if (x>=0 && y>=0 && x<=width && y<=width) { 
+								if (m.which == 1) {
+									qrCode[x][y] = true;
+									p.drawAll();
+								} else if (m.which == 3) {
+									qrCode[x][y] = false;
+									p.drawAll();
+								}
+							}
+							p.drawAll();
+							//console.log("("+x+","+y+")");
+							return false;
+						}
+						
+						p.mouseDragged = function(m) {
+							var x = Math.floor(m.offsetX/rectWidth)-1;
+							var y = Math.floor(m.offsetY/rectWidth)-1;
+							if (x>=0 && y>=0 && x<=width && y<=width) { 
+								if (m.which == 1) {
+									qrCode[x][y] = true;
+									p.drawAll();
+								} else if (m.which == 3) {
+									qrCode[x][y] = false;
+									p.drawAll();
+								}
+							}
+							//console.log(m);
+							return false;
+						}*/
+								
+						p.draw = function() {
+							p.background(0);
+							p.stroke(200);
+							p.strokeWeight(1);
+							for (var i=0; i<width; i++) {
+								for (var j=0; j<width; j++) {
+									if (qrCodeOverlay[i][j]) {
+										p.fill(qrCodeOverlay[i][j]);
+									} else {
+										//if (qrCode[i][j]) p.fill(0);
+										//else p.fill(255);
+										p.fill(220)
+									}
+									p.rect(i*rectWidth,j*rectWidth,i*rectWidth+rectWidth,j*rectWidth+rectWidth);
+								}
+							}
+						};
+					};
+					var QRCode1 = new p5(fQRCode1, 'QRCode1');
+			
+				</script>
+			</div>
+		</div>
+		<p>Om er achter te komen welke version je hebt kan je natuurlijk gewoon vakjes gaan tellen, maar somige versions zijn makkelijker te herkennen. Één manier waaraan je de versions kan herkennen is het aantal Alignment Patterns die er in de code zitten, version 1 is de enige zonder Alignment Patterns, versions 2 t/m 6 hebben er precies één en dan moet je toch echt de vakjes gaan tellen om het version nummer te weten, en hogere versions hebben er meerdere.</p>
+		<img src="./images/v7-version-number.png" style="width: 180px;">
+		<p>Bij versions 7 en hoger hebben ze het version nummer in de code zelf staan (in de groene blokjes). Het version nummer staat in binair genoteerd over zes verschillende vakjes, zie het plaatje hiernaast. In het plaatje hiernaast zie je dat de getallen 1, 2 en 3 op een donker vakje staan en de andere nummers op een licht vakje, alle donkere vakjes zijn 1'en en alle lichte vakjes zijn 0's, dus hieruit komt het binaire getal 000111, wat 7 is in decimaal, dus weet je dat de QR-Code uit het plaatje van version 7 is.</p>
+		<p>Overigens zijn er twee groene gebieden in iedere QR-Code van version 7 of hoger, maar deze twee gebieden zijn hetzelfde maar dan gedraait en gespiegeld.</p>
+		
+		<h3>Stap 2: Welke mask word er gebruikt?</h3>
+		<div class="wrapper">
+			<div class="collumn">
+				<p>Je hebt bij de vorige stap gezien dat een QR-Code een aantal vaste elementen heeft, maar de data die we willen lezen zit in het gebied dat in de QR-Code van de vorige stap grijs gekleurd is, dat grijze gebied bevat de data en ook een hoop vakjes die worden gebruikt voor error correctie.</p>
+				<p>Om te voorkomen dat er grote witte of zwarte vlakken in een QR-Code ontstaan zit er een <i>"mask"</i> over het gebied met de data en de error correctie heen. Deze mask (hiernaast weergegeven) is een patroon dat sommige vakjes omkeert, dus alle vakjes die hiernaast zwart zijn gekleurd zijn in de QR-Code het tegenovergestelde van wat ze eigenlijk horen te zijn.</p>
+				<p>Kies een mask: <select id="maskNumber" onchange="QRCode2.generateMask()">
+						<option value="0">0</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+					</select>
+				</p>
+				<p>In totaal zijn er 8 verschillende patronen, genummerd 0 t/m 7, die de mask kan gebruiken, welke er gebruikt wordt kan je aflezen uit de QR-Code.</p>
+			</div>
+			<div class="collumn">
+				<div id="QRCode2" class="QRCodes"></div>
+				<!-- QR-Code Mask --> <script>
+					var maskNumber = 0;
+					var funcQRCode2 = function(p) {
+						p.setup = function() {
+							p.createCanvas(canvasWidth+1, canvasWidth+1);
+							p.noLoop();
+							
+						};
+						
+						p.generateMask = function() { // activated by QRCode1
+							maskNumber = document.getElementById("maskNumber").value;
+							for (var i=0; i<width; i++) {
+								mask[i] = [];
+								for (var j=0; j<width; j++) {
+									mask[i][j]=p.calcMask(i,j);
+								}
+							}
+							p.draw();
+							if (QRCode3._setupDone) QRCode3.draw();
+						};
+									
+						p.draw = function() {
+							if (!mask || !mask[0] || !mask[0][0]) return false;
+							p.background(0);
+							p.stroke(200);
+							p.strokeWeight(1);
+							for (var i=0; i<width; i++) {
+								for (var j=0; j<width; j++) {
+									p.fill(mask[i][j]);
+									p.rect(i*rectWidth,j*rectWidth,i*rectWidth+rectWidth,j*rectWidth+rectWidth);
+								}
+							}
+						};
+						
+						p.isInFiveByFiveSquareAround = function(x,y,i,j) {
+							return (i<x+3 && j<y+3 && i>x-3 && j>y-3);
+						}
+						
+						p.calcMask = function(i,j) {
+							if (qrCodeOverlay[i][j] != false) {
+								if (qrCodeOverlay[i][j][0] == 140 && qrCodeOverlay[i][j][1] == 191 && qrCodeOverlay[i][j][2] == 255) {
+									return [140,191,255];
+								}
+								else return [220, 220, 220];
+							}
+
+							i++; // coordinates start at 1 not at zero
+							j++;							
+					
+							switch(maskNumber) {
+								case "0":
+									if ((i + j) % 2 == 0) return [0,0,0];
+									else return [255,255,255];
+								case "1":
+									if ((j) % 2 == 0) return [0,0,0];
+									else return [255,255,255];
+								case "2":
+									if ((i) % 3 == 0) return [0,0,0];
+									else return [255,255,255];
+								case "3":
+									if ((i + j) % 3 == 0) return [0,0,0];
+									else return [255,255,255];
+								case "4":
+									if ((Math.floor(j/2) + Math.floor(i/3)) % 2 == 0) return [0,0,0];
+									else return [255,255,255];
+								case "5":
+									if (((i * j) % 2) + ((i * j) % 3) == 0) return [0,0,0];
+									else return [255,255,255];
+								case "6":
+									if ((((i * j) % 2) + ((i * j) % 3)) % 2 == 0) return [0,0,0];
+									else return [255,255,255];
+								case "7":
+									if ((((i + j) % 2) + ((i * j) % 3)) % 2 == 0) return [0,0,0];
+									else return [255,255,255];
+							}
+						};
+					};
+					var QRCode2 = new p5(funcQRCode2, 'QRCode2');
+				</script>
+			</div>
+		</div>
+		<p>Het nummer van welke mask er wordt gebruikt staat in verdeeld over drie specifieke hokjes in het blauwe gebied, dit blauwe gebied is het <i>formating</i> gebied.</p>
+		
+		<h3>dit wordt nog verder aangevuld</h3>
+		
+		<script>
+			// section 3 - Data
+			var funcQRCode3 = function(p) {
+				p.setup = function() {
+					p.createCanvas(canvasWidth+1, canvasWidth+1);
+					p.noLoop();
+				};
+				
+				p.draw = function() {
+					if (!mask || !mask[0] || !mask[0][0]) return false;
+					p.background(0);
+					p.stroke(200);
+					p.strokeWeight(1);
+					for (var i=0; i<width; i++) {
+						for (var j=0; j<width; j++) {
+							if (qrCodeOverlay[i][j]) {
+								p.fill(qrCodeOverlay[i][j]); // draw from overlay
+							} else {
+								if (mask[i][j][0] != 0 && mask[i][j][1] != 0 && mask[i][j][2] != 0) {
+									if (qrCode[i][j]) p.fill(0); // draw from qr code
+									else p.fill(255);
+								}  else {
+									if (qrCode[i][j]) p.fill(255); // draw from qr code inverted
+									else p.fill(0);
+								}
+							}
+							p.rect(i*rectWidth,j*rectWidth,i*rectWidth+rectWidth,j*rectWidth+rectWidth);
+						}
 					}
-				}
+				};
 			};
-		};
-		var section3 = new p5(funcSection3, 'section3-canvas');
-	</script>
-	<div id="section1">
-		<h2>QR-Code</h2>
-		<div id="section1-canvas"></div>
-		Version (1-5): <select id="versionNumber" onchange="section1.reload()">
-			<option value="1">1 (21x21)</option>
-			<option value="2">2 (25x25)</option>
-			<option value="3">3 (29x29)</option>
-			<option value="4">4 (31x31)</option>
-			<option value="5">5 (37x37)</option>
-		</select>
-	</div>
-	<div id="section2">
-		<h2>Mask</h2>
-		<div id="section2-canvas"></div>
-		Mask Number (0-7): <select id="maskNumber" onchange="section2.generateMask()">
-			<option value="0">0</option>
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
-			<option value="6">6</option>
-			<option value="7">7</option>
-		</select>
-	</div>
-	<div id="section3">
-		<h2>Data</h2>
-		<div id="section3-canvas"></div>
-		<br>
+			var QRCode3 = new p5(funcQRCode3, 'QRCode3');
+			
+		</script>
+ 		<div id="QRCode3">
+			<h4>QR-Code Zonder Mask</h4>
+			<div id="QRCode3" class="QRCodes"></div>
+			<br>
+		</div>
+		<h4>Bronnenlijst:</h4>
+		<ul>
+			<li>http://www.thonky.com/qr-code-tutorial/</li>
+			<li>http://www.esponce.com/resources/about-qr-codes</li>
+		</ul>
 	</div>
 </body>
 </html>
