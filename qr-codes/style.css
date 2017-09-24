@@ -1,0 +1,76 @@
+body {
+	font-family: Arial;
+	text-align: center;
+	background-color: #FFFFC1;
+}
+
+#content {
+	width: 800px;
+	margin: 40px auto 80px auto;
+	padding: 40px;
+	background-color: #FFFFFF;
+	text-align: left;
+	box-shadow: 0px 0px 12px #92926E;
+}
+
+h1 {
+	font-size: 4.5em;
+	padding-bottom: 0px;
+	margin: 0px;
+}
+
+h2 {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-size: 1.6em;
+	margin: 0px
+}
+
+h3 {
+	font-size: 2.5em;
+	background-color: #C1E9FF;
+	padding: 20px 40px 20px 40px;
+	margin-left: -40px;
+	margin-right: -40px;
+}
+
+h4 {
+	margin: 0px;
+}
+
+p {
+	margin: 0px 0px 1em 0px;
+}
+
+.wrapper {
+	display: block;
+	overflow: hidden; 
+	width: 100%;
+}
+		
+.collumn {
+	display: inline-block;
+	position: relative;
+	float: left;
+	width: 50%;
+}
+
+.QRCodes {
+	text-align: right;
+}
+	
+canvas {
+	width: 380px;
+	height: 380px;
+	border-top: 1px solid #C8C8C8;
+	border-right: 2px solid #C8C8C8;
+	border-bottom: 2px solid #C8C8C8;
+	border-left: 1px solid #C8C8C8;
+	margin-bottom: 1em;
+}
+
+img {
+	float: right;
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
