@@ -43,6 +43,9 @@ var funcQRCode2 = function(p) {
 			else return qrCodeOverlay[i][j];
 		}
 	
+		if (i<7) i++; // Skip timing pattern
+		if (j<7) j++;
+		
 		switch(maskNumber) {
 			case "0":
 				if ((i + j) % 2 == 0) return [0,0,0];
