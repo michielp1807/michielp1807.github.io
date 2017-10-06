@@ -1,4 +1,4 @@
-/*	// Currently disabled 
+/*	// Currently disabled
 
 var previousWidth = 0;
 var collumnElements;

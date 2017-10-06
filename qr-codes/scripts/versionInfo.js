@@ -46,7 +46,6 @@ var funcVersionInfo = function(p) {
 			QRCode1.reload();
 		}
 		p.reCalculate(vNumber);
-		//p.drawAll();
 		return false;
 	}
 	

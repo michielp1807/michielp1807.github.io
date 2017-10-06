@@ -12,6 +12,8 @@
 	<div id="content">
 		<h1>Hoe Lees Je QR-Codes</h1>
 		<h2>Interactieve digitale handleiding door Britt en Michiel</h2>
+		
+		
 		<h3>Stap 1: Hoe groot is de QR-Code?</h3>
 		<div class="wrapper">
 			<div class="collumn">
@@ -36,22 +38,22 @@
 				<h4>Vaste patronen</h4>
 				<p>De drie grote vierkanten in de hoeken van de QR-Code zijn de <i>"Finder Patterns"</i>, door deze patronen herkent de scanner de QR-Code.</p>
 				<p>De Finder Patterns worden met elkaar verbonden door een stippellijn, deze lijnen zijn de <i>"Timing Patterns"</i>, deze helpen de scanner de positie van de andere vakjes te herkennen.</p>
-				<p> Bij alle versions behalve de aller kleinste zie je ook een kleiner vierkant van 3 bij 3 vakjes in de hoek rechts onder, dit is zijn <i>"Alignment Patterns"</i>, deze zorgen ervoor dat de scanner de code beter kan uitlijnen. Bij grotere codes komen er vaak meerdere Alignment Patterns voor.</p>
+				<p> Bij alle versions behalve de aller kleinste zie je ook een kleiner vierkant van 5 bij 5 vakjes in de hoek rechts onder, dit is zijn <i>"Alignment Patterns"</i>, deze zorgen ervoor dat de scanner de code beter kan uitlijnen. Bij grotere codes komen er meerdere Alignment Patterns voor.</p>
 			</div>
 			<div class="collumn">
 				<div id="QRCode1" class="QRCodes"></div>
 				<script src="./scripts/qrcodePreview.js"></script>
 			</div>
 		</div>
-		<h4>Welke version heb je?</h4>
+		<h4>Welke version is het?</h4>
 		<p>Om er achter te komen welke version je hebt kan je natuurlijk gewoon vakjes gaan tellen, maar somige versions zijn makkelijker te herkennen. Één manier waaraan je de versions kan herkennen is het aantal Alignment Patterns die er in de code zitten, version 1 is de enige zonder Alignment Patterns, versions 2 t/m 6 hebben er precies één en dan moet je toch echt de vakjes gaan tellen om het version nummer te weten, en hogere versions hebben er meerdere.</p>
 		<img src="./images/v7-version-number.png" style="width: 180px;">
-		<h4>Version Info</h4>
-		<p>Bij versions 7 en hoger hebben ze de version in de code zelf staan (in de groene blokjes). Het version nummer staat in binair genoteerd over zes verschillende vakjes, zie het plaatje hiernaast. In het plaatje hiernaast zie je dat de getallen 1, 2 en 3 op een donker vakje staan en de andere nummers op een licht vakje, alle donkere vakjes zijn 1'en en alle lichte vakjes zijn 0's, dus hieruit komt het binaire getal 000111, wat 7 is in decimaal, dus weet je dat de QR-Code uit het plaatje van version 7 is.</p>
+		<h4>Version Info (alleen bij versie 7 en hoger)</h4>
+		<p>Bij versions 7 en hoger hebben ze de version in de code zelf staan (in de hiernaast groen gekleurde vakjes). Het versie nummer staat in binair genoteerd over zes verschillende vakjes, zie het plaatje hiernaast. In het plaatje hiernaast zie je dat de getallen 1, 2 en 3 op een donker vakje staan en de andere nummers op een licht vakje, alle donkere vakjes zijn 1'en en alle lichte vakjes zijn 0's, dus hieruit komt het binaire getal 000111, wat 7 is in decimaal, dus weet je dat de QR-Code uit het plaatje van version 7 is.</p>
 		<p>Overigens zijn er twee groene gebieden in iedere QR-Code van version 7 of hoger, maar deze twee gebieden zijn hetzelfde maar dan gedraait en gespiegeld.</p>
 		<div class="wrapper">
 			<div class="collumn">
-				<p>Vul hiernaast de zes rechter vakjes van de Version Info in als je een QR-Code van version 7 of hoger hebt. (Je weet dat je version 7 of hoger hebt wanneer je meer dan 1 Alignment Pattern hebt)</p>
+				<p>Vul hiernaast de zes rechter vakjes van de Version Info in als je een QR-Code van versie 7 of hoger hebt. (als je meer dan 1 Alignment Pattern ziet heb je versie 7 of hoger)</p>
 				<p>Er staat nu de code voor <b id="versionInfoNumber">Version 7</b>.</p>
 				<p id="versionInfoNumberAddon"></p>
 			</div>
@@ -60,10 +62,13 @@
 				<script src="./scripts/versionInfo.js"></script>
 			</div>
 		</div>
-		<p>De vakjes die je hier links van de 6 vakjes met het version nummer ziet staan, zijn error correctie vakjes, deze zorgen er voor dat de scanner zeker weet dat hij de version info goed gescanned heeft. Als de scanner ziet dat hij de version info niet goed heeft gescanned kan hij alsnog het versie nummer berekenen met deze vakjes.</p>
+		<p>De grijze vakjes die je hier links van de 6 vakjes met het version nummer ziet staan, zijn error correctie vakjes, deze zorgen er voor dat de scanner zeker weet dat hij de version info goed gescanned heeft. Als de scanner ziet dat hij de version info niet goed heeft gescanned kan hij alsnog het versie nummer berekenen met deze vakjes. Elke versie heeft een vaste bijbehoorende combinatie van error correctie vakjes die met een wiskundige formule berekend zijn.</p>
+		
+		
 		<h3>Stap 2: Welke mask word er gebruikt?</h3>
 		<div class="wrapper">
 			<div class="collumn">
+				<h4>Data Masks</h4>
 				<p>Je hebt bij de vorige stap gezien dat een QR-Code een aantal vaste elementen heeft, maar de data die we willen lezen zit in het gebied dat in de QR-Code van de vorige stap grijs gekleurd is, dat grijze gebied bevat de data en ook een hoop vakjes die worden gebruikt voor error correctie.</p>
 				<p>Om te voorkomen dat er grote witte of zwarte vlakken in een QR-Code ontstaan zit er een <i>"mask"</i> over het gebied met de data en de error correctie heen. Deze mask (hiernaast weergegeven) is een patroon dat sommige vakjes omkeert, dus alle vakjes die hiernaast zwart zijn gekleurd zijn in de QR-Code het tegenovergestelde van wat ze eigenlijk horen te zijn.</p>
 				<p>Kies een mask: <select id="maskNumber" onchange="QRCode2.generateMask()">
@@ -77,6 +82,7 @@
 						<option value="7">7</option>
 					</select>
 				</p>
+				<h4>Welke mask wordt er gebruikt?</h4>
 				<p>In totaal zijn er 8 verschillende patronen, genummerd 0 t/m 7, die de mask kan gebruiken, welke er gebruikt wordt kan je aflezen uit de QR-Code.</p>
 			</div>
 			<div class="collumn">
@@ -84,7 +90,26 @@
 				<script src="./scripts/qrcodeMask.js"></script>
 			</div>
 		</div>
-		<p>Het nummer van welke mask er wordt gebruikt staat in verdeeld over drie specifieke hokjes in het blauwe gebied, dit blauwe gebied is het <i>formating</i> gebied.</p>
+		<img src="./images/format-info.png" style="width: 180px;">
+		<h4>Formating Info</h4>
+		<p>Het nummer van welke mask er wordt gebruikt staat in binair genoteerd over drie specifieke vakjes in het blauwe gebied, dit blauwe gebied is het <i>formating</i> gebied. Dit gebied bestaat uit twee vakjes die de hoeveelheid error correctie aangeven en daarna de drie vakjes die aangeven welke mask er wordt gebruikt, de overige vakjes zijn error correctie van deze eerste vijf vakjes.</p>
+		<p>Net zoals de version info staat de format info ook twee keer in de QR-Code, zodat de scanner zeker weet dat hij deze goed gescanned heeft, want deze gebieden zijn cruciaal voor het lezen van de QR-Code.</p>
+		<div class="wrapper">
+			<div class="collumn">
+				<p>Vul de eerste vijf vakjes van de Format Info hiernaast in om er achter te komen welke mask er gebruikt wordt.</p>
+				<p>Er staat nu de code voor:</p>
+				<ul>
+					<li>Error correctie level: <b id="errCorElement">M (15%)</b></li>
+					<li>Mask nummer: <b id="maskNumberElement">0</b></li>
+				</ul>
+				<p id="formatInfoNumberAddon"></p>
+			</div>
+			<div class="collumn">
+				<div id="FormatInfo" class="QRCodes"></div>
+				<script src="./scripts/formatInfo.js"></script>
+			</div>
+		</div>
+		
 		
 		<h3>Dit wordt nog verder aangevuld</h3>
 		

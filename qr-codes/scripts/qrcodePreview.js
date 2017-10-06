@@ -4,6 +4,7 @@ var canvasWidth = 380;
 var rectWidth = canvasWidth/width;
 var mask = [];
 var versionInfo = [];
+var formatInfo = [];
 var qrCode = [];
 var qrCodeOverlay = [];
 

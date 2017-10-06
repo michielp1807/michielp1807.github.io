@@ -1,9 +1,11 @@
 var maskNumber = 0;
+var maskNumberElement;
+
 var funcQRCode2 = function(p) {
 	p.setup = function() {
 		p.createCanvas(canvasWidth+1, canvasWidth+1);
 		p.noLoop();
-		
+		maskNumberElement = document.getElementById("maskNumber");
 	};
 	
 	p.generateMask = function() { // activated by QRCode1
@@ -43,6 +45,9 @@ var funcQRCode2 = function(p) {
 			else return qrCodeOverlay[i][j];
 		}
 	
+		if (i<7) i++; // Skip timing pattern
+		if (j<7) j++;
+		
 		switch(maskNumber) {
 			case "0":
 				if ((i + j) % 2 == 0) return [0,0,0];
