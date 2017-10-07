@@ -135,40 +135,6 @@ var fQRCode1 = function(p) {
 		
 		qrCodeOverlay[x][y] = [0,0,0]; // inner black dot
 	}
-	
-	// Mouse Interaction
-	/*p.mouseClicked = function(m) {
-		var x = Math.floor(m.offsetX/rectWidth)-1;
-		var y = Math.floor(m.offsetY/rectWidth)-1;
-		if (x>=0 && y>=0 && x<=width && y<=width) { 
-			if (m.which == 1) {
-				qrCode[x][y] = true;
-				p.drawAll();
-			} else if (m.which == 3) {
-				qrCode[x][y] = false;
-				p.drawAll();
-			}
-		}
-		p.drawAll();
-		//console.log("("+x+","+y+")");
-		return false;
-	}
-	
-	p.mouseDragged = function(m) {
-		var x = Math.floor(m.offsetX/rectWidth)-1;
-		var y = Math.floor(m.offsetY/rectWidth)-1;
-		if (x>=0 && y>=0 && x<=width && y<=width) { 
-			if (m.which == 1) {
-				qrCode[x][y] = true;
-				p.drawAll();
-			} else if (m.which == 3) {
-				qrCode[x][y] = false;
-				p.drawAll();
-			}
-		}
-		//console.log(m);
-		return false;
-	}*/
 			
 	p.draw = function() {
 		p.background(0);

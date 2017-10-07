@@ -32,20 +32,20 @@ var funcVersionInfo = function(p) {
 					versionInfo[x][y] = [0,0,0];
 				}
 			}
-		}
-		var vNumber = 0;
-		for (var i=0; i<2; i++) {
-			for (var j=0; j<3; j++) {
-				if (versionInfo[4+i][j][0] === 0) {
-					vNumber+=Math.pow(2,j+i*3);
+			var vNumber = 0;
+			for (var i=0; i<2; i++) {
+				for (var j=0; j<3; j++) {
+					if (versionInfo[4+i][j][0] === 0) {
+						vNumber+=Math.pow(2,j+i*3);
+					}
 				}
 			}
+			if (vNumber>0 && vNumber<=13) {
+				versionNumberElement.value=""+vNumber; // set version number
+				QRCode1.reload();
+			}
+			p.reCalculate(vNumber);
 		}
-		if (vNumber>0 && vNumber<=13) {
-			versionNumberElement.value=""+vNumber; // set version number
-			QRCode1.reload();
-		}
-		p.reCalculate(vNumber);
 		return false;
 	}
 	

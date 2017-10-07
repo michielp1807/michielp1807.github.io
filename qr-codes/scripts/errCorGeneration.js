@@ -25,8 +25,6 @@ function generateErrCor(genPoly,data,length) {
 }
 
 function errCorDivision(genPoly,data,length,errCorLength) { // recursive division function for every division
-	//console.log("--------------------");
-	
 	//console.log("Gen Poly: " + genPoly);
 	// pad generator polynominal with 0's on right side
 	var genPolyPadded = genPoly;
@@ -37,14 +35,7 @@ function errCorDivision(genPoly,data,length,errCorLength) { // recursive divisio
 	
 	
 	// XOR the padded data and the padded generator polynominal
-	var output = "";
-	for (var i=0; i<data.length; i++) {
-		if (data[i]==genPolyPadded[i]) {
-			output+="0";
-		} else {
-			output+="1";
-		}
-	}
+	var output = xor(data,genPolyPadded);
 	//console.log("Output: " + output);
 	
 	
@@ -65,4 +56,16 @@ function errCorDivision(genPoly,data,length,errCorLength) { // recursive divisio
 		
 		return output;
 	}
+}
+
+function xor(var1, var2) { // manually perform xor on binary strings
+	var output = "";
+	for (var i=0; i<var1.length; i++) {
+		if (var1[i]==var2[i]) {
+			output+="0";
+		} else {
+			output+="1";
+		}
+	}
+	return output;
 }

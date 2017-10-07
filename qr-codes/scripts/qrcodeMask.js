@@ -17,6 +17,7 @@ var funcQRCode2 = function(p) {
 			}
 		}
 		p.draw();
+		//FormatInfo.reCalculate()
 		if (QRCode3._setupDone) QRCode3.draw();
 	};
 				
@@ -39,8 +40,10 @@ var funcQRCode2 = function(p) {
 	
 	p.calcMask = function(i,j) {
 		if (qrCodeOverlay[i][j] != false) {
-			if ((qrCodeOverlay[i][j][0] == 255 && qrCodeOverlay[i][j][1] == 255 && qrCodeOverlay[i][j][2] == 255)||(qrCodeOverlay[i][j][0] == 0 && qrCodeOverlay[i][j][1] == 0 && qrCodeOverlay[i][j][2] == 0)) {
-				return [220, 220, 220];
+			if (qrCodeOverlay[i][j][0] == 255 && qrCodeOverlay[i][j][1] == 255 && qrCodeOverlay[i][j][2] == 255) {
+				return [230,230,230]; //light gray
+			} else if (qrCodeOverlay[i][j][0] == 0 && qrCodeOverlay[i][j][1] == 0 && qrCodeOverlay[i][j][2] == 0) {
+				return [180,180,180]; // slightly darker gray
 			}
 			else return qrCodeOverlay[i][j];
 		}

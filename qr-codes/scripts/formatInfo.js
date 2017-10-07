@@ -4,7 +4,7 @@ var funcFormatInfo = function(p) {
 		c.mousePressed(p.clicked);
 		p.noLoop();
 		p.generateFormatInfo();
-		document.getElementById("formatInfoNumberAddon").innerHTML = "<i>Klik op de vakjes aan de rechter kant om ze aan te passen.</i>";
+		document.getElementById("formatInfoNumberAddon").innerHTML = "<i>Klik op de vakjes links onder in het stuk van de code hiernaast om ze aan te passen.</i>";
 	};
 		
 	p.generateFormatInfo = function() {
@@ -16,7 +16,7 @@ var funcFormatInfo = function(p) {
 				else formatInfo[i][j]=[230,230,230]; // light gray
 			}
 		}
-		p.reCalculate(0, 0);
+		p.reCalculate("00000", 0, 0);
 	};
 		
 	// Mouse Interaction
@@ -33,55 +33,85 @@ var funcFormatInfo = function(p) {
 					formatInfo[x][y] = [0,0,0];
 				}
 			}
-		}
-		
-		var mNumber = 0;
-		for (var i=0; i<3; i++) { // calculate mask number frow the boxes
-			if (formatInfo[2+i][8][0] === 0) {
-				mNumber+=Math.pow(2,i);
+			
+			var mNumber = 0;
+			for (var i=0; i<3; i++) { // calculate mask number frow the boxes
+				if (formatInfo[2+i][8][0] === 0) {
+					mNumber+=Math.pow(2,i);
+				}
 			}
-		}
-		//console.log("mask number " + mNumber);
-		
-		var errCorNumber = 0;
-		for (var i=0; i<2; i++) { // calculate error correction number frow the boxes
-			if (formatInfo[i][8][0] === 0) {
-				errCorNumber+=Math.pow(2,i);
+			//console.log("mask number " + mNumber);
+			
+			var errCorNumber = 0;
+			for (var i=0; i<2; i++) { // calculate error correction number frow the boxes
+				if (formatInfo[i][8][0] === 0) {
+					errCorNumber+=Math.pow(2,i);
+				}
 			}
+			//console.log("error correction number " + mNumber);
+			
+			var formatInfoString = "";
+			for (var i=0; i<5; i++) { // calculate formatInfoString frow the boxes
+				if (formatInfo[i][8][0] === 0) {
+					formatInfoString+="1";
+				} else {
+					formatInfoString+="0";
+				}
+			}
+			//console.log("error correction number " + mNumber);
+			
+			if (mNumber != maskNumber) {
+				maskNumberElement.value=""+mNumber; // set format number
+				QRCode1.reload();
+			}
+			
+			p.reCalculate(formatInfoString, errCorNumber, mNumber);
 		}
-		//console.log("error correction number " + mNumber);
-		
-		if (mNumber != maskNumber) {
-			maskNumberElement.value=""+mNumber; // set format number
-			QRCode1.reload();
-		}
-
-		
-		p.reCalculate(errCorNumber, mNumber);
 		return false;
 	}
 	
-	p.reCalculate = function(errCorNumber, mNumber) {	
-		/*
+	p.reCalculate = function(formatInfoString, errCorNumber, mNumber) {	
+		
 		// Calculate Error Correction
-		var vNumberB = (vNumber >>> 0).toString(2); // Convert to binary
-		vNumberB="000000".substr(vNumberB.length)+vNumberB // Make string 6 long
-		//console.log(vNumber + ": " + vNumberB);
-			
-		var vErrCor = vNumberB + generateErrCor("1111100100101",vNumberB,18);
+		formatInfoString = xor(formatInfoString,"10101");
+		//console.log(formatInfoString);
+		
+		var vErrCor = xor(formatInfoString + generateErrCor("10100110111",formatInfoString,15),"101010000010010");
+		//console.log(vErrCor);
 		
 		// Draw Error Correction
-		for (var i=0; i<9; i++) {
-			for (var j=0; j<9; j++) {
-				if (vErrCor[17-(j+i*9)] === "0") {
-					if (i<4) formatInfo[i][j] = [230,230,230]; //light gray
-					else formatInfo[i][j] = [255,255,255]; // white
-				} else {
-					if (i<4) formatInfo[i][j] = [160,160,160]; // dark gray
-					else formatInfo[i][j] = [0,0,0]; // black
-				}
+		for (var i=0; i<6; i++) {
+			if (vErrCor[i] === "0") {
+				if (i>=5) formatInfo[i][8] = [230,230,230]; //light gray
+				else formatInfo[i][8] = [255,255,255]; // white
+			} else {
+				if (i>=5) formatInfo[i][8] = [160,160,160]; // dark gray
+				else formatInfo[i][8] = [0,0,0]; // black
 			}
-		}*/
+		}
+		if (vErrCor[6] === "0") {
+			formatInfo[7][8] = [230,230,230]; //light gray
+		} else {
+			formatInfo[7][8] = [160,160,160]; // dark gray
+		}
+		if (vErrCor[7] === "0") {
+			formatInfo[8][8] = [230,230,230]; //light gray
+		} else {
+			formatInfo[8][8] = [160,160,160]; // dark gray
+		}
+		if (vErrCor[8] === "0") {
+			formatInfo[8][7] = [230,230,230]; //light gray
+		} else {
+			formatInfo[8][7] = [160,160,160]; // dark gray
+		}
+		for (var i=0; i<6; i++) {
+			if (vErrCor[14-i] === "0") {
+				formatInfo[8][i] = [230,230,230]; //light gray
+			} else {
+				formatInfo[8][i] = [160,160,160]; // dark gray
+			}
+		}
+		
 		
 		// Change HTML Text
 		document.getElementById("maskNumberElement").innerHTML = "" + mNumber;
@@ -96,16 +126,16 @@ var funcFormatInfo = function(p) {
 		}*/
 		switch(errCorNumber) { // set error correction number
 			case 0: 
-				document.getElementById("errCorElement").innerHTML = "M (15%)";
-				break;
-			case 1: 
-				document.getElementById("errCorElement").innerHTML = "L (7%)";
-				break;
-			case 2: 
 				document.getElementById("errCorElement").innerHTML = "H (30%)";
 				break;
-			case 3: 
+			case 1: 
+				document.getElementById("errCorElement").innerHTML = "M (15%)";
+				break;
+			case 2: 
 				document.getElementById("errCorElement").innerHTML = "Q (25%)";
+				break;
+			case 3: 
+				document.getElementById("errCorElement").innerHTML = "L (7%)";
 				break;
 		}
 		p.draw();
