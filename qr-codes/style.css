@@ -44,10 +44,10 @@ p {
 
 .wrapper {
 	display: block;
-	overflow: hidden; 
+	overflow: hidden;
 	width: 100%;
 }
-		
+
 .collumn {
 	display: inline-block;
 	position: relative;
@@ -55,10 +55,18 @@ p {
 	width: 50%;
 }
 
+.collumn3 {
+	display: inline-block;
+	position: relative;
+	float: left;
+	width: 33.33%;
+	text-align: center;
+}
+
 .QRCodes {
 	text-align: right;
 }
-	
+
 canvas {
 	width: 380px;
 	height: 380px;

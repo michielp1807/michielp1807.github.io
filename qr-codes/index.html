@@ -12,8 +12,9 @@
 	<div id="content">
 		<h1>Hoe Lees Je QR-Codes</h1>
 		<h2>Interactieve digitale handleiding door Britt en Michiel</h2>
-		
-		
+
+
+
 		<h3>Stap 1: Hoe groot is de QR-Code?</h3>
 		<div class="wrapper">
 			<div class="collumn">
@@ -55,7 +56,7 @@
 			<div class="collumn">
 				<p>Vul hiernaast de zes rechter vakjes van de Version Info in als je een QR-Code van versie 7 of hoger hebt. (als je meer dan 1 Alignment Pattern ziet heb je versie 7 of hoger)</p>
 				<p>Er staat nu de code voor <b id="versionInfoNumber">Version 7</b>.</p>
-				<p id="versionInfoNumberAddon">Klik op de vakjes aan de rechter kant om ze aan te passen.</p>
+				<p id="versionInfoNumberAddon"><i>Klik op de vakjes aan de rechter kant om ze aan te passen.</i></p>
 			</div>
 			<div class="collumn">
 				<div id="VersionInfo" class="QRCodes"></div>
@@ -63,9 +64,12 @@
 			</div>
 		</div>
 		<p>De grijze vakjes die je hier links van de 6 vakjes met het version nummer ziet staan, zijn error correctie vakjes, deze zorgen er voor dat de scanner zeker weet dat hij de version info goed gescanned heeft. Als de scanner ziet dat hij de version info niet goed heeft gescanned kan hij alsnog het versie nummer berekenen met deze vakjes. Elke versie heeft een vaste bijbehoorende combinatie van error correctie vakjes die met een wiskundige formule berekend zijn.</p>
-		
-		
-		
+
+
+
+
+
+
 		<h3>Stap 2: Welke mask word er gebruikt?</h3>
 		<div class="wrapper">
 			<div class="collumn">
@@ -103,26 +107,71 @@
 					<li>Error correctie level: <b id="errCorElement">M (15%)</b></li>
 					<li>Mask nummer: <b id="maskNumberElement">0</b></li>
 				</ul>
-				<p id="formatInfoNumberAddon">Klik op de vakjes links onder in het stuk van de code hiernaast om ze aan te passen.</p>
+				<p id="formatInfoNumberAddon"><i>Klik op de vakjes links onder in het stuk van de code hiernaast om ze aan te passen.</i></p>
+				<!-- TO DO: meer info over error correctie level? -->
 			</div>
 			<div class="collumn">
 				<div id="FormatInfo" class="QRCodes"></div>
 				<script src="./scripts/formatInfo.js"></script>
 			</div>
 		</div>
-		
-		
-		
+
+
+
+
+
 		<h3>Stap 3: Welk datatype wordt er gebruikt?</h3>
-		
-		
-		
+		<img src="./images/data-type.png" style="width: 180px;">
+		<h4>Datatypes</h4>
+		<p>Nu we weten wat voor mask er gebruikt wordt kunnen we eindelijk gaan kijken wat naar de data in de QR-Code zelf. Er zijn een aantal verschillende datatypes die gebruikt kunnen worden in een QR-Code, om te weten welk datatype er gebruikt wordt moet je kijken naar de 4 vakjes rechts onder in de QR-Code.</p>
+		<p>Dit zijn de verschillende datatypes met bijbehoorende code:</p>
+		<ul>
+			<li>0001: Numeric Mode</li>
+			<li>0010: Alphanumeric Mode</li>
+			<li>0100: Byte Mode</li>
+			<li>1000: Kanji Mode</li>
+			<li>0111: ECI Mode</li>
+		</ul>
+
+		<h4>Numeric Mode</h4>
+		<p>Met Numeric Mode bestaat de data uit alleen cijfers, dit heeft als voordeel dat er maar 10 verschillende mogelijke tekens zijn (nummer 0 t/m 9) waardoor deze modus het grootste aantal tekens in een QR-Code kan opslaan.</p>
+		<h4>Alphanumeric Mode</h4>
+		<p>Deze modus kan niet alleen getallen gebruiken, maar ook hoofdletters en een aantal andere tekens zoals een spatie of een plusteken, maar bijvoorbeeld niet een vraagteken. De Alphanumeric Mode neemt door de extra mogelijke tekens iets meer ruimte in per teken dan de Numeric Mode.</p>
+		<h4>Byte Mode</h4>
+		<p>Byte Mode is de meest gebruikte data type in QR-Codes, omdat deze modus bijna alle tekens kan opslaan, maar hierdoor neemt hij wel meer ruimte per teken in. Byte Mode maakt gebruik van ASCII codes, ASCII bevat nummers, hoofd- en kleine letters en alle leestekens.</p>
+		<h4>Kanji Mode</h4>
+		<p>Kanji Mode wordt gebruikt voor Japanse Kanji tekens. Deze is nog minder ruimte efficiënt dan de Byte Mode omdat er meer Kanji tekens zijn dan ASCII-tekens. Deze Japanse tekens hebben hun eigen QR-Code modus omdat QR-Codes oorspronkelijk uit Japan komen.</p>
+		<h4>ECI Mode</h4>
+		<p>Als laatste heb je nog ECI Mode, deze wordt gebruikt wanneer je een andere teken set wil gebruiken dan deze hierboven, zo kan je met ECI Mode bijvoorbeeld Arabische of Chinese tekens opslaan in je QR-Code.</p>
+
+		<h4>Welk datatype wordt er gebruikt?</h4>
+		<p>Omdat de 4 vakjes met het datatype nummer in het datagebied staan moet je eerst de mask van de vakjes afhalen voordat je kan weten welk datatype er gebruikt wordt. Als je in het gedeelte hierboven de juiste versie nummer hebt ingevuld en de formating info hebt in gevuld zoals hij op jouw QR-Code staat, dan kan je nu hieronder de 4 vakjes waaruit je het gebruikte datatype kan aflezen invullen:</p>
+		<div class="wrapper">
+			<div class="collumn3">
+				<h4>Met Mask</h4>
+				<div id="DataType1"></div>
+			</div>
+			<div class="collumn3">
+				<h4>Mask</h4>
+				<div id="DataType2"></div>
+			</div>
+			<div class="collumn3">
+				<h4>Zonder Mask</h4>
+				<div id="DataType3"></div>
+			</div>
+			<script src="./scripts/dataType.js"></script>
+		</div>
+		<p id="dataTypeAddon"><i>Klik op de vakjes in het linker vierkant om ze aan te passen.</i></p>
+
+
+
+
 		<h3>Stap 4: Aflezen van de data</h3>
-		
-		
-		
+
+
+
 		<h3>Dit wordt nog verder aangevuld</h3>
-		
+
  		<div id="QRCode3">
 			<h4>QR-Code Zonder Mask</h4>
 			<div id="QRCode3" class="QRCodes"></div>

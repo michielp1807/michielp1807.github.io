@@ -7,7 +7,7 @@ var funcQRCode2 = function(p) {
 		p.noLoop();
 		maskNumberElement = document.getElementById("maskNumber");
 	};
-	
+
 	p.generateMask = function() { // activated by QRCode1
 		maskNumber = document.getElementById("maskNumber").value;
 		for (var i=0; i<width; i++) {
@@ -20,7 +20,7 @@ var funcQRCode2 = function(p) {
 		//FormatInfo.reCalculate()
 		if (QRCode3._setupDone) QRCode3.draw();
 	};
-				
+
 	p.draw = function() {
 		if (!mask || !mask[0] || !mask[0][0]) return false;
 		p.background(0);
@@ -32,12 +32,13 @@ var funcQRCode2 = function(p) {
 				p.rect(i*rectWidth,j*rectWidth,i*rectWidth+rectWidth,j*rectWidth+rectWidth);
 			}
 		}
+		DataType2.draw() // update data type mask part
 	};
-	
+
 	p.isInFiveByFiveSquareAround = function(x,y,i,j) {
 		return (i<x+3 && j<y+3 && i>x-3 && j>y-3);
 	}
-	
+
 	p.calcMask = function(i,j) {
 		if (qrCodeOverlay[i][j] != false) {
 			if (qrCodeOverlay[i][j][0] == 255 && qrCodeOverlay[i][j][1] == 255 && qrCodeOverlay[i][j][2] == 255) {
@@ -47,10 +48,10 @@ var funcQRCode2 = function(p) {
 			}
 			else return qrCodeOverlay[i][j];
 		}
-	
+
 		if (i<7) i++; // Skip timing pattern
 		if (j<7) j++;
-		
+
 		switch(maskNumber) {
 			case "0":
 				if ((i + j) % 2 == 0) return [0,0,0];
