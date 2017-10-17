@@ -15,8 +15,8 @@ var funcDataType1 = function(p) {
 	p.clicked = function(m) {
 		var x = Math.floor(m.offsetX/boxWidth);
 		var y = Math.floor(m.offsetY/boxWidth);
-    var i = 3-(x+2*y);
-    //console.log("x: " + x + " y: " + y + " (" + i + ")");
+    var i = x + 2*y;
+    console.log("x: " + x + " y: " + y + " (" + i + ")");
 
     dataType = xor(dataType,("000"+10**i).substr(("000"+10**i).length-4)); // swap data at position around
 
@@ -28,8 +28,8 @@ var funcDataType1 = function(p) {
 		p.stroke(200);
 		p.strokeWeight(1);
 		for (var i=0; i<4; i++) {
-      var x = (i % 2);
-      var y = Math.floor(i/2);
+      var x = ((i+1) % 2);
+      var y = 1-Math.floor(i/2);
       p.fill(dataType[i]*255);
 			p.rect(x*boxWidth,y*boxWidth,x*boxWidth+boxWidth,y*boxWidth+boxWidth);
 		}
@@ -48,13 +48,13 @@ var funcDataType2 = function(p) {
 	};
 
 	p.draw = function() {
-		dataTypeMask = "" + (1*(mask[width-2][width-2][0] == 255)) + (1*(mask[width-1][width-2][0] == 255)) + (1*(mask[width-2][width-1][0] == 255)) + (1*(mask[width-1][width-1][0] == 255));
+		dataTypeMask = "" + (1*(mask[width-1][width-1][0] == 255)) + (1*(mask[width-2][width-1][0] == 255)) + (1*(mask[width-1][width-2][0] == 255)) + (1*(mask[width-2][width-2][0] == 255));
 		p.background(255);
 		p.stroke(200);
 		p.strokeWeight(1);
 		for (var i=0; i<4; i++) {
-      var x = (i % 2);
-      var y = Math.floor(i/2);
+      var x = ((i+1) % 2);
+      var y = 1-Math.floor(i/2);
       p.fill(140+100*dataTypeMask[i]); // gray
 			p.rect(x*boxWidth,y*boxWidth,x*boxWidth+boxWidth,y*boxWidth+boxWidth);
 		}
@@ -78,8 +78,8 @@ var funcDataType3 = function(p) {
 		p.stroke(200);
 		p.strokeWeight(1);
 		for (var i=0; i<4; i++) {
-      var x = (i % 2);
-      var y = Math.floor(i/2);
+      var x = ((i+1) % 2);
+      var y = 1-Math.floor(i/2);
       p.fill(140+100*(1-dataTypeNoMask[i])); // gray
 			p.rect(x*boxWidth,y*boxWidth,x*boxWidth+boxWidth,y*boxWidth+boxWidth);
 		}

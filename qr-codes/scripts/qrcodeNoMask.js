@@ -3,7 +3,7 @@ var funcQRCode3 = function(p) {
 		p.createCanvas(canvasWidth+1, canvasWidth+1);
 		p.noLoop();
 	};
-	
+
 	p.draw = function() {
 		if (!mask || !mask[0] || !mask[0][0]) return false;
 		p.background(0);

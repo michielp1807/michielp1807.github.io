@@ -18,7 +18,7 @@ var funcQRCode2 = function(p) {
 		}
 		p.draw();
 		//FormatInfo.reCalculate()
-		if (QRCode3._setupDone) QRCode3.draw();
+		//if (QRCode3._setupDone) QRCode3.draw();
 	};
 
 	p.draw = function() {

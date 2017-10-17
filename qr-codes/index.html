@@ -4,7 +4,6 @@
 	<title>QR-Codes</title>
 	<script language="javascript" src="libraries/p5.js"></script>
 	<script language="javascript" src="libraries/p5.dom.js"></script>
-	<script language="javascript" src="./scripts/improveStyling.js"></script>
 	<script language="javascript" src="./scripts/errCorGeneration.js"></script>
 	<link rel="stylesheet" type="text/css" href="./style.css">
 </head>
@@ -39,7 +38,7 @@
 				<h4>Vaste patronen</h4>
 				<p>De drie grote vierkanten in de hoeken van de QR-Code zijn de <i>"Finder Patterns"</i>, door deze patronen herkent de scanner de QR-Code.</p>
 				<p>De Finder Patterns worden met elkaar verbonden door een stippellijn, deze lijnen zijn de <i>"Timing Patterns"</i>, deze helpen de scanner de positie van de andere vakjes te herkennen.</p>
-				<p> Bij alle versions behalve de aller kleinste zie je ook een kleiner vierkant van 5 bij 5 vakjes in de hoek rechts onder, dit is zijn <i>"Alignment Patterns"</i>, deze zorgen ervoor dat de scanner de code beter kan uitlijnen. Bij grotere codes komen er meerdere Alignment Patterns voor.</p>
+				<p>Bij alle versions behalve de aller kleinste zie je ook een kleiner vierkant van 5 bij 5 vakjes in de hoek rechts onder, dit is zijn <i>"Alignment Patterns"</i>, deze zorgen ervoor dat de scanner de code beter kan uitlijnen. Bij grotere codes komen er meerdere Alignment Patterns voor.</p>
 			</div>
 			<div class="collumn">
 				<div id="QRCode1" class="QRCodes"></div>
@@ -47,7 +46,7 @@
 			</div>
 		</div>
 		<h4>Welke version is het?</h4>
-		<p>Om er achter te komen welke version je hebt kan je natuurlijk gewoon vakjes gaan tellen, maar somige versions zijn makkelijker te herkennen. Één manier waaraan je de versions kan herkennen is het aantal Alignment Patterns die er in de code zitten, version 1 is de enige zonder Alignment Patterns, versions 2 t/m 6 hebben er precies één en dan moet je toch echt de vakjes gaan tellen om het version nummer te weten, en hogere versions hebben er meerdere.</p>
+		<p>Om er achter te komen welke version je hebt kan je natuurlijk gewoon vakjes gaan tellen, maar somige versions zijn makkelijker te herkennen. Één manier waaraan je de versions kan herkennen is het aantal Alignment Patterns die er in de code zitten, version 1 is de enige zonder Alignment Patterns, versions 2 t/m 6 hebben er precies één en dan moet je toch echt de vakjes gaan tellen om het version nummer te weten, maar hogere versions (vanaf 7) hebben meerdere Alignment Patterns. Als je vakjes moet gaan tellen dan is de makkelijkste manier om de lengte van de Timing Patterns te tellen want hier wisselt zwart en wit mooi af.</p>
 		<img src="./images/v7-version-number.png" style="width: 180px;">
 		<h4>Version Info (alleen bij versie 7 en hoger)</h4>
 		<p>Bij versions 7 en hoger hebben ze de version in de code zelf staan (in de hiernaast groen gekleurde vakjes). Het versie nummer staat in binair genoteerd over zes verschillende vakjes, zie het plaatje hiernaast. In het plaatje hiernaast zie je dat de getallen 1, 2 en 3 op een donker vakje staan en de andere nummers op een licht vakje, alle donkere vakjes zijn 1'en en alle lichte vakjes zijn 0's, dus hieruit komt het binaire getal 000111, wat 7 is in decimaal, dus weet je dat de QR-Code uit het plaatje van version 7 is.</p>
@@ -170,15 +169,17 @@
 
 
 
+
 		<h3>Dit wordt nog verder aangevuld</h3>
 
- 		<div id="QRCode3">
+
+ 		<!-- <div id="QRCode3">
 			<h4>QR-Code Zonder Mask</h4>
 			<div id="QRCode3" class="QRCodes"></div>
 			<script src="./scripts/qrcodeNoMask.js"></script>
 			<br>
-		</div>
-		<h4>Bronnen:</h4>
+		</div> -->
+		<h4>Bronnenlijst:</h4>
 		<ul>
 			<li><a href="http://www.thonky.com/qr-code-tutorial/">http://www.thonky.com/qr-code-tutorial/</a></li>
 			<li><a href="http://www.esponce.com/resources/about-qr-codes">http://www.esponce.com/resources/about-qr-codes</a></li>
