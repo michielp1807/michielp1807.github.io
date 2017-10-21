@@ -3,7 +3,7 @@ var maskNumberElement;
 
 var funcQRCode2 = function(p) {
 	p.setup = function() {
-		p.createCanvas(canvasWidth+1, canvasWidth+1);
+		p.createCanvas(canvasWidth, canvasWidth);
 		p.noLoop();
 		maskNumberElement = document.getElementById("maskNumber");
 	};
@@ -23,7 +23,8 @@ var funcQRCode2 = function(p) {
 
 	p.draw = function() {
 		if (!mask || !mask[0] || !mask[0][0]) return false;
-		p.background(0);
+		p.background(200);
+		p.rectMode("corners");
 		p.stroke(200);
 		p.strokeWeight(1);
 		for (var i=0; i<width; i++) {
@@ -32,7 +33,8 @@ var funcQRCode2 = function(p) {
 				p.rect(i*rectWidth,j*rectWidth,i*rectWidth+rectWidth,j*rectWidth+rectWidth);
 			}
 		}
-		DataType2.draw() // update data type mask part
+		DataType2.draw(); // update data type mask part
+		dataLength2.draw();
 	};
 
 	p.isInFiveByFiveSquareAround = function(x,y,i,j) {

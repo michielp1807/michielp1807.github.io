@@ -1,12 +1,14 @@
+var errCorLevel = "H";
+
 var funcFormatInfo = function(p) {
 	p.setup = function() {
-		var c = p.createCanvas(canvasWidth+1, canvasWidth+1);
-		c.mousePressed(p.clicked);
+		var c = p.createCanvas(canvasWidth, canvasWidth);
+		c.mouseClicked(p.clicked);
 		p.noLoop();
 		p.generateFormatInfo();
 		document.getElementById("formatInfoNumberAddon").innerHTML = "<i>Klik op de vakjes links onder in het stuk van de code hiernaast om ze aan te passen.</i>";
 	};
-		
+
 	p.generateFormatInfo = function() {
 		for (var i=0; i<9; i++) {
 			formatInfo[i] = [];
@@ -18,13 +20,13 @@ var funcFormatInfo = function(p) {
 		}
 		p.reCalculate("00000", 0, 0);
 	};
-		
+
 	// Mouse Interaction
 	p.clicked = function(m) {
 		var x = Math.floor(m.offsetX/(canvasWidth/9));
 		var y = Math.floor(m.offsetY/(canvasWidth/9));
 		//console.log("x: " + x + " y: " + y);
-		
+
 		if (x>=0 && x<5 && y==8) { // change color of box
 			if (m.which == 1) {
 				if (formatInfo[x][y][0]===0) {
@@ -33,7 +35,7 @@ var funcFormatInfo = function(p) {
 					formatInfo[x][y] = [0,0,0];
 				}
 			}
-			
+
 			var mNumber = 0;
 			for (var i=0; i<3; i++) { // calculate mask number frow the boxes
 				if (formatInfo[2+i][8][0] === 0) {
@@ -41,7 +43,7 @@ var funcFormatInfo = function(p) {
 				}
 			}
 			//console.log("mask number " + mNumber);
-			
+
 			var errCorNumber = 0;
 			for (var i=0; i<2; i++) { // calculate error correction number frow the boxes
 				if (formatInfo[i][8][0] === 0) {
@@ -49,7 +51,7 @@ var funcFormatInfo = function(p) {
 				}
 			}
 			//console.log("error correction number " + mNumber);
-			
+
 			var formatInfoString = "";
 			for (var i=0; i<5; i++) { // calculate formatInfoString frow the boxes
 				if (formatInfo[i][8][0] === 0) {
@@ -59,26 +61,26 @@ var funcFormatInfo = function(p) {
 				}
 			}
 			//console.log("error correction number " + mNumber);
-			
+
 			if (mNumber != maskNumber) {
 				maskNumberElement.value=""+mNumber; // set format number
 				QRCode1.reload();
 			}
-			
+
 			p.reCalculate(formatInfoString, errCorNumber, mNumber);
 		}
 		return false;
 	}
-	
-	p.reCalculate = function(formatInfoString, errCorNumber, mNumber) {	
-		
+
+	p.reCalculate = function(formatInfoString, errCorNumber, mNumber) {
+
 		// Calculate Error Correction
 		formatInfoString = xor(formatInfoString,"10101");
 		//console.log(formatInfoString);
-		
+
 		var vErrCor = xor(formatInfoString + generateErrCor("10100110111",formatInfoString,15),"101010000010010");
 		//console.log(vErrCor);
-		
+
 		// Draw Error Correction
 		for (var i=0; i<6; i++) {
 			if (vErrCor[i] === "0") {
@@ -111,8 +113,8 @@ var funcFormatInfo = function(p) {
 				formatInfo[8][i] = [160,160,160]; // dark gray
 			}
 		}
-		
-		
+
+
 		// Change HTML Text
 		document.getElementById("maskNumberElement").innerHTML = "" + mNumber;
 		/*if (mNumber < 7) {														// TO DO: Add extra information
@@ -125,31 +127,36 @@ var funcFormatInfo = function(p) {
 			document.getElementById("formatInfoNumberAddon").innerHTML = "";
 		}*/
 		switch(errCorNumber) { // set error correction number
-			case 0: 
+			case 0:
 				document.getElementById("errCorElement").innerHTML = "H (30%)";
+				errCorLevel = "H";
 				break;
-			case 1: 
+			case 1:
 				document.getElementById("errCorElement").innerHTML = "M (15%)";
+				errCorLevel = "M";
 				break;
-			case 2: 
+			case 2:
 				document.getElementById("errCorElement").innerHTML = "Q (25%)";
+				errCorLevel = "Q";
 				break;
-			case 3: 
+			case 3:
 				document.getElementById("errCorElement").innerHTML = "L (7%)";
+				errCorLevel = "L";
 				break;
 		}
+		updateDataBlocksHTML();
 		p.draw();
 	}
-		
+
 	p.draw = function() {
-		var tempRectWidth = canvasWidth/9;
-		p.background(0);
+		p.background(200);
+		p.rectMode("corners");
 		p.stroke(200);
 		p.strokeWeight(1);
 		for (var i=0; i<9; i++) {
 			for (var j=0; j<9; j++) {
 				p.fill(formatInfo[i][j]);
-				p.rect(i*tempRectWidth,j*tempRectWidth,i*tempRectWidth+tempRectWidth,j*tempRectWidth+tempRectWidth);
+				p.rect(i*boxWidth,j*boxWidth,i*boxWidth+boxWidth,j*boxWidth+boxWidth);
 			}
 		}
 	};

@@ -1,7 +1,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Hoe Lees Je QR-Codes</title>
+	<title>Hoe Lees Je QR-Codes Zonder Scanner - Interactieve Digitale Handleiding</title>
+	<meta name="description" content="Ben je benieuwd hoe QR-Codes werken en wil je weten hoe je ze zelf kan lezen zonder scanner, kijk dan hier!"/>
 	<script language="javascript" src="libraries/p5.js"></script>
 	<script language="javascript" src="libraries/p5.dom.js"></script>
 	<script language="javascript" src="./scripts/errCorGeneration.js"></script>
@@ -119,10 +120,168 @@
 
 
 
-		<h3>Stap 3: Welk datatype wordt er gebruikt?</h3>
+		<h3>Stap 3: Hoeveel data blocks zijn er?</h3>
+		<h4>Data Blocks</h4>
+		<p>Een belangrijk feit waar je rekening mee moet houden als je een QR-Code probeert te lezen is dat de data soms in meerdere data blocks verdeelt kan zijn. Als dit zo is, dan staat de data niet meer op de logische volgorde zoals je dat zou verwachten, maar worden de datablokken steeds afgewisseld waardoor je eerst een byte van het eerste datablok hebt, dan een byte van het tweede datablok, enzovoort.</p>
+		<p>Het aantal datablokken en de lengte van ieder blok hangt af van QR-Code versie en van de hoeveelheid error correctie. Hieronder kan je zien hoeveel datablokken je hebt:</p>
+		<div class="wrapper">
+			<div class="collumn4">
+				<h4>Version 1</h4>
+				<ul>
+					<li><b>L:</b> 1 x 19</li>
+					<li><b>M:</b> 1 x 16</li>
+					<li><b>Q:</b> 1 x 13</li>
+					<li><b>H:</b> 1 x 9</li>
+				</ul>
+			</div>
+			<div class="collumn4">
+				<h4>Version 2</h4>
+  			<ul>
+					<li><b>L:</b> 1 x 34</li>
+					<li><b>M:</b> 1 x 28</li>
+					<li><b>Q:</b> 1 x 22</li>
+					<li><b>H:</b> 1 x 16</li>
+				</ul>
+			</div>
+			<div class="collumn4">
+				<h4>Version 3</h4>
+  			<ul>
+					<li><b>L:</b> 1 x 55</li>
+					<li><b>M:</b> 1 x 44</li>
+					<li><b>Q:</b> 2 x 17</li>
+					<li><b>H:</b> 2 x 13</li>
+				</ul>
+			</div>
+			<div class="collumn4">
+				<h4>Version 4</h4>
+  			<ul>
+					<li><b>L:</b> 1 x 80</li>
+					<li><b>M:</b> 2 x 32</li>
+					<li><b>Q:</b> 2 x 24</li>
+					<li><b>H:</b> 4 x 9</li>
+				</ul>
+			</div>
+		</div>
+		<div class="wrapper">
+			<div class="collumn4">
+				<h4>Version 5</h4>
+	  		<ul>
+					<li><b>L:</b> 1 x 108</li>
+					<li><b>M:</b> 2 x 43</li>
+					<li><b>Q:</b> 2 x 15 + 2 x 16</li>
+					<li><b>H:</b> 2 x 11 + 2 x 12</li>
+				</ul>
+			</div>
+			<div class="collumn4">
+				<h4>Version 6</h4>
+	  		<ul>
+					<li><b>L:</b> 2 x 68</li>
+					<li><b>M:</b> 4 x 27</li>
+					<li><b>Q:</b> 4 x 19</li>
+					<li><b>H:</b> 4 x 15</li>
+				</ul>
+			</div>
+			<div class="collumn4">
+				<h4>Version 7</h4>
+	  		<ul>
+					<li><b>L:</b> 2 x 78</li>
+					<li><b>M:</b> 4 x 31</li>
+					<li><b>Q:</b> 2 x 14 + 4 x 15</li>
+					<li><b>H:</b> 4 x 13 + 1 x 14</li>
+				</ul>
+			</div>
+			<div class="collumn4">
+				<h4>Version 8</h4>
+	  		<ul>
+					<li><b>L:</b> 2 x 97</li>
+					<li><b>M:</b> 2 x 38 + 2 x 39</li>
+					<li><b>Q:</b> 4 x 18 + 2 x 19</li>
+					<li><b>H:</b> 4 x 14 + 2 x 15</li>
+				</ul>
+			</div>
+		</div>
+		<div class="wrapper">
+			<div class="collumn4">
+				<h4>Version 9</h4>
+	  		<ul>
+					<li><b>L:</b> 2 x 116</li>
+					<li><b>M:</b> 3 x 36 + 2 x 37</li>
+					<li><b>Q:</b> 4 x 16 + 4 x 17</li>
+					<li><b>H:</b> 4 x 12 + 4 x 13</li>
+				</ul>
+			</div>
+			<div class="collumn4">
+				<h4>Version 10</h4>
+				<ul>
+					<li><b>L:</b> 2 x 68 + 2 x 69</li>
+					<li><b>M:</b> 4 x 43 + 1 x 44</li>
+					<li><b>Q:</b> 6 x 19 + 2 x 20</li>
+					<li><b>H:</b> 6 x 15 + 2 x 16</li>
+				</ul>
+			</div>
+			<div class="collumn4">
+				<h4>Version 11</h4>
+				<ul>
+					<li><b>L:</b> 4 x 81</li>
+					<li><b>M:</b> 1 x 50 + 4 x 51</li>
+					<li><b>Q:</b> 4 x 22 + 4 x 23</li>
+					<li><b>H:</b> 3 x 12 + 8 x 13</li>
+				</ul>
+			</div>
+			<div class="collumn4">
+				<h4>Version 12</h4>
+				<ul>
+					<li><b>L:</b> 2 x 92 + 2 x 93</li>
+					<li><b>M:</b> 6 x 36 + 2 x 37</li>
+					<li><b>Q:</b> 4 x 20 + 6 x 21</li>
+					<li><b>H:</b> 7 x 14 + 4 x 15</li>
+				</ul>
+			</div>
+		</div>
+		<div class="wrapper">
+			<div class="collumn4">
+				<h4>Version 13</h4>
+				<ul>
+					<li><b>L:</b> 7 x 107</li>
+					<li><b>M:</b> 8 x 37 + 1 x 38</li>
+					<li><b>Q:</b> 8 x 20 + 4 x 21</li>
+					<li><b>H:</b> 12 x 11 + 4 x 12</li>
+				</ul>
+			</div>
+		</div>
+		<p id="dataBlocksText" class="centered">
+			<i>Jij hebt <b>Version 7</b> en <b>Error Correctie Level M</b>, dus jij hebt <b>4 datablokken</b> van <b>31 bytes</b> lang.</i>
+		</p>
+		<img src="./images/data-blocks.png" style="width: 230px;">
+		<h4>Data Volgorde</h4>
+		<p>De data in een QR-Code staat volgens een aantal regels verdeelt over de QR-Code. De data staat verdeelt over kolommen van 2 vakjes breed, het begint rechts onder in de QR-Code en gaat daar naar boven, wanneer je boven aan bent gekomen ga je in de
+		kollom daarnaast weer naar beneden (zie het plaatje hiernaast).</p>
+		<p>De data is verdeeld in bytes, elk gebied hiernaast met een rode rand er omheen is een byte die bestaat uit acht vakjes, elk vakje is één bit van een byte. De bits (de losse enen en nullen) moet je in de bytes altijd van rechts naar links lezen, en
+		vertikaal moet je de richting van de data (zie de pijlen hiernaast) volgen.</p>
+		<h4>Meerdere Data Blokken</h4>
+		<img src="./images/data-blocks2.png" style="width: 260px;">
+		<p>Zoals eerder gezegd moet je als je meerdere data blokken hebt er op letten dat de bytes niet op volgorde staan. Hiernaast hebben we een voorbeeld plaatje staan van een QR-Code van Version 7 en error correctie level L, hij heeft dus 2 datablokken van 78 bytes lang. De eerste byte staat zoals altijd rechts onder in de QR-Code, voor de tweede byte staat eerst de 79'ste byte, dit is de eerste byte van het tweede datablok, en als je zo verder kijkt zie je dat op deze manier de twee datablokken steeds om en om staan.</p>
+		<p>Stel dat je meer dan twee datablokken hebt dan worden op een soort gelijke manier door elkaar gezet, je krijgt eerst een byte van het eerste datablok, dan een byte van het tweede datablok, gevolgd door een byte van het derde datablok, enzovoort totdat je van alle datablokken de eerste byte hebt gehad, dan ga je verder met de tweede byte van ieder datablok.</p>
+		<p>Stel dat je in tabel hierboven hebt gezien dat je datablokken van verschillende lengtes hebt, bijvoorbeeld 2 van 15 byte en 2 van 16 byte, dan staan ze alsnog op dezelfde manier afgewisseld in de QR-Code, zoals bijvoorbeeld met 4 datablokken als je twee keer 2 datablokken hebt. Het enige wat anders is, is dat de eerste paar blokken één byte korter zijn.</p>
+		<div class="wrapper">
+			<div class="collumn">
+
+			</div>
+			<div class="collumn">
+				<div id="DataBlocks" class="QRCodes"></div>
+				<script src="./scripts/dataBlocks.js"></script>
+			</div>
+		</div>
+
+
+
+
+
+
+		<h3>Stap 4: Welk datatype wordt er gebruikt?</h3>
 		<img src="./images/data-type.png" style="width: 180px;">
 		<h4>Datatypes</h4>
-		<p>Nu we weten wat voor mask er gebruikt wordt kunnen we eindelijk gaan kijken wat naar de data in de QR-Code zelf. Er zijn een aantal verschillende datatypes die gebruikt kunnen worden in een QR-Code, om te weten welk datatype er gebruikt wordt moet je kijken naar de 4 vakjes rechts onder in de QR-Code.</p>
+		<p>Nu we weten waar we onze data kunnen vinden kunnen we eindelijk gaan kijken naar wat er in de data staat. Er zijn een aantal verschillende datatypes die gebruikt kunnen worden in een QR-Code, om te weten welk datatype er gebruikt wordt moet je kijken naar de eerste 4 bits van de eerste byte rechts onder in de QR-Code.</p>
 		<p>Dit zijn de verschillende datatypes met bijbehoorende code:</p>
 		<ul>
 			<li>0001: Numeric Mode</li>
@@ -137,7 +296,7 @@
 		<h4>Alphanumeric Mode</h4>
 		<p>Deze modus kan niet alleen getallen gebruiken, maar ook hoofdletters en een aantal andere tekens zoals een spatie of een plusteken, maar bijvoorbeeld niet een vraagteken. De Alphanumeric Mode neemt door de extra mogelijke tekens iets meer ruimte in per teken dan de Numeric Mode.</p>
 		<h4>Byte Mode</h4>
-		<p>Byte Mode is de meest gebruikte data type in QR-Codes, omdat deze modus bijna alle tekens kan opslaan, maar hierdoor neemt hij wel meer ruimte per teken in. Byte Mode maakt gebruik van ASCII codes, ASCII bevat nummers, hoofd- en kleine letters en alle leestekens.</p>
+		<p>Byte Mode is de meest gebruikte data type in QR-Codes, omdat deze modus bijna alle tekens kan opslaan, maar hierdoor neemt hij wel meer ruimte per teken in. Byte Mode maakt gebruik van ASCII (en ook UTF-8) codes, ASCII bevat nummers, hoofd- en kleine letters en alle leestekens. ASCII en UTF-8 zijn de meest voorkomende manieren om text op te slaan in bytes.</p>
 		<h4>Kanji Mode</h4>
 		<p>Kanji Mode wordt gebruikt voor Japanse Kanji tekens. Deze is nog minder ruimte efficiënt dan de Byte Mode omdat er meer Kanji tekens zijn dan ASCII-tekens. Deze Japanse tekens hebben hun eigen QR-Code modus omdat QR-Codes oorspronkelijk uit Japan komen.</p>
 		<h4>ECI Mode</h4>
@@ -161,11 +320,80 @@
 			<script src="./scripts/dataType.js"></script>
 		</div>
 		<p id="dataTypeAddon"><i>Klik op de vakjes in het linker vierkant om ze aan te passen.</i></p>
+		<br>
+		<p class="attention"><b>We zullen in de komende stappen ervan uitgaan dat je de <i>Byte Modus</i> gebruikt, omdat je deze het vaakst tegen komt, maar het principe is voor alle datatype ongeveer hetzelfde.</b></p>
 
 
 
 
-		<h3>Stap 4: Aflezen van de data</h3>
+
+
+		<h3>Stap 5: Hoe lang is de data?</h3>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<br>
+		<h4>Character Count Indicator</h4>
+		<p>Na het datatype is het eerst volgende stuk dat in de data van de QR-Code staat de Character Count Indicator, deze geeft aan uit hoeveel bytes je tekst in de QR-Code bestaat. Elke byte is meestal één teken, met uitzondering van sommige speciale tekens, zoals letters met accenten erop, die kunnen soms meerdere bytes gebruiken. Met de Byte Mode is de Character Count Indicator zelf 1 of 2 bytes lang, 1 byte bij versies 1 t/m 9, 2 bytes bij versies 10 t/m 40, dit betekend dat de Character Count Indicator uit 8 of 16 vakjes bestaat.</p>
+		<img src="./images/data-length.png" style="width: 260px;">
+		<!-- <h4>Versie 1 t/m 9:</h4>
+		<ul>
+			<li>Numeric Mode: 10 bits</li>
+			<li>Alphanumeric Mode: 9 bits</li>
+			<li>Byte Mode: 8 bits</li>
+		</ul>
+		<h4>Versie 10 t/m 26:</h4>
+		<ul>
+			<li>Numeric Mode: 12 bits</li>
+			<li>Alphanumeric Mode: 11 bits</li>
+			<li>Byte Mode: 16 bits</li>
+		</ul>
+		<h4>Versie 27 t/m 40:</h4>
+		<ul>
+			<li>Numeric Mode: 14 bits</li>
+			<li>Alphanumeric Mode: 13 bits</li>
+			<li>Byte Mode: 16 bits</li>
+		</ul> -->
+		<p id="dataLengthBits" class="noMarginCentered">
+			<i>Jij hebt <b>Version 1</b> en je gebruikt <b>Byte Mode</b>, dus is de Character Count Indicator <b>8 bits</b> lang.</i>
+		</p>
+		<p class="centered">(de versie en het datatype zijn overgenomen uit de stappen hiervoor)</p>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<div class="wrapper">
+			<div class="collumn3">
+				<h4>Met Mask</h4>
+				<div id="DataLength1"></div>
+			</div>
+			<div class="collumn3">
+				<h4>Mask</h4>
+				<div id="DataLength2"></div>
+			</div>
+			<div class="collumn3">
+				<h4>Zonder Mask</h4>
+				<div id="DataLength3"></div>
+			</div>
+			<script src="./scripts/dataLength.js"></script>
+		</div>
+		<p id="dataLengthAddon"><i>Klik op de vakjes in het linker rechthoek om ze aan te passen.</i></p>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+		<h4 class="centered">!!! MOET NOG AANGEPAST WORDEN !!!</h4>
+
+
+
+
+
+		<h3>Stap 6: Wat staat er nou eigenlijk?</h3>
+
+
 
 
 
@@ -182,6 +410,7 @@
 		<h4>Bronnenlijst:</h4>
 		<ul>
 			<li><a href="http://www.thonky.com/qr-code-tutorial/">http://www.thonky.com/qr-code-tutorial/</a></li>
+			<li>ISO/IEC 18004 (official QR-Code Paper)</li>
 			<li><a href="http://www.esponce.com/resources/about-qr-codes">http://www.esponce.com/resources/about-qr-codes</a></li>
 		</ul>
 	</div>

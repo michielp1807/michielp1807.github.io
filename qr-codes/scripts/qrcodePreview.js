@@ -90,6 +90,8 @@ var fQRCode1 = function(p) {
 		QRCode2.setup();
 		//QRCode3.setup();
 		VersionInfo.reCalculate(version);
+		updateDataLengthHTML();
+		updateDataBlocksHTML();
 	}
 
 	p.drawAll = function() {
@@ -137,7 +139,8 @@ var fQRCode1 = function(p) {
 	}
 
 	p.draw = function() {
-		p.background(0);
+		p.background(200);
+		p.rectMode("corners");
 		p.stroke(200);
 		p.strokeWeight(1);
 		for (var i=0; i<width; i++) {

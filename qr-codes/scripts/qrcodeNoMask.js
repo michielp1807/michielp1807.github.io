@@ -1,12 +1,13 @@
 var funcQRCode3 = function(p) {
 	p.setup = function() {
-		p.createCanvas(canvasWidth+1, canvasWidth+1);
+		p.createCanvas(canvasWidth, canvasWidth);
 		p.noLoop();
 	};
 
 	p.draw = function() {
 		if (!mask || !mask[0] || !mask[0][0]) return false;
-		p.background(0);
+		p.background(200);
+		p.rectMode("corners");
 		p.stroke(200);
 		p.strokeWeight(1);
 		for (var i=0; i<width; i++) {

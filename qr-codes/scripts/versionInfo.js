@@ -1,12 +1,12 @@
 var funcVersionInfo = function(p) {
 	p.setup = function() {
 		var c = p.createCanvas(canvasWidth+1, canvasWidth/2+1);
-		c.mousePressed(p.clicked);
+		c.mouseClicked(p.clicked);
 		p.noLoop();
 		p.generateVersionInfo();
 		document.getElementById("versionInfoNumberAddon").innerHTML = "<i>Klik op de vakjes aan de rechter kant om ze aan te passen.</i>";
 	};
-		
+
 	p.generateVersionInfo = function() {
 		for (var i=0; i<6; i++) {
 			versionInfo[i] = [];
@@ -18,12 +18,12 @@ var funcVersionInfo = function(p) {
 		}
 		p.reCalculate(1);
 	};
-		
+
 	// Mouse Interaction
 	p.clicked = function(m) {
 		var x = Math.floor(m.offsetX/(canvasWidth/6));
 		var y = Math.floor(m.offsetY/(canvasWidth/6));
-		if (x>3 && y>=0 && x<6 && y<3) { 
+		if (x>3 && y>=0 && x<6 && y<3) {
 			//console.log("x: " + x + " y: " + y);
 			if (m.which == 1) {
 				if (versionInfo[x][y][0]===0) {
@@ -48,15 +48,15 @@ var funcVersionInfo = function(p) {
 		}
 		return false;
 	}
-	
-	p.reCalculate = function(vNumber) {	
+
+	p.reCalculate = function(vNumber) {
 		// Calculate Error Correction
 		var vNumberB = (vNumber >>> 0).toString(2); // Convert to binary
 		vNumberB="000000".substr(vNumberB.length)+vNumberB // Make string 6 long
 		//console.log(vNumber + ": " + vNumberB);
-			
+
 		var vErrCor = vNumberB + generateErrCor("1111100100101",vNumberB,18);
-		
+
 		// Draw Error Correction
 		for (var i=0; i<6; i++) {
 			for (var j=0; j<3; j++) {
@@ -69,7 +69,7 @@ var funcVersionInfo = function(p) {
 				}
 			}
 		}
-		
+
 		// Change HTML Text
 		document.getElementById("versionInfoNumber").innerHTML = "Version " + vNumber;
 		if (vNumber < 7) {
@@ -77,13 +77,13 @@ var funcVersionInfo = function(p) {
 		} else if (vNumber > 40) {
 			document.getElementById("versionInfoNumberAddon").innerHTML = "<i>Deze version bestaat echter niet. (Version 40 is de grootste QR-Code)</i>";
 		} else if (vNumber > 13) {
-			document.getElementById("versionInfoNumberAddon").innerHTML = "<i>Onze site laat alleen Versions 1 t/m 13 zien, hogere versies zijn zo groot dat het te onoverzichtelijk wordt.</i>";
+			document.getElementById("versionInfoNumberAddon").innerHTML = "<i>Onze site werkt alleen met Versions 1 t/m 13, hogere versies zijn zo groot dat het te onoverzichtelijk wordt.</i>";
 		} else {
 			document.getElementById("versionInfoNumberAddon").innerHTML = "";
 		}
 		p.draw();
 	}
-		
+
 	p.draw = function() {
 		var tempRectWidth = canvasWidth/6;
 		p.background(0);
