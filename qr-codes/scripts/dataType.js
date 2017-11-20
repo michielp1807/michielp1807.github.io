@@ -3,6 +3,7 @@ var dataType = "0000";
 var dataTypeMask = "0000";
 var dataTypeNoMask = "0000";
 var dataTypeName = "Byte Mode";
+var dataTypeLegitCode = false;
 
 var funcDataType1 = function(p) {
 	p.setup = function() {
@@ -24,6 +25,11 @@ var funcDataType1 = function(p) {
 		p.draw();
 
 		return false;
+	}
+
+	p.setDataType = function(data) {
+		dataType = data;
+		p.draw();
 	}
 
 	p.draw = function() {
@@ -84,6 +90,15 @@ var funcDataType3 = function(p) {
 
 	p.draw = function() {
 		dataTypeNoMask = xor(dataType, dataTypeMask);
+
+		// update data reader
+		if (mainDataBytes[0] != undefined) {
+			mainDataBytes[0] = dataType + mainDataBytes[0].substr(4,4);
+		} else {
+			mainDataBytes[0] = dataType + "0000";
+		}
+		dataCurrentByte1.reload();
+
 		p.background(200);
 		p.rectMode("corners");
 		p.stroke(200);
@@ -112,12 +127,15 @@ var funcDataType3 = function(p) {
 				break;
 			case "1000": // Kanji Mode
 				htmlText += "dit is de code voor <b>Kanji Mode</b>.";
+				dataTypeName = "Kanji Mode";
 				break;
 			case "0111": // ECI Mode
 				htmlText += "dit is de code voor <b>ECI Mode</b>.";
+				dataTypeName = "ECI Mode";
 				break;
 			default: // other
 				htmlText += "dit is geen geldige code.";
+				dataTypeName = "geen geldige code";
 				break;
 		}
 		htmlText += "</i>";

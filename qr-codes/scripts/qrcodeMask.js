@@ -34,7 +34,8 @@ var funcQRCode2 = function(p) {
 			}
 		}
 		DataType2.draw(); // update data type mask part
-		dataLength2.draw();
+		//dataLength2.draw();
+		dataCurrentByte2.reload();
 	};
 
 	p.isInFiveByFiveSquareAround = function(x,y,i,j) {

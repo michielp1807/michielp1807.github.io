@@ -78,7 +78,7 @@ var fQRCode1 = function(p) {
 
 		qrCodeOverlay[8][width-8] = [0,0,0]; // dark module
 
-		setTimeout(QRCode2.generateMask,200);
+		setTimeout(QRCode2.generateMask,1000);
 	};
 
 	p.reload = function() {
@@ -89,15 +89,18 @@ var fQRCode1 = function(p) {
 		QRCode1.draw();
 		QRCode2.setup();
 		//QRCode3.setup();
+		setTimeout(dataCurrentByte1.reset, 500);
 		VersionInfo.reCalculate(version);
 		updateDataLengthHTML();
 		updateDataBlocksHTML();
+		changeBytes(0);
 	}
 
 	p.drawAll = function() {
 		﻿QRCode1.draw();
 		QRCode2.draw();
 		//QRCode3.draw();
+		setTimeout(QRCodeBytePosition.draw,100);
 	}
 
 	p.setFinderPatterns = function(x,y) {

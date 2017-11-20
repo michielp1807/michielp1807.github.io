@@ -94,6 +94,14 @@ ul {
 	width: 50%;
 }
 
+.collumn2 {
+	display: inline-block;
+	position: relative;
+	float: left;
+	width: 50%;
+	text-align: center;
+}
+
 .collumn3 {
 	display: inline-block;
 	position: relative;
@@ -107,6 +115,39 @@ ul {
 	position: relative;
 	float: left;
 	width: 25%;
+}
+
+.collumnNo {
+	display: inline-block;
+	position: relative;
+	float: left;
+	width: 100%;
+	text-align: center;
+}
+
+#QR-Code-Reader {
+	background-color: #EEEEEE;
+	padding: 0px 40px 20px 40px;
+	margin-left: -40px;
+	margin-right: -40px;
+}
+
+#QR-Code-Reader-Header .collumn2 {
+	display: inline-block;
+	position: relative;
+	float: left;
+	width: 540px;
+	padding: 0px 10px 0px 10px;
+	text-align: center;
+}
+
+#QR-Code-Reader-Header .collumn4 {
+	display: inline-block;
+	position: relative;
+	float: left;
+	width: 120px;
+	height: 60px;
+	text-align: center;
 }
 
 .QRCodes {

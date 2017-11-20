@@ -1,7 +1,7 @@
 var totalDataBlocks = 4;  // total amount of data blocks
 var group2DataBlocks = 0; // amount of data blocks in group 2
-var dataBlockLength = 16; // amount of bites in group 1 (groep 2 has +1)
-
+var dataBlockLength = 16; // amount of bites in group 1 (group 2 has +1)
+var totalBytes = 9;       // total amount of data bytes (without error correction)
 
 
 function updateDataBlocksHTML() {
@@ -247,7 +247,7 @@ function updateDataBlocksHTML() {
       dataBlockLength = 14;
       break;
     case "13L":
-      totalDataBlocks = 7;
+      totalDataBlocks = 4;
       group2DataBlocks = 0;
       dataBlockLength = 107;
       break;
@@ -270,6 +270,11 @@ function updateDataBlocksHTML() {
       console.log("Error: no '" + version + errCorLevel + "' in updateDataBlocksHTML");
       break;
   }
+
+  totalBytes = (totalDataBlocks-group2DataBlocks)*dataBlockLength + group2DataBlocks*(dataBlockLength+1);
+  document.getElementById("QR-Code-Reader-Slider").max = totalBytes;
+  changeBytes(0);
+
 
   let htmlText =  "<i>Jij hebt <b>Version "+version+"</b> en <b>Error Correctie Level "+errCorLevel+"</b>, dus jij hebt <b>";
   if (group2DataBlocks > 0) {
