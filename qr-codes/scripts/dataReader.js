@@ -42,39 +42,119 @@ var QRCodeBytePosition = new p5(funcQRCodeBytePosition, 'QRCodeBytePosition');
 function updateDataReaderHTML() {
 	document.getElementById("QR-Code-Reader-Byte-BinCode").innerHTML = dataCurrentByteNoMask;
 	var rawDataString = "";
-	var rawDataStringWithSpaces = "";
+	//var rawDataStringWithSpaces = "";
 	for (var i=0; i<deepestTouchedByte; i++) {
 		rawDataString += (mainDataBytesNoMask[i] || "00000000");
-		rawDataStringWithSpaces += (mainDataBytesNoMask[i] || "00000000") + " ";
+		//rawDataStringWithSpaces += (mainDataBytesNoMask[i] || "00000000") + " ";
 	}
-	document.getElementById("DataReaderRawDataTextArea").innerHTML = rawDataStringWithSpaces;
+	document.getElementById("DataReaderRawDataTextArea").innerHTML = rawDataString;
 
 	var bitAnalyserHTML = "";
+	var decodedDataString = "";
 	if (deepestTouchedByte <= 0) {
 		document.getElementById("DataReaderTextAreaEx").innerHTML = "Hier komt alle data van de bytes te staan die je hebt ingevoerd:";
-		bitAnalyserHTML = "<i>Vul eerst een byte in...</i>";
+		bitAnalyserHTML = "<i>Vul eerst meer informatie in...</i>";
 	} else if (deepestTouchedByte >= 1) {
 		document.getElementById("DataReaderTextAreaEx").innerHTML = "Hier zie je alle data van de bytes die je hebt ingevoerd:";
+
 		bitAnalyserHTML += "<b>"+rawDataString.substr(0,4)+"</b>: Mode Indicator, jij hebt hier <b>"+dataTypeName+"</b>, zie stap 4.";
 
 		if (dataTypeName == "ECI Mode") {
 			bitAnalyserHTML += "<br><br>ECI Mode kan veel verschillende soorten data bevatten, maar omdat deze niet zo vaak voorkomt hebben we besloten deze hier niet verder te analyseren.";
+
 		} else if (dataTypeName != "geen geldige code" && deepestTouchedByte >= Math.ceil((dataLengthBits + 4) / 8)) {
 			bitAnalyserHTML += "<br><b>"+rawDataString.substr(4,dataLengthBits)+"</b>: Character Count Indicator, jij hebt hier lengte <b>"+binaryStringToInt(rawDataString.substr(4,dataLengthBits))+"</b>, zie stap 5.";
+
 			if (dataTypeName == "Kanji Mode") {
 				bitAnalyserHTML += "<br><br>De rest van de data bestaat uit codes die corresponderen met Japanse Kanji teken, deze zullen we hier niet verder analyseren.";
 			} else {
 				if (dataTypeName == "Byte Mode") {
-					for (var i=4+dataLengthBits; i<deepestTouchedByte*8-8; i+=8) {
-						bitAnalyserHTML += "<br><b>"+rawDataString.substr(i,8)+"</b>: ASCII-code voor: <b>"+String.fromCharCode("0b"+rawDataString.substr(i,8))+"</b>";
+					var i = 4+dataLengthBits;
+					while (i<(deepestTouchedByte-1)*8) {
+						if (i < 4+dataLengthBits+8*binaryStringToInt(rawDataString.substr(4,dataLengthBits))) {
+							bitAnalyserHTML += "<br><b>"+rawDataString.substr(i,8)+"</b>: ASCII-code voor: <b>"+String.fromCharCode("0b"+rawDataString.substr(i,8))+"</b>";
+							decodedDataString += String.fromCharCode("0b"+rawDataString.substr(i,8));
+							i+=8;
+						} else if (i < Math.ceil((4+dataLengthBits+8*binaryStringToInt(rawDataString.substr(4,dataLengthBits)))/8)*8) {
+							var terminatorZerosStart = 4+dataLengthBits+8*binaryStringToInt(rawDataString.substr(4,dataLengthBits));
+							var terminatorZerosLength = Math.ceil(terminatorZerosStart/8)*8 - terminatorZerosStart;
+							bitAnalyserHTML += "<br><b>"+rawDataString.substr(terminatorZerosStart,terminatorZerosLength)+"</b>: Terminator 0s, extra nullen om de data een veelvoud van 8 lang te maken.</b>";
+							i+=terminatorZerosLength;
+						} else {
+							bitAnalyserHTML += "<br><b>"+rawDataString.substr(i,8)+"</b>: Pad Bytes, extra bytes om de ruimte op te vullen.</b>";
+							i+=8;
+						}
+					}
+
+				} else if (dataTypeName == "Alphanumeric Mode") {
+					var anumString = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./:"; // all characters in alphanumeric mode in order
+					var totalDataBits = 4+dataLengthBits+Math.floor(binaryStringToInt(rawDataString.substr(4,dataLengthBits))/2)*11; // for every 2 characters, add 11
+					if (binaryStringToInt(rawDataString.substr(4,dataLengthBits)) % 2 === 1) {
+						totalDataBits += 6; // if uneven amount of characters, add 6
+						var uneven = true;
+					} else {
+						var uneven = false;
+					}
+					var i = 4+dataLengthBits;
+					while (i<(deepestTouchedByte-1)*8) {
+						if (i < totalDataBits) {
+							if (uneven && i >= totalDataBits-6) { // last six bits of data, only 1 single character
+								bitAnalyserHTML += "<br><b>"+rawDataString.substr(i,6)+"</b>: Alphanumeric code voor: <b>"+anumString[binaryStringToInt(rawDataString.substr(i,6))]+"</b>";
+								decodedDataString += anumString[binaryStringToInt(rawDataString.substr(i,6))];
+								i+=6;
+							} else { // eleven bits of data, which consist of 2 characters
+								var dataInt = binaryStringToInt(rawDataString.substr(i,11));
+								var char1 = anumString[Math.floor(dataInt/45)];
+								var char2 = anumString[dataInt % 45];
+								bitAnalyserHTML += "<br><b>"+rawDataString.substr(i,11)+"</b>: Alphanumeric code voor: <b>"+char1+char2+"</b>";
+								decodedDataString += char1 + char2;
+								i+=11;
+							}
+						} else if (i < Math.ceil(totalDataBits/8)*8) {
+							var terminatorZerosStart = totalDataBits;
+							var terminatorZerosLength = Math.ceil(terminatorZerosStart/8)*8 - terminatorZerosStart;
+							bitAnalyserHTML += "<br><b>"+rawDataString.substr(terminatorZerosStart,terminatorZerosLength)+"</b>: Terminator 0s, extra nullen om de data een veelvoud van 8 lang te maken.</b>";
+							i+=terminatorZerosLength;
+						} else {
+							bitAnalyserHTML += "<br><b>"+rawDataString.substr(i,8)+"</b>: Pad Bytes, extra bytes om de ruimte op te vullen.</b>";
+							i+=8;
+						}
+					}
+
+				} else if (dataTypeName == "Numeric Mode") { // TO DO
+					var totalDataBits = 4+dataLengthBits+Math.ceil(binaryStringToInt(rawDataString.substr(4,dataLengthBits))*(10/3)); // for every 3 characters, add 10
+					var i = 4+dataLengthBits;
+					while (i<(deepestTouchedByte-1)*8) {
+						if (i < totalDataBits) {
+							var dataNumLength = 10;
+							if (totalDataBits-i < 10)  dataNumLength = totalDataBits-i;
+							var dataNumString = rawDataString.substr(i,dataNumLength);
+							var dataEncoded = "000"+binaryStringToInt(dataNumString);
+							dataEncoded = dataEncoded.substr(dataEncoded.length - Math.floor(dataNumLength/3), Math.floor(dataNumLength/3));
+							bitAnalyserHTML += "<br><b>"+dataNumString+"</b>: Numeric code voor: <b>"+dataEncoded+"</b>";
+							decodedDataString += dataEncoded;
+							i+=dataNumLength;
+						} else if (i < Math.ceil(totalDataBits/8)*8) {
+							var terminatorZerosStart = totalDataBits;
+							var terminatorZerosLength = Math.ceil(terminatorZerosStart/8)*8 - terminatorZerosStart;
+							bitAnalyserHTML += "<br><b>"+rawDataString.substr(terminatorZerosStart,terminatorZerosLength)+"</b>: Terminator 0s, extra nullen om de data een veelvoud van 8 lang te maken.</b>";
+							i+=terminatorZerosLength;
+						} else {
+							bitAnalyserHTML += "<br><b>"+rawDataString.substr(i,8)+"</b>: Pad Bytes, extra bytes om de ruimte op te vullen.</b>";
+							i+=8;
+						}
 					}
 				}
+				if (decodedDataString.length < binaryStringToInt(rawDataString.substr(4,dataLengthBits))) bitAnalyserHTML += "<br><br><i>Vul meer bytes in om de data verder te analyseren...</i>";
 			}
+		} else if (dataTypeName != "geen geldige code") {
+			bitAnalyserHTML += "<br><br><i>Vul meer bytes in om de data verder te analyseren...</i>";
 		}
 	}
 
 
 	document.getElementById("DataReaderBitAnalyser").innerHTML = bitAnalyserHTML;
+	document.getElementById("DataReaderDecodedDataTextArea").innerHTML = decodedDataString;
 }
 
 

@@ -148,7 +148,7 @@ function updateDataLengthHTML() {
 	if (dataLengthBits != false) {
 		document.getElementById("dataLengthBits").innerHTML = "<i>Jij hebt <b>Version "+version+"</b> en je gebruikt <b>"+dataTypeName+"</b>, dus is de Character Count Indicator <b>"+dataLengthBits+" bits</b> lang.</i>";
 	} else {
-		document.getElementById("dataLengthBits").innerHTML = "<i>Jij hebt <b>Version "+version+"</b> maar je hebt bij stap 4 een niet-kloppende Mode Indicator ingevuld, dus weten we niet hoelang de data is.</i>";
+		document.getElementById("dataLengthBits").innerHTML = "<i>Je hebt bij stap 4 een <b>niet-kloppende Mode Indicator</b> ingevuld, dus weten we niet hoelang de data is.</i>";
 	}
 	// if (pDataLengthBits != dataLengthBits) {
 	// 	setTimeout(function(){

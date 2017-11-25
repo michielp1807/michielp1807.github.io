@@ -98,9 +98,10 @@
 		<img src="./images/format-info.png" style="width: 180px;" title="Hier vind je de formating info...">
 		<h4>Formating Info</h4>
 		<p>Het nummer van welke mask er wordt gebruikt staat in binair genoteerd over drie specifieke vakjes in het blauwe gebied, dit blauwe gebied is het <i>formating</i> gebied. Dit gebied bestaat uit twee vakjes die de hoeveelheid error correctie aangeven en daarna de drie vakjes die aangeven welke mask er wordt gebruikt, de overige vakjes zijn error correctie van deze eerste vijf vakjes.</p>
-		<p>Net zoals de version info staat de format info ook twee keer in de QR-Code, zodat de scanner zeker weet dat hij deze goed gescanned heeft, want deze gebieden zijn cruciaal voor het lezen van de QR-Code.</p>
+		<p>Net als bij de rest van de data uit de QR-Code, zit er ook een mask over de formating info. Deze mask is wel altijd hetzelfde, voor de eerste vijf vakjes namelijk 10101, wat betekend dat het eerste, derde en vijfde vakje zijn omgekeerd.</p>
 		<div class="wrapper">
 			<div class="collumn">
+				<p>Net zoals de version info staat de format info ook twee keer in de QR-Code, zodat de scanner zeker weet dat hij deze goed gescanned heeft, want deze gebieden zijn cruciaal voor het lezen van de QR-Code.</p>
 				<p>Vul de eerste vijf vakjes van de Format Info hiernaast in om er achter te komen welke mask er gebruikt wordt.</p>
 				<p>Er staat nu de code voor:</p>
 				<ul>
@@ -258,13 +259,6 @@
 		kollom daarnaast weer naar beneden (zie het plaatje hiernaast).</p>
 		<p>De data is verdeeld in bytes, elk gebied hiernaast met een rode rand er omheen is een byte die bestaat uit acht vakjes, elk vakje is één bit van een byte. De bits (de losse enen en nullen) moet je in de bytes altijd van rechts naar links lezen, en
 		vertikaal moet je de richting van de data (zie de pijlen hiernaast) volgen.</p>
-
-
-		<h4>TO DO: Bit volgorde in byte!</h4>
-		<h4>TO DO: Bit volgorde in byte!</h4>
-		<h4>TO DO: Bit volgorde in byte!</h4>
-		<h4>TO DO: Bit volgorde in byte!</h4>
-		<h4>TO DO: Bit volgorde in byte!</h4>
 		<br>
 
 		<h4>Meerdere Data Blokken</h4>
@@ -338,18 +332,35 @@
 
 
 		<h3>Stap 5: Hoe lang is de data?</h3>
-		<br>
+		<img src="./images/data-length.png" style="width: 180px;">
 		<h4>Character Count Indicator</h4>
-		<p>Na het datatype is het eerst volgende stuk dat in de data van de QR-Code staat de Character Count Indicator, deze geeft aan uit hoeveel bytes je tekst in de QR-Code bestaat. Elke byte is meestal één teken, met uitzondering van sommige speciale tekens, zoals letters met accenten erop, die kunnen soms meerdere bytes gebruiken. Met de Byte Mode is de Character Count Indicator 1 of 2 bytes lang, 1 byte bij versies 1 t/m 9, 2 bytes bij versies 10 t/m 40, dit betekend dat de Character Count Indicator uit 8 of 16 vakjes bestaat.</p>
-		<img src="./images/data-length.png" style="width: 260px;">
-		<p id="dataLengthBits" class="noMarginCentered">
+		<p>Na het datatype is het eerst volgende stuk dat in de data van de QR-Code staat de Character Count Indicator, deze geeft aan uit hoeveel tekens de rest van de data in de QR-Code bestaat. De lengte van de Character Count Indicator hangt af van het datatype en de grootte van de QR-Code, want een datatype dat minder bits per teken gebruikt kan dus meer tekens in de code opslaan, waardoor hij ook een langere Character Count Indicator nodig heeft.</p>
+		<p>Hieronder kan je zien hoelang de Character Count Indicator is:</p>
+		<div class="wrapper" style="width: 75%;">
+			<div class="collumn">
+				<h4>Versions 1 t/m 9</h4>
+				<ul>
+					<li>Numeric Mode: 10 bits</li>
+					<li>Alphanumeric Mode: 9 bits</li>
+					<li>Byte Mode: 8 bits</li>
+					<li>Kanji Mode: 8 bits</li>
+				</ul>
+			</div>
+			<div class="collumn">
+				<h4>Versions 10 t/m 26</h4>
+				<ul>
+					<li>Numeric Mode: 12 bits</li>
+					<li>Alphanumeric Mode: 11 bits</li>
+					<li>Byte Mode: 16 bits</li>
+					<li>Kanji Mode: 10 bits</li>
+				</ul>
+			</div>
+		</div>
+		<p id="dataLengthBits" class="centered" style="background-color: #EEEEEE; padding: 10px 40px 10px 40px; margin-left: -40px; margin-right: -40px;">
 			<i>Jij hebt <b>Version 1</b> en je gebruikt <b>Byte Mode</b>, dus is de Character Count Indicator <b>8 bits</b> lang.</i>
 		</p>
 		<p class="centered">(de versie en het datatype zijn overgenomen uit de stappen hiervoor)</p>
-		<p class="centered"><b> !!!! MOET NOG AANGEPAST WORDEN !!!! </b></p>
-		<p class="centered"><b> !!!! MOET NOG AANGEPAST WORDEN !!!! </b></p>
-		<p class="centered"><b> !!!! MOET NOG AANGEPAST WORDEN !!!! </b></p>
-		<p class="centered"><b> !!!! MOET NOG AANGEPAST WORDEN !!!! </b></p>
+		<p>We zullen in de volgende stap gaan bekijken wat voor nummer er uit de character count indicator komt, ga dus nu verder naar stap 6 waar we de QR-Code byte voor byte zullen gaan analyseren.</p>
 		<!-- <div class="wrapper">
 			<div class="collumn3">
 				<h4>Met Mask</h4>
@@ -421,25 +432,23 @@
 				</div>
 				<div>
 					<h4 style="margin-bottom: 2px;">Data verwerking</h4>
-					<p style="margin-bottom: 0;" id="DataReaderTextAreaEx">Hier zie je alle data van de bytes die je hebt ingevoerd:</p>
+					<p style="margin-bottom: 0;" id="DataReaderTextAreaEx">Hier zie je alle binaire data van de bytes die je hebt ingevoerd:</p>
 					<textarea id="DataReaderRawDataTextArea" rows="3" readonly=true style="width: 100%; max-width: 100%; margin-bottom: 1em;" title="Dit is alle data met de mask er al afgehaald uit de bytes die je hebt ingevoerd..."></textarea>
 					<p style="text-align: center;">We zullen nu de data in stukjes opsplitsen om er stukje voor stukje achter te komen wat er nou eigenlijk staat.</p>
 					<div>
-						<p id="DataReaderBitAnalyser">
+						<p id="DataReaderBitAnalyser" style="background-color: #CCCCCC; margin: 20px -40px 20px -40px; padding: 10px 40px 10px 40px;">
 							<!-- THIS WILL BE CHANGED BY updateDataReaderHTML(); -->
 							<b>0100</b>: Mode Indicator, jij hebt hier <b>Byte Mode</b>, zie stap 4.<br>
 							<b>00001100</b>: Character Count Indicator, jij hebt hier lengte <b>12</b>, zie stap 5.
 						</p>
 					</div>
+					<p style="margin-bottom: 0;" id="DataReaderTextAreaEx">Hier zie je alle gedecodeerde data van de bytes die je hebt ingevoerd:</p>
+					<textarea id="DataReaderDecodedDataTextArea" rows="3" readonly=true style="width: 100%; max-width: 100%; margin-bottom: 1em;" title="Dit is alle gedecodeerde data uit de bytes die je hebt ingevoerd..."></textarea>
 				</div>
 			</div>
 		</div>
 
 
-
-
-
-		<h3>Dit wordt nog verder aangevuld</h3>
 
 
  		<!-- <div id="QRCode3">
@@ -448,6 +457,7 @@
 			<script src="./scripts/qrcodeNoMask.js"></script>
 			<br>
 		</div> -->
+		<br><br><br>
 		<h4>Bronnenlijst:</h4>
 		<ul>
 			<li><a href="http://www.thonky.com/qr-code-tutorial/" title="Een tutorial die beschrijft hoe QR-Codes gegenereerd worden">http://www.thonky.com/qr-code-tutorial/</a></li>

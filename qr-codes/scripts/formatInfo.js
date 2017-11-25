@@ -18,7 +18,7 @@ var funcFormatInfo = function(p) {
 				else formatInfo[i][j]=[230,230,230]; // light gray
 			}
 		}
-		p.reCalculate("00000", 0, 0);
+		p.reCalculate("10101", 0, 0);
 	};
 
 	// Mouse Interaction
@@ -36,6 +36,7 @@ var funcFormatInfo = function(p) {
 				}
 			}
 
+			/*      NOW DOING THIS AFTER THE FORMAT INFO STRING
 			var mNumber = 0;
 			for (var i=0; i<3; i++) { // calculate mask number frow the boxes
 				if (formatInfo[2+i][8][0] === 0) {
@@ -51,6 +52,7 @@ var funcFormatInfo = function(p) {
 				}
 			}
 			//console.log("error correction number " + mNumber);
+			*/
 
 			var formatInfoString = "";
 			for (var i=0; i<5; i++) { // calculate formatInfoString frow the boxes
@@ -60,6 +62,12 @@ var funcFormatInfo = function(p) {
 					formatInfoString+="0";
 				}
 			}
+			formatInfoString = xor(formatInfoString,"10101"); // xor it first
+			//console.log(formatInfoString);
+
+			var errCorNumber = binaryStringToInt(formatInfoString.substr(0,2));
+			var mNumber = binaryStringToInt(formatInfoString.substr(2,3));
+
 			//console.log("error correction number " + mNumber);
 
 			if (mNumber != maskNumber) {
@@ -75,8 +83,6 @@ var funcFormatInfo = function(p) {
 	p.reCalculate = function(formatInfoString, errCorNumber, mNumber) {
 
 		// Calculate Error Correction
-		formatInfoString = xor(formatInfoString,"10101");
-		//console.log(formatInfoString);
 
 		var vErrCor = xor(formatInfoString + generateErrCor("10100110111",formatInfoString,15),"101010000010010");
 		//console.log(vErrCor);
@@ -117,29 +123,20 @@ var funcFormatInfo = function(p) {
 
 		// Change HTML Text
 		document.getElementById("maskNumberElement").innerHTML = "" + mNumber;
-		/*if (mNumber < 7) {														// TO DO: Add extra information
-			document.getElementById("formatInfoNumberAddon").innerHTML = "<i>Deze staat echter niet op de QR-Code. (pas vanaf Format 7 zie je de Format Info op de QR-Code)</i>";
-		} else if (mNumber > 40) {
-			document.getElementById("formatInfoNumberAddon").innerHTML = "<i>Deze format bestaat echter niet. (Format 40 is de grootste QR-Code)</i>";
-		} else if (mNumber > 13) {
-			document.getElementById("formatInfoNumberAddon").innerHTML = "<i>Onze site laat alleen Formats 1 t/m 13 zien, hogere versies zijn zo groot dat het te onoverzichtelijk wordt.</i>";
-		} else {
-			document.getElementById("formatInfoNumberAddon").innerHTML = "";
-		}*/
 		switch(errCorNumber) { // set error correction number
-			case 0:
+			case 2:
 				document.getElementById("errCorElement").innerHTML = "H (30%)";
 				errCorLevel = "H";
 				break;
-			case 1:
+			case 0:
 				document.getElementById("errCorElement").innerHTML = "M (15%)";
 				errCorLevel = "M";
 				break;
-			case 2:
+			case 3:
 				document.getElementById("errCorElement").innerHTML = "Q (25%)";
 				errCorLevel = "Q";
 				break;
-			case 3:
+			case 1:
 				document.getElementById("errCorElement").innerHTML = "L (7%)";
 				errCorLevel = "L";
 				break;

@@ -141,6 +141,7 @@ var funcDataType3 = function(p) {
 		htmlText += "</i>";
 		document.getElementById("dataTypeAddon").innerHTML = htmlText;
 		updateDataLengthHTML();
+		updateDataReaderHTML();
 	};
 };
 var DataType3 = new p5(funcDataType3, 'DataType3');
