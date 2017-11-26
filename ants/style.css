@@ -2,8 +2,18 @@ body {
 	margin: 0;
 	padding: 20px 3px 20px 3px;
 	text-align: center;
+	font-family: arial;
 }
 
 canvas {
 	border: 3px solid black;
+}
+
+h1 {
+	margin: 0px;
+}
+
+a {
+	color: black;
+	text-decoration: none;
 }

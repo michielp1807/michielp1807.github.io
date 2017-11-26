@@ -8,5 +8,19 @@
     <script src="sketch.js"></script>
   </head>
   <body>
+    <h1><a href="https://en.wikipedia.org/wiki/Langton%27s_ant" target="_blank">Langton's Ants</a></h1>
+    <div id="p5-sketch"></div>
+    <div>
+      Mouse Action: <select id="mouseAction" onchange="setMouseAction()">
+        <option value="Nothing">Nothing</option>
+        <option value="Add Ants">Add Ants</option>
+        <option value="Draw Blocks">Place Blocks</option>
+      </select>
+
+      || Frame Rate: <input type="number" id="frameRate" value="60" oninput="setFrameRateFromHTML()" onchange="setFrameRateFromHTML()" style="width: 2.5em;">
+
+      || Total Ants: <input type="number" id="antCount" value="10" style="width: 3em;">
+      <input type="button" onclick="restart()" value="Restart">
+    </div>
   </body>
 </html>
