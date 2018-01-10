@@ -17,6 +17,8 @@
         <option value="Draw Blocks">Place Blocks</option>
       </select>
 
+	  || Updates per Frame: <input type="number" id="updateRate" value="1" oninput="setUpdateRateFromHTML()" onchange="setUpdateRateFromHTML()" style="width: 3em;">
+	  
       || Frame Rate: <input type="number" id="frameRate" value="60" oninput="setFrameRateFromHTML()" onchange="setFrameRateFromHTML()" style="width: 2.5em;">
 
       || Total Ants: <input type="number" id="antCount" value="10" style="width: 3em;">

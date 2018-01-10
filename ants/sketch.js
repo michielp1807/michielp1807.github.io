@@ -4,6 +4,7 @@ let pixelRows = 164;
 let antCount = 10;
 let ants = [];
 let pixels = [];
+let updatesPerFrame = 1;
 let mouseAction = "";
 
 function setup() {
@@ -75,8 +76,15 @@ function setMouseAction() {
 }
 
 function setFrameRateFromHTML() {
-  setFrameRate(parseInt(document.getElementById("frameRate").value));
-  console.log("setFrameRate");
+  let f = parseInt(document.getElementById("frameRate").value);
+  setFrameRate(f);
+  console.log("setFrameRate("+f+")");
+}
+
+function setUpdateRateFromHTML() {
+  let u = parseInt(document.getElementById("updateRate").value);
+  updatesPerFrame = u;
+  console.log("setUpdateRate("+u+")");
 }
 
 function ant(_x, _y, _c) {
@@ -120,8 +128,10 @@ function ant(_x, _y, _c) {
 function draw() {
 	strokeWeight(0);
 
-	for (let i=0; i<ants.length; i++) {
-		fill(ants[i].move());
-		rect(ants[i].x*pixelSize, ants[i].y*pixelSize, pixelSize, pixelSize);
+	for (let j=0; j<updatesPerFrame; j++) {
+		for (let i=0; i<ants.length; i++) {
+			fill(ants[i].move());
+			rect(ants[i].x*pixelSize, ants[i].y*pixelSize, pixelSize, pixelSize);
+		}
 	}
 }
