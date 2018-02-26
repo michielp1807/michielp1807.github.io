@@ -1,0 +1,35 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>DONG</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="dong.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div id="buttonDiv">
+    <button onclick="buttonClick()">DONG</button>
+  </div>
+  <div id="footer">
+    <hr>
+    <p>Click the button above to be taken to a random dong, something you can Do Only Now Guys.
+    </p>
+    <p>The website choses from a list of <span id="numberOfDongs">0</span> of my favorite dongs, most of which where featured on the <a href="https://www.youtube.com/dong" target="_blank">Dong YouTube channel.</a>
+    </p>
+  </div>
+  <button id="menuButton" onclick="menuButtonClick()">
+    <svg viewBox="0 0 24 24">
+      <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+    </svg>
+  </button>
+  <div id="overlay" class="hidden"></div>
+  <div id="menu" class="hidden">
+    <h1>Random Dongs</h1>
+    <h2>Bookmark</h2>
+    <p>Bookmark <a href="" id="bookmark">RANDOM DONG</a> to get random dongs instantaneously!</p>
+    <h2>Categories</h2>
+    <!-- <p>You can disable catagories you don't like here:</p> -->
+    <p>Coming soon...</p>
+  </div>
+</body>
+</html>
