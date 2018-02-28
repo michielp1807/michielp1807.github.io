@@ -28,8 +28,14 @@
     <h2>Bookmark</h2>
     <p>Bookmark <a href="" id="bookmark">RANDOM DONG</a> to get random dongs instantaneously!</p>
     <h2>Categories</h2>
-    <!-- <p>You can disable catagories you don't like here:</p> -->
-    <p>Coming soon...</p>
+    <p>Enable/disable catagories here:</p>
+    <div id="categories">
+      <label class="checkContainer">
+        All (<span id="catLengthAll"></span>)
+        <input type="checkbox" id="checkBoxAll" onclick="categoryButtonAll()" checked>
+        <span class="checkmark"></span>
+      </label>
+    </div>
   </div>
 </body>
 </html>

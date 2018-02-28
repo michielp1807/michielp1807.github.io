@@ -54,7 +54,7 @@ body {
   text-shadow: 3px 3px 0px black,
                2px 2px 0px black,
                1px 1px 0px black;
-  font-family: Impact, Charcoal, "Arial Black", sans-serif;
+  font-family: Impact, "Arial Black", "Arial Bold", sans-serif;
   font-size: 50px;
   letter-spacing: 8px;
   -webkit-transition: background-color 0.2s, transform 0.1s, box-shadow 0.1s;
@@ -134,11 +134,12 @@ body {
   top: 0px;
   width: 300px;
   height: 100%;
-  background: #CCC8C7;
+  background: #EAE6E5;
   transition: left 0.5s ease;
   z-index: 500;
   font-family: Arial, sans-serif;
   color: #555;
+  overflow-y: auto;
 }
 #menu.hidden {
   left: -300px;
@@ -148,7 +149,7 @@ body {
   margin: 15px 15px 0 15px;
 }
 #menu h2 {
-  margin: 15px 15px 0 15px;
+  margin: 15px 15px 5px 15px;
 }
 #menu p {
   margin: 0 15px;
@@ -159,4 +160,64 @@ body {
   color: #555;
   font-style: italic;
   font-weight: 800;
+}
+
+#categories {
+  margin: 0 15px;
+}
+.subcategory {
+  margin-left: 20px;
+}
+
+/*https://www.w3schools.com/howto/howto_css_custom_checkbox.asp*/
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 14px;
+  width: 14px;
+  /* background-color: #eee; */
+  border: 2px solid #888;
+  border-radius: 5px;
+}
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.checkContainer:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+.checkContainer input:checked ~ .checkmark {
+  background-color: #4272DE;
+}
+.checkContainer input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.checkContainer {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  margin: 5px 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.checkContainer input:checked ~ .checkmark:after {
+  display: block;
+}
+.checkContainer .checkmark:after {
+  left: 4px;
+  top: 0px;
+  width: 3px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
