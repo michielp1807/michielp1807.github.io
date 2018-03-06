@@ -1,130 +1,211 @@
-name,url,category,subcategory,working
-Ambicular,http://www.ambicular.com/,Audio,Ambient,
-ASMR Generator,http://asmrion.com/,Audio,Ambient,
-Groove Pizza,https://apps.musedlab.org/groovepizza/,Audio,Music,
-New Years Musicbox,https://www.newyearsmusicbox.com/,Audio,Music,
-Rick Astley Remixer,http://dinahmoelabs.com/rickastley,Audio,Music,
-Scribble Audio,http://scribble.audio/,Audio,Music,
-Swingify,http://www.musinformatics.com/swingify,Audio,Music,
-Touch Pianist,http://touchpianist.com/,Audio,Music,
-Cellular Tones,https://civim.org/experiment/eb2/,Audio,Other,
-Chrome Music Lab,https://musiclab.chromeexperiments.com/,Audio,Other,
-Radio Garden,http://radio.garden/live/,Audio,Other,
-AutoDraw,https://www.autodraw.com/,Creative,,
-Circular,http://vladgotlib.com/circular/,Creative,,
-Toonator,http://toonator.com/draw/,Creative,,
-Voxsculpt,https://joshshadik.github.io/voxsculpt/src/,Creative,,
-Cookie Clicker,http://orteil.dashnet.org/cookieclicker/,Games,Clicker,
-Paperclips,http://www.decisionproblem.com/paperclips/index2.html,Games,Clicker,
-Agar.io,http://agar.io/,Games,Multiplayer,
-Bonk.io,http://bonk.io/,Games,Multiplayer,
-Braains.io,http://braains.io/,Games,Multiplayer,
-Cursors.io,http://cursors.io/,Games,Multiplayer,
-Diep.io,http://diep.io/,Games,Multiplayer,
-MooMoo.io,http://moomoo.io/,Games,Multiplayer,
-Mope.io,http://mope.io,Games,Multiplayer,
-Skribbl.io,https://skribbl.io/,Games,Multiplayer,
-Slither.io,http://slither.io/,Games,Multiplayer,
-Splix.io,http://splix.io/,Games,Multiplayer,
-The Wiki Game,https://thewikigame.com/speed-race/,Games,Multiplayer,FALSE
-Vertix.io,http://vertix.io/,Games,Multiplayer,
-Zlap.io,http://zlap.io/,Games,Multiplayer,
-2048,https://gabrielecirulli.github.io/2048/,Games,Puzzle,
-100 Most Common Words Quiz,http://quizicon.com/quiz,Games,Puzzle,
-Ancient Greek Geometry,https://sciencevsmagic.net/geo/,Games,Puzzle,
-Battleships,https://lukerissacher.com/battleships,Games,Puzzle,
-Cube Out,http://alteredqualia.com/cubeout/,Games,Puzzle,
-Fit Circles,http://shapesmania.com/circles,Games,Puzzle,
-Hex,https://hex.frvr.com/,Games,Puzzle,
-Kyubi,http://g-kak.com/kyubi/,Games,Puzzle,
-Levers,http://vectorpark.com/levers/,Games,Puzzle,
-Little Alchemy,https://littlealchemy.com/,Games,Puzzle,
-Nonogram,https://nonogram.frvr.com/,Games,Puzzle,
-Picture Puzzles,http://c2w.com/hangman/104413-Picture-Puzzles,Games,Puzzle,
-RoTopo,https://rotopo.com/,Games,Puzzle,
-Shape Connector,https://shapeconnector.com/,Games,Puzzle,
-That's Your Jam,https://thatsyourjam.com/,Games,Puzzle,
-Treksit,http://treksit.com/,Games,Puzzle,
-Tromino Puzzle,http://www3.amherst.edu/~nstarr/trom/puzzle-8by8/,Games,Puzzle,
-Browser Pong,http://stewd.io/pong/,Games,Other,
-Cat Trap,http://llerrah.com/cattrap.htm,Games,Other,
-Circle Game,http://circle-game.sysach.com/,Games,Other,
-Click The Color And Not The Word,http://s3.mirror.co.uk/click-the-colour-and-not-the-word/index.html,Games,Other,
-Cube Runner,http://www.game5.com.de/cuberunner/index.html,Games,Other,
-Flappy 2048,https://www.flappy-2048.com/,Games,Other,
-Geoguessr,https://geoguessr.com/world/play/,Games,Other,
-Pew Pew Pew,https://www.martin-laxenaire.fr/experiments/pewpewpew/,Games,Other,
-Polka Dot,https://www.polkadotgame.com/,Games,Other,
-Quick Draw,https://quickdraw.withgoogle.com/,Games,Other,
-Serpents,http://serpents.herokuapp.com/,Games,Other,
-Simon Says,http://www.freegames.ws/games/kidsgames/simon/mysimon.htm,Games,Other,
-Snake,https://playsnake.org/,Games,Other,
-Tetris N-Blox,https://n-blox.com/,Games,Other,
-Tic Tac Toe,https://playtictactoe.org/,Games,Other,
-Trans Cube,http://code.jerev.be/ggo13-transcube/,Games,Other,
-ZType,http://zty.pe/,Games,Other,
-Internet Live Stats,http://www.internetlivestats.com/,Informative,Internet,
-Wikipedia Lamest Edit Wars,https://informationisbeautiful.net/visualizations/wikipedia-lamest-edit-wars/,Informative,Internet,
-YouTube Geofind,https://mattwright324.github.io/youtube-geofind/location,Informative,Internet,
-Animated Bezier Curves,https://www.jasondavies.com/animated-bezier/,Informative,Math,
-Super Formula Generator,http://mysterydate.github.io/superFormulaGenerator/,Informative,Math,
-The First 10000 Digits Of Pi,https://www.angio.net/pi/digits/10000.txt,Informative,Math,
-The First 10000 Prime Numbers,http://primes.utm.edu/lists/small/10000.txt,Informative,Math,
-Ulam Spiral,https://www.alpertron.com.ar/ULAM.HTM,Informative,Math,
-What's Special About This Number?,http://www2.stetson.edu/~efriedma/numbers.html,Informative,Math,
-100000 Stars,http://stars.chromeexperiments.com/,Informative,Space,
-Apollo 17,http://apollo17.org/,Informative,Space,
-How Far Away Is Andromeda,https://howfarawayisandromeda.neocities.org/,Informative,Space,
-How Fast Are You Moving?,http://neal.fun/speed/,Informative,Space,
-How Many People Are In Space Right Now,http://www.howmanypeopleareinspacerightnow.com/,Informative,Space,
-Space Dashboard,http://spacedashboard.com/,Informative,Space,
-Where Is Roadster,http://www.whereisroadster.com/,Informative,Space,
-Jason Davies Map Projections,https://www.jasondavies.com/maps/,Informative,Other,
-Map Projections,http://www.gis.osu.edu/misc/map-projections/,Informative,Other,
-Movie Map,https://www.movie-map.com/,Informative,Other,
-Music Map,https://www.music-map.com/,Informative,Other,
-One Zoom,http://www.onezoom.org/life.html/,Informative,Other,
-Progress,http://neal.fun/progress/,Informative,Other,
-Useless Facts,https://uselessfacts.net/,Informative,Other,
-VisuWords,https://visuwords.com/,Informative,Other,
-Even Stranger,http://evenstranger.pw/,Visual,Generator,
-Prizma Space,http://www.prizmaspace.com/#/home,Visual,Generator,
-Interactive Polyhedra,https://www.ibiblio.org/e-notes/webgl/polyhedra/polyhedra.htm,Visual,Geometry,
-Science VS Magic,https://sciencevsmagic.net/,Visual,Geometry,
-Visual Polyhedra,http://dmccooey.com/polyhedra/,Visual,Geometry,
-Geometrize Web,http://www.samcodes.co.uk/project/geometrize-haxe-web/,Visual,Recreation,
-Linify,http://linify.me/,Visual,Recreation,
-Colorful Fluid,https://www.yuichiroharai.com/experiments/fluid/,Visual,Other,
-Strobe Illusion,https://strobe.cool/,Visual,Other,
-Bummersauce,http://bummersauce.com/,Other,,
-Cat Bounce,http://cat-bounce.com/,Other,,
-Click Click Click Click,https://clickclickclick.click/,Other,,
-Domino,http://domino.roilipman.com/,Other,,
-Elastic Man,http://www.adultswim.com/etcetera/elastic-man/,Other,,
-Endless Doors,http://www.biglongnow.com/,Other,,
-Endless Horse,http://endless.horse/,Other,,
-Feed the Head,http://vectorpark.com/head/,Other,,
-Globe Genie,http://www.globegenie.com/,Other,,
-Heeeeeeeey,http://heeeeeeeey.com,Other,,
-Hex Clock,http://www.jacopocolo.com/hexclock/,Other,,
-I Can't Sleep Help,http://www.icantsleep.help/,Other,,
-Is It Dark Outside?,https://www.isitdarkoutside.com/,Other,,
-Jello Time,https://jellotime.com/,Other,,
-Land Lines,https://lines.chromeexperiments.com/,Other,,
-Mystery Search,https://mysterysear.ch,Other,,
-Nice One Dad,http://niceonedad.com/,Other,,
-Noot Noot,https://noot.space/,Other,,
-Please Touch Me,http://www.pleasetouchme.com/,Other,,
-Pointer Pointer,http://www.pointerpointer.com/,Other,,
-Popcorn,http://popopopcorn.com/,Other,,
-Random Dog,https://random.dog/,Other,,
-Reaction Time Test,https://www.humanbenchmark.com/tests/reactiontime/,Other,,
-RGB,http://www.rrrgggbbb.com/,Other,,
-Short Trip,https://alexanderperrin.com.au/paper/shorttrip/,Other,,
-Show More,http://www.showmore.ch/,Other,,
-Spend Bill Gate's Money,http://neal.fun/spend/,Other,,
-Staggering Beauty,http://www.staggeringbeauty.com/,Other,,
-Taco Spin,http://www.tacospin.com/,Other,,
-The Proof Is Trivial,http://www.theproofistrivial.com/,Other,,
-Trash Loop,http://www.trashloop.com/,Other,,
-Way To Go,http://a-way-to-go.com/,Other,,
+name,url,category,subcategory,flash
+Ambicular,http://www.ambicular.com/,Audio,Ambient,FALSE
+ASMR Generator,http://asmrion.com/,Audio,Ambient,FALSE
+Noisli,https://www.noisli.com/,Audio,Ambient,FALSE
+Rain Sound Generator,https://rain.today/,Audio,Ambient,FALSE
+Snowy Escape,http://snowyescape.com/,Audio,Ambient,FALSE
+Groove Pizza,https://apps.musedlab.org/groovepizza/,Audio,Music,FALSE
+HTML5 Drum Kit,http://www.randomthink.net/labs/html5drums/,Audio,Music,FALSE
+New Years Musicbox,https://www.newyearsmusicbox.com/,Audio,Music,FALSE
+Record Tripping,http://www.recordtripping.com/,Audio,Music,TRUE
+Rick Astley Remixer,http://dinahmoelabs.com/rickastley,Audio,Music,FALSE
+Sampulator,http://sampulator.com/,Audio,Music,FALSE
+Scribble Audio,http://scribble.audio/,Audio,Music,FALSE
+Swingify,http://www.musinformatics.com/swingify,Audio,Music,FALSE
+Touch Pianist,http://touchpianist.com/,Audio,Music,FALSE
+Cellular Tones,https://civim.org/experiment/eb2/,Audio,Other,FALSE
+Chrome Music Lab,https://musiclab.chromeexperiments.com/,Audio,Other,FALSE
+Key Light,https://lab.hakim.se/keylight/03b/,Audio,Other,FALSE
+Patatap,http://www.patatap.com/,Audio,Other,FALSE
+Radio Garden,http://radio.garden/live/,Audio,Other,FALSE
+Typatone,https://www.typatone.com/,Audio,Other,FALSE
+AutoDraw,https://www.autodraw.com/,Creative,,FALSE
+Circular,http://vladgotlib.com/circular/,Creative,,FALSE
+FlipAnim,http://flipanim.com/,Creative,,FALSE
+Pixel Art,http://pixl8.xyz/,Creative,,FALSE
+Toonator,http://toonator.com/draw/,Creative,,TRUE
+Voxsculpt,https://joshshadik.github.io/voxsculpt/src/,Creative,,FALSE
+Cookie Clicker,http://orteil.dashnet.org/cookieclicker/,Games,Clicker,FALSE
+Paperclips,http://www.decisionproblem.com/paperclips/index2.html,Games,Clicker,FALSE
+Agar.io,http://agar.io/,Games,Multiplayer,FALSE
+Bonk.io,http://bonk.io/,Games,Multiplayer,TRUE
+Braains.io,http://braains.io/,Games,Multiplayer,FALSE
+Cursors.io,http://cursors.io/,Games,Multiplayer,FALSE
+Curve Fever,http://curvefever.io/,Games,Multiplayer,FALSE
+Diep.io,http://diep.io/,Games,Multiplayer,FALSE
+MooMoo.io,http://moomoo.io/,Games,Multiplayer,FALSE
+Mope.io,http://mope.io,Games,Multiplayer,FALSE
+Multiplayer Puzzle,http://www.epuzzle.info/multiplayer,Games,Multiplayer,FALSE
+Skribbl.io,https://skribbl.io/,Games,Multiplayer,FALSE
+Slither.io,http://slither.io/,Games,Multiplayer,FALSE
+Splix.io,http://splix.io/,Games,Multiplayer,FALSE
+The Wiki Game,https://thewikigame.com/,Games,Multiplayer,FALSE
+Type Racer,http://play.typeracer.com/,Games,Multiplayer,FALSE
+Vertix.io,http://vertix.io/,Games,Multiplayer,FALSE
+Zlap.io,http://zlap.io/,Games,Multiplayer,FALSE
+2048,https://gabrielecirulli.github.io/2048/,Games,Puzzle,FALSE
+Ancient Greek Geometry,https://sciencevsmagic.net/geo/,Games,Puzzle,FALSE
+Battleships,https://lukerissacher.com/battleships,Games,Puzzle,FALSE
+Cube Out,http://alteredqualia.com/cubeout/,Games,Puzzle,FALSE
+Curvy,http://www.flaminglunchbox.net/curvy,Games,Puzzle,FALSE
+Fit Circles,http://shapesmania.com/circles,Games,Puzzle,FALSE
+Gateway,http://cockroach.se/gateway/,Games,Puzzle,TRUE
+Google Feud,http://www.googlefeud.com/,Games,Puzzle,FALSE
+Hex,https://hex.frvr.com/,Games,Puzzle,FALSE
+Kyubi,http://g-kak.com/kyubi/,Games,Puzzle,FALSE
+Levers,http://vectorpark.com/levers/,Games,Puzzle,TRUE
+Little Alchemy,https://littlealchemy.com/,Games,Puzzle,FALSE
+Minesweeper,http://minesweeperonline.com/,Games,Puzzle,FALSE
+Nonogram,https://nonogram.frvr.com/,Games,Puzzle,FALSE
+Picture Puzzles,http://c2w.com/hangman/104413-Picture-Puzzles,Games,Puzzle,FALSE
+Quizicon,http://quizicon.com/,Games,Puzzle,FALSE
+RoTopo,https://rotopo.com/,Games,Puzzle,FALSE
+Shape Connector,https://shapeconnector.com/,Games,Puzzle,FALSE
+Spot The Spot,http://creativetechguy.com/spotthespot,Games,Puzzle,FALSE
+Super Stacker,http://www.thegamehomepage.com/play/super-stacker/,Games,Puzzle,TRUE
+That's Your Jam,https://thatsyourjam.com/,Games,Puzzle,FALSE
+Treksit,http://treksit.com/,Games,Puzzle,FALSE
+Tromino Puzzle,http://www3.amherst.edu/~nstarr/trom/puzzle-8by8/,Games,Puzzle,FALSE
+Wiki Roulette,http://wikiroulette.net/,Games,Puzzle,FALSE
+AirConsole,https://www.airconsole.com/,Games,Other,FALSE
+Balance,http://www.mostaddicting.com/Balance.html,Games,Other,TRUE
+Browser Pong,http://stewd.io/pong/,Games,Other,FALSE
+Cat Trap,http://llerrah.com/cattrap.htm,Games,Other,TRUE
+Chain Reaction,http://www.yvoschaap.com/chainrxn/,Games,Other,FALSE
+Circle Game,http://circle-game.sysach.com/,Games,Other,FALSE
+Click The Color And Not The Word,http://s3.mirror.co.uk/click-the-colour-and-not-the-word/index.html,Games,Other,FALSE
+Cube Runner,http://www.game5.com.de/cuberunner/index.html,Games,Other,FALSE
+Driving Simulator On Google Maps,https://framesynthesis.com/drivingsimulator/maps/,Games,Other,FALSE
+Favorite Pokemon,https://fio4ri.github.io/FavoritePokemon/,Games,Other,FALSE
+Flappy 2048,https://www.flappy-2048.com/,Games,Other,FALSE
+Geoguessr,https://geoguessr.com/world/play/,Games,Other,FALSE
+Pew Pew Pew,https://www.martin-laxenaire.fr/experiments/pewpewpew/,Games,Other,FALSE
+Polka Dot,https://www.polkadotgame.com/,Games,Other,FALSE
+Quick Draw,https://quickdraw.withgoogle.com/,Games,Other,FALSE
+Serpents,http://serpents.herokuapp.com/,Games,Other,FALSE
+Simon Says,http://www.freegames.ws/games/kidsgames/simon/mysimon.htm,Games,Other,TRUE
+Snake,https://playsnake.org/,Games,Other,TRUE
+Sprinter,http://www.gamedesign.jp/flash/sprinter/sprinter.html,Games,Other,TRUE
+Tennis Line Judger,http://graphics.wsj.com/are-you-good-enough-to-be-a-tennis-line-judge/,Games,Other,FALSE
+Tetris N-Blox,https://n-blox.com/,Games,Other,TRUE
+The Eyeballing Game,http://woodgears.ca/eyeball/,Games,Other,TRUE
+Tic Tac Toe,https://playtictactoe.org/,Games,Other,FALSE
+Trans Cube,http://code.jerev.be/ggo13-transcube/,Games,Other,FALSE
+ZType,http://zty.pe/,Games,Other,FALSE
+Flight Radar,https://www.flightradar24.com/,Informative,Earth,FALSE
+Ground Zero,http://www.carloslabs.com/projects/200712B/GroundZero-2-6.html,Informative,Earth,FALSE
+If It Were My Home,http://www.ifitweremyhome.com/,Informative,Earth,FALSE
+Jason Davies Map Projections,https://www.jasondavies.com/maps/,Informative,Earth,FALSE
+Map Projections,http://www.gis.osu.edu/misc/map-projections/,Informative,Earth,FALSE
+One Zoom,http://www.onezoom.org/life.html/,Informative,Earth,FALSE
+Scaling Everest,https://www.washingtonpost.com/graphics/world/scaling-everest/,Informative,Earth,FALSE
+Internet Live Stats,http://www.internetlivestats.com/,Informative,Internet,FALSE
+Wikipedia Lamest Edit Wars,https://informationisbeautiful.net/visualizations/wikipedia-lamest-edit-wars/,Informative,Internet,FALSE
+YouTube Geofind,https://mattwright324.github.io/youtube-geofind/location,Informative,Internet,FALSE
+Animated Bezier Curves,https://www.jasondavies.com/animated-bezier/,Informative,Math,FALSE
+Super Formula Generator,http://mysterydate.github.io/superFormulaGenerator/,Informative,Math,FALSE
+The First 10000 Digits Of Pi,https://www.angio.net/pi/digits/10000.txt,Informative,Math,FALSE
+The First 10000 Prime Numbers,http://primes.utm.edu/lists/small/10000.txt,Informative,Math,FALSE
+Ulam Spiral,https://www.alpertron.com.ar/ULAM.HTM,Informative,Math,FALSE
+What's Special About This Number?,http://www2.stetson.edu/~efriedma/numbers.html,Informative,Math,FALSE
+100000 Stars,http://stars.chromeexperiments.com/,Informative,Space,FALSE
+Apollo 17,http://apollo17.org/,Informative,Space,FALSE
+How Far Away Is Andromeda,https://howfarawayisandromeda.neocities.org/,Informative,Space,FALSE
+How Fast Are You Moving?,http://neal.fun/speed/,Informative,Space,FALSE
+How Many People Are In Space Right Now,http://www.howmanypeopleareinspacerightnow.com/,Informative,Space,FALSE
+Space Dashboard,http://spacedashboard.com/,Informative,Space,FALSE
+SpaceX Webcast,http://www.spacex.com/webcast,Informative,Space,FALSE
+Where Is Roadster,http://www.whereisroadster.com/,Informative,Space,FALSE
+Amazing Fact Generator,http://mentalfloss.com/amazingfactgenerator/,Informative,Other,FALSE
+How Many Days Until Star Wars,http://howmanydaysuntilstarwars.com/,Informative,Other,FALSE
+Movie Map,https://www.movie-map.com/,Informative,Other,FALSE
+Music Map,https://www.music-map.com/,Informative,Other,FALSE
+Progress,http://neal.fun/progress/,Informative,Other,FALSE
+Spurious Correlations,http://tylervigen.com/spurious-correlations,Informative,Other,FALSE
+Useless Facts,https://uselessfacts.net/,Informative,Other,FALSE
+VisuWords,https://visuwords.com/,Informative,Other,FALSE
+Bacon Sizzling,http://www.baconsizzling.com/,Random,,FALSE
+Bummersauce,http://bummersauce.com/,Random,,FALSE
+Cat Bounce,http://cat-bounce.com/,Random,,TRUE
+Celery Man Simulator,http://celeryman.alexmeub.com/,Random,,FALSE
+Click Click Click Click,https://clickclickclick.click/,Random,,FALSE
+Colorize,http://colorize.site/,Random,,FALSE
+Corgi Party,https://corgiorgy.com/,Random,,FALSE
+Cursor Disco,https://cursordisco.com/,Random,,FALSE
+Domino,http://domino.roilipman.com/,Random,,FALSE
+Drift,https://www.koert.com/work/drift/play.php,Random,,TRUE
+Elastic Man,http://www.adultswim.com/etcetera/elastic-man/,Random,,FALSE
+Electric Boogie Woogie,http://www.electricboogiewoogie.com/,Random,,FALSE
+Emoji Party,http://emojiparty.club/,Random,,FALSE
+Endless Doors,http://www.biglongnow.com/,Random,,TRUE
+Endless Horse,http://endless.horse/,Random,,FALSE
+Fake Update,http://fakeupdate.net/,Random,,FALSE
+Falling Falling,http://www.fallingfalling.com/,Random,,FALSE
+Feed the Head,http://vectorpark.com/head/,Random,,TRUE
+Free Gong Button,http://www.freegongbutton.com/,Random,,TRUE
+Fried Chicken Simulator,http://friedchickensimulator.surge.sh/,Random,,FALSE
+Geocitiesizer,http://www.wonder-tonic.com/geocitiesizer/,Random,,FALSE
+Gif Party Generator,http://my.corgiorgy.com/,Random,,FALSE
+Globe Genie,http://www.globegenie.com/,Random,,FALSE
+Great Big Nothing,http://www.greatbignothing.com/,Random,,FALSE
+Hardcore Prawn Lawn,http://hardcoreprawnlawn.com/,Random,,FALSE
+Has The Large Hadron Collider Destroyed The World Yet?,http://hasthelargehadroncolliderdestroyedtheworldyet.com/,Random,,FALSE
+Heeeeeeeey,http://heeeeeeeey.com,Random,,FALSE
+Hex Clock,http://www.jacopocolo.com/hexclock/,Random,,FALSE
+I Can't Sleep Help,http://www.icantsleep.help/,Random,,FALSE
+Is It Dark Outside?,https://www.isitdarkoutside.com/,Random,,FALSE
+Is It White?,http://isitwhite.com/,Random,,FALSE
+Is My Computer On Fire?,http://ismycomputeronfire.com/,Random,,FALSE
+Is My Computer On?,http://www.ismycomputeron.com/,Random,,FALSE
+Jello Time,https://jellotime.com/,Random,,TRUE
+Land Lines,https://lines.chromeexperiments.com/,Random,,FALSE
+Map Crunch,http://www.mapcrunch.com/,Random,,FALSE
+Move Now Think Later,http://www.movenowthinklater.com/,Random,,FALSE
+Mystery Search,https://mysterysear.ch,Random,,FALSE
+Nice One Dad,http://niceonedad.com/,Random,,FALSE
+Ninjaflex,http://ninjaflex.com/,Random,,FALSE
+Nooooooooooooooo,http://nooooooooooooooo.com/,Random,,FALSE
+Noot Noot,https://noot.space/,Random,,FALSE
+Nulling The Void,http://www.nullingthevoid.com/,Random,,FALSE
+OMFG Dogs,https://www.omfgdogs.com/,Random,,FALSE
+Pickle Donkey Knife,http://www.pickledonkeyknife.com/,Random,,FALSE
+Pixels Fighting,http://pixelsfighting.com/,Random,,FALSE
+Please Touch Me,http://www.pleasetouchme.com/,Random,,FALSE
+Pointer Pointer,http://www.pointerpointer.com/,Random,,FALSE
+Popcorn,http://popopopcorn.com/,Random,,FALSE
+Random Colour,http://randomcolour.com/,Random,,FALSE
+Random Dog,https://random.dog/,Random,,FALSE
+Reaction Time Test,https://www.humanbenchmark.com/tests/reactiontime/,Random,,FALSE
+Republique Des Mangues,http://www.republiquedesmangues.fr/,Random,,FALSE
+RGB,http://www.rrrgggbbb.com/,Random,,FALSE
+Secret Door,http://ww3.safestyle-windows.co.uk/the-secret-door/,Random,,FALSE
+Short Trip,https://alexanderperrin.com.au/paper/shorttrip/,Random,,FALSE
+Show More,http://www.showmore.ch/,Random,,FALSE
+Spend Bill Gate's Money,http://neal.fun/spend/,Random,,FALSE
+Staggering Beauty,http://www.staggeringbeauty.com/,Random,,FALSE
+Table Flipper,http://tableflipper.com/,Random,,FALSE
+Taco Party,http://tacodumpsters.corgiorgy.com/,Random,,FALSE
+Taco Spin,http://www.tacospin.com/,Random,,FALSE
+Talk Obama To Me,http://talkobamato.me/,Random,,FALSE
+The Moment Of Color,http://bickov.com/projects/the-moment-of-color/,Random,,FALSE
+The Most Amzing Website On The Internet,http://www.themostamazingwebsiteontheinternet.com/,Random,,FALSE
+The Proof Is Trivial,http://www.theproofistrivial.com/,Random,,FALSE
+This Is Sand,https://thisissand.com/,Random,,TRUE
+Traitor!,http://tr-8r.com/,Random,,FALSE
+Trash Loop,http://www.trashloop.com/,Random,,FALSE
+Trump Donald,http://trumpdonald.org/,Random,,FALSE
+Vsauce Party,http://vsauce.corgiorgy.com/,Random,,FALSE
+Way To Go,http://a-way-to-go.com/,Random,,FALSE
+Yes No If,http://yesnoif.com/,Random,,FALSE
+Your Game Idea Is Too Big,http://yourgameideaistoobig.com/,Random,,FALSE
+Even Stranger,http://evenstranger.pw/,Visual,Generator,FALSE
+Prizma Space,http://www.prizmaspace.com/#/home,Visual,Generator,FALSE
+Interactive Polyhedra,https://www.ibiblio.org/e-notes/webgl/polyhedra/polyhedra.htm,Visual,Geometry,FALSE
+Science VS Magic,https://sciencevsmagic.net/,Visual,Geometry,FALSE
+Visual Polyhedra,http://dmccooey.com/polyhedra/,Visual,Geometry,FALSE
+Geometrize Web,http://www.samcodes.co.uk/project/geometrize-haxe-web/,Visual,Recreation,FALSE
+Linify,http://linify.me/,Visual,Recreation,FALSE
+Adobe Color Wheel,https://color.adobe.com/create/color-wheel/,Visual,Other,FALSE
+Colorful Fluid,https://www.yuichiroharai.com/experiments/fluid/,Visual,Other,FALSE
+Star Wars Asciimation,http://www.asciimation.co.nz/,Visual,Other,FALSE
+Strobe Illusion,https://strobe.cool/,Visual,Other,FALSE

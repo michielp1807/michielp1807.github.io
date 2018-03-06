@@ -8,7 +8,9 @@
 </head>
 <body>
   <div id="buttonDiv">
-    <button onclick="buttonClick()">DONG</button>
+    <button onclick="buttonClick()" onmousedown="snd('sndKeyDown')" onmouseup="snd('sndKeyUp')">DONG</button>
+		<audio id="sndKeyDown" src="audio/keydown.mp3" preload="auto"></audio>
+		<audio id="sndKeyUp" src="audio/keyup.mp3" preload="auto"></audio>
   </div>
   <div id="footer">
     <hr>
@@ -36,6 +38,11 @@
         <span class="checkmark"></span>
       </label>
     </div>
+		<label class="checkContainer" style="margin: 30px 15px 5px 15px;">
+			Enable websites which require Adobe Flash Player
+			<input type="checkbox" id="checkBoxFlash" onclick="categoryButtonFlash()" checked>
+			<span class="checkmark"></span>
+		</label>
   </div>
 </body>
 </html>

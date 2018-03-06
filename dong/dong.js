@@ -3,6 +3,7 @@ let categories = {};
 let destination;
 let notChosen = [];
 let clicked = false;
+let flash = true;
 
 $(document).ready(function() {
   $.ajax({
@@ -17,9 +18,7 @@ $(document).ready(function() {
           for (let j=0; j<arr[i].length; j++) {
             website[arr[0][j]] = arr[i][j];
           }
-          if (website.working == "") {
-            websites.push(website);
-          }
+          websites.push(website);
         }
       }
       resetNotChosen(false);
@@ -61,7 +60,9 @@ $(document).ready(function() {
         if (!(categories[category] instanceof Array)) { // if category is not an array of websites
           for (let subcategory in categories[category]) {
             length = categories[category][subcategory].length;
-            let element = $('<label class="checkContainer"></label>').text(subcategory + " (" + length + ")");
+            let element = $('<label class="checkContainer"></label>').text(subcategory + " (");
+						element.append('<span id="catLength'+category+subcategory+'">'+length+'</span>');
+						element.append(")");
             element.append($('<input type="checkbox" id="checkBox'+category+subcategory+'" onclick="categoryButtonClick('+"'"+category+"','"+subcategory+"'"+')" checked>'));
             element.append($('<span class="checkmark"></span>'));
             let div = $('<div class="subcategory"></div>');
@@ -75,7 +76,7 @@ $(document).ready(function() {
 });
 
 function buttonClick() {
-  if (!clicked) {
+	if (!clicked) {
     clicked = true;
     if (notChosen.length == 0) {
       resetNotChosen(true);
@@ -88,11 +89,15 @@ function buttonClick() {
     }, 400);
   }
 }
+function snd(soundElementId) {
+	$('#'+soundElementId)[0].play();
+}
 
 function resetNotChosen(checkButtons) {
   notChosen = [];
   for (let i=0; i<websites.length; i++) {
-    if (checkButtons) {
+		if (!flash && websites[i].flash == "TRUE") continue;
+		if (checkButtons) {
       if (websites[i].subcategory != "") {
         if ($("#checkBox" + websites[i].category + websites[i].subcategory)[0].checked) notChosen.push(i);
       } else {
@@ -140,32 +145,7 @@ function categoryButtonClick(category, subcategory) {
     $("#checkBox" + category)[0].checked = categoryShouldBeOn;
     $("#catLength" + category).text((length > 0) ? length : fullLength);
   }
-
-  // All button stuff
-  let allButtonShouldBeOn = false;
-  let totalLength = 0;
-  let totalFullLength = 0;
-  for (let category in categories) {
-    if (!(categories[category] instanceof Array)) { // if category is not an array of websites
-      for (let subcategory in categories[category]) {
-        if ($("#checkBox" + category + subcategory)[0].checked) {
-          totalLength += categories[category][subcategory].length;
-          allButtonShouldBeOn = true;
-        }
-        totalFullLength += categories[category][subcategory].length;
-      }
-    } else {
-      if ($("#checkBox" + category)[0].checked) {
-        totalLength += categories[category].length;
-        allButtonShouldBeOn = true;
-      }
-      totalFullLength += categories[category].length;
-    }
-  }
-  $("#checkBoxAll")[0].checked = allButtonShouldBeOn;
-  $("#catLengthAll").text((totalLength > 0) ? totalLength : totalFullLength);
-
-  resetNotChosen(true);
+  updateCategoryLengths();
 }
 function categoryButtonAll() {
   resetNotChosen(false);
@@ -178,4 +158,34 @@ function categoryButtonAll() {
     }
     $("#checkBox" + category)[0].checked = $("#checkBoxAll")[0].checked;
   }
+}
+function categoryButtonFlash() {
+	flash = $("#checkBoxFlash")[0].checked;
+	updateCategoryLengths();
+}
+
+function updateCategoryLengths() {
+	resetNotChosen(true);
+	let lengths = {"All": {"total": 0, "active": 0}};
+	for (let i=0; i<notChosen.length; i++) {
+		let website = websites[notChosen[i]];
+		if (!lengths[website.category]) lengths[website.category] = {"total": 0, "active": 0};
+		if (!lengths[website.category+website.subcategory]) lengths[website.category+website.subcategory] = {"total": 0, "active": 0};;
+		if ($("#checkBox" + website.category + website.subcategory)[0].checked) {
+			lengths[website.category].active++;
+			if (website.subcategory != "") lengths[website.category+website.subcategory].active++;
+			lengths["All"].active++;
+		}
+		lengths[website.category].total++;
+		if (website.subcategory != "") lengths[website.category+website.subcategory].total++;
+		lengths["All"].total++;
+	}
+	for (let category in lengths) {
+		if (lengths[category].active > 0) {
+			$("#catLength" + category).text(lengths[category].active);
+		} else {
+			$("#catLength" + category).text(lengths[category].total);
+		}
+	}
+	$("#checkBoxAll")[0].checked = (lengths["All"].active > 0);
 }
