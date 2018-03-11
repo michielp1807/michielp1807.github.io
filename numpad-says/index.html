@@ -1,0 +1,47 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Numpad Says Number Constants</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="simon.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<h1>Numpad Says Number Constants</h1>
+	<h2>A Memory Game About Number Constants</h2>
+	<div id="game">
+		<div id="menu">
+			<select id="whichConstant">
+			  <option value="pi">π</option>
+			  <option value="e">e</option>
+			  <option value="root2">√2</option>
+			</select>
+			<button type="button" onclick="play()">Play!</button>
+		</div>
+		<div id="level">
+			<table>
+				<tr>
+					<td>7</td>
+					<td>8</td>
+					<td>9</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td>5</td>
+					<td>6</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td colspan="2">0</td>
+					<td>.</td>
+				</tr>
+			</table>
+			<p>Level: <span id="levelNumber">0</span></p>
+		</div>
+	</div>
+</body>
+</html>

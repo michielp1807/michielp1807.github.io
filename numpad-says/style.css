@@ -1,0 +1,82 @@
+body {
+	background-color: #150A2D;
+	color: #fff;
+	text-align: center;
+	font-family: Arial, sans-serif;
+	margin: 40px;
+}
+
+h1 {
+	font-size: 3em;
+	margin-bottom: 0;
+}
+h2 {
+	margin-top: 0;
+	margin-bottom: 60px;
+}
+
+#game {
+	position: relative;
+	margin: 0px auto;
+	height: 320px;
+}
+#menu {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: #150A2D88;
+	z-index: 10;
+}
+#menu select, #menu button {
+	width: 60px;
+	height: 30px;
+}
+#level {
+	position: absolute;
+	margin: 0px auto;
+	width: 100%;
+	height: 100%;
+}
+
+table {
+	background-color: #111;
+	margin: 0px auto;
+  border: 3px inset #ddd;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	 -khtml-user-select: none; /* Konqueror HTML */
+		 -moz-user-select: none; /* Firefox */
+			-ms-user-select: none; /* Internet Explorer/Edge */
+					user-select: none; /* Chrome and Opera */
+}
+td {
+	border: 4px outset #fff;
+	background-color: #333;
+	color: #fff;
+  padding: 15px 20px;
+	margin: 0px auto;
+	text-align: center;
+	font-size: 1.5em;
+	cursor: default;
+	shadow: none;
+	z-index: -1000;
+}
+td.allowed {
+	cursor: pointer;
+}
+td.allowed:hover {
+	border: 4px inset #ddd;
+	background-color: #222;
+}
+td.allowed:active, td.active {
+	border: 4px inset #ff6;
+	background-color: #442;
+	color: #ff6;
+	text-shadow: 0px 0px 5px #fff;
+	box-shadow: 0px 0px 15px #fff;
+	z-index: -900 !important;
+}
