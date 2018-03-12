@@ -21,6 +21,10 @@ $(function () {
 	}
 
 	$(this).keydown(function(e) {
+		if (e.which == 13) {
+			if ($("#menu").is(":visible")) play();
+			return;
+		}
 		let numkey = numpad[e.key];
 		if (numkey != undefined && userCanType && pressedKeys[e.which] != true) {
 			pressedKeys[e.which] = true;
@@ -40,7 +44,9 @@ $(function () {
 function play() {
 	$.get("numbers/"+$("#whichConstant")[0].value+".txt", function(data) {
 		numberString = data;
-		level = 0;
+		level = parseInt($("#startFrom")[0].value) - 1;
+		if (isNaN(level)) level = 0;
+		if (level>999) level = 999;
 		$("#menu").hide();
 		startLevel();
 	});
@@ -66,17 +72,19 @@ function sayNumber() {
 	} else {
 		playSfx(parseInt(numberString[currentDigit])+1);
 	}
-	setTimeout(hideNumber, 400);
+	let timeout = 400+40*(currentDigit-level+1);
+	if (timeout<100) timeout = 100;
+	setTimeout(hideNumber, timeout, timeout);
 }
 
-function hideNumber() {
+function hideNumber(timeout) {
 	let numkey = numpad[numberString[currentDigit]];
 	numkey.className = "";
 	currentDigit++;
 	if (currentDigit >= level) {
 		startUserInput();
 	} else {
-		setTimeout(sayNumber, 400);
+		setTimeout(sayNumber, timeout);
 	}
 }
 
@@ -142,4 +150,30 @@ function gameOver() {
 function playSfx(int) {
 	snd[int].currentTime = 0;
 	snd[int].play();
+}
+
+function setVolume(mute) {
+	let volume = parseFloat($("#volumeSlider")[0].value);
+	if (mute) {
+		volume = (volume > 0) ? 0 : 1;
+		$("#volumeSlider")[0].value = volume;
+	}
+	for (audio in snd) {
+		snd[audio].volume = volume;
+	}
+	if (volume == 0) {
+		$("#volumeIcon").text("volume_off");
+	} else if (volume <= 0.33) {
+		$("#volumeIcon").text("volume_mute");
+	} else if (volume <= 0.66) {
+		$("#volumeIcon").text("volume_down");
+	} else {
+		$("#volumeIcon").text("volume_up");
+	}
+}
+
+function startFromUpdate() {
+	let v = parseInt($("#startFrom")[0].value);
+	if (v > 1000) $("#startFrom")[0].value = 1000;
+	if (v < 1) $("#startFrom")[0].value = 1;
 }

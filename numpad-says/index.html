@@ -5,43 +5,64 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="simon.js"></script>
   <link rel="stylesheet" type="text/css" href="style.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 	<h1>Numpad Says Number Constants</h1>
 	<h2>A Memory Game About Number Constants</h2>
-	<div id="game">
-		<div id="menu">
-			<select id="whichConstant">
-			  <option value="pi">π</option>
-			  <option value="e">e</option>
-			  <option value="root2">√2</option>
-			</select>
-			<button type="button" onclick="play()">Play!</button>
+	<div id="container">
+		<div id="game">
+			<div id="menu">
+				<div>
+					<h3>Numpad Says</h3>
+				</div>
+				<div>
+					<select id="whichConstant">
+					  <option value="pi">π</option>
+					  <option value="e">e</option>
+						<option value="phi">φ</option>
+						<option value="root2">√2</option>
+						<option value="root3">√3</option>
+						<option value="root5">√5</option>
+					</select>
+					<button type="button" onclick="play()">Go!</button>
+				</div>
+				<div>
+					Start from:
+					<input id="startFrom" type="number" onchange="startFromUpdate()" placeholder="1" min="1" max="1000">
+				</div>
+			</div>
+			<div id="level">
+				<table>
+					<tr>
+						<td>7</td>
+						<td>8</td>
+						<td>9</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>5</td>
+						<td>6</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+					</tr>
+					<tr>
+						<td colspan="2">0</td>
+						<td>.</td>
+					</tr>
+				</table>
+			</div>
 		</div>
-		<div id="level">
-			<table>
-				<tr>
-					<td>7</td>
-					<td>8</td>
-					<td>9</td>
-				</tr>
-				<tr>
-					<td>4</td>
-					<td>5</td>
-					<td>6</td>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td>2</td>
-					<td>3</td>
-				</tr>
-				<tr>
-					<td colspan="2">0</td>
-					<td>.</td>
-				</tr>
-			</table>
-			<p>Level: <span id="levelNumber">0</span></p>
-		</div>
+		<p>
+			Level: <span id="levelNumber">0</span>
+		</p>
 	</div>
+	<p id="volumeControlls">
+		<i class="material-icons" onmousedown="setVolume(true)" id="volumeIcon">volume_up</i>
+		<input type="range" min="0" max="1" value="1" step="0.01" oninput="setVolume()" id="volumeSlider">
+	</p>
 </body>
 </html>
