@@ -163,9 +163,7 @@ function setVolume(mute) {
 	}
 	if (volume == 0) {
 		$("#volumeIcon").text("volume_off");
-	} else if (volume <= 0.33) {
-		$("#volumeIcon").text("volume_mute");
-	} else if (volume <= 0.66) {
+	} else if (volume <= 0.5) {
 		$("#volumeIcon").text("volume_down");
 	} else {
 		$("#volumeIcon").text("volume_up");

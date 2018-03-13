@@ -12,8 +12,45 @@ h1 {
 	margin-bottom: 0;
 }
 h2 {
+	font-size: 1.5em;
 	margin-top: 0;
 	margin-bottom: 60px;
+}
+@media only screen and (max-width: 850px)  {
+	body {
+		margin: 30px;
+	}
+	h1 {
+		font-size: 2em;
+	}
+	h2 {
+		font-size: 1em;
+		margin-bottom: 30px;
+	}
+}
+@media only screen and (max-width: 570px)  {
+	body {
+		margin: 25px;
+	}
+	h1 {
+		font-size: 1.6em;
+	}
+	h2 {
+		font-size: 0.8em;
+		margin-bottom: 25px;
+	}
+}
+@media only screen and (max-width: 460px)  {
+	body {
+		margin: 20px;
+	}
+	h1 {
+		font-size: 1.4em;
+	}
+	h2 {
+		font-size: 0.75em;
+		margin-bottom: 20px;
+	}
 }
 
 button {
@@ -22,12 +59,14 @@ button {
 
 #container {
 	position: relative;
+	margin-bottom: 110px;
 }
 #container p {
 	position: absolute;
 	font-size: 1.2em;
 	font-weight: bold;
 	width: 100%;
+	margin-bottom: 0;
 }
 #game {
 	position: relative;
@@ -78,6 +117,17 @@ button {
 	bottom: 20px;
 	right: 28px;
 	z-index: 100;
+}
+@media only screen and (max-height: 510px) and (max-width: 850px) {
+	#container {
+		margin-bottom: 1em;
+	}
+	#container p {
+		text-align: left;
+	}
+	#volumeControlls {
+		position: static;
+	}
 }
 
 table {
