@@ -5,6 +5,7 @@ body {
 	font-family: Arial, sans-serif;
 	text-shadow: 2px 2px 1px black;
 	margin: 40px;
+	min-width: 230px;
 }
 
 h1 {

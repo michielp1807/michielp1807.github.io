@@ -2,16 +2,20 @@ let numpad = {};
 let userCanType = false;
 let userString = "";
 let numberString = "";
-let snd = [];
+let whichConstant = "";
 let level = 0;
 let currentDigit = 0;
-for (let i=0; i<11; i++) {
-	snd[i] = new Audio("snd/snd"+(i+1)+".mp3")
-}
-snd["gameover"] = new Audio("snd/gameover.mp3")
 let pressedKeys = {};
+const maxLevel = 1001;
 
-$(function () {
+$(function () { // on document ready
+	// set max level of level selector
+	$("#startFrom")[0].max = maxLevel;
+
+	// load volume from local storage
+	loadVolume();
+
+	// set up numpad
 	let tds = $("td");
 	for (let i=0; i<tds.length; i++) {
 		tds[i].onmousedown = function() {
@@ -20,6 +24,7 @@ $(function () {
 		numpad[tds[i].innerHTML] = tds[i];
 	}
 
+	// keyboard events
 	$(this).keydown(function(e) {
 		if (e.which == 13) {
 			if ($("#menu").is(":visible")) play();
@@ -42,11 +47,13 @@ $(function () {
 });
 
 function play() {
-	$.get("numbers/"+$("#whichConstant")[0].value+".txt", function(data) {
+	// activated when play button is pressed
+	whichConstant = $("#whichConstant")[0].value;
+	$.get("numbers/"+whichConstant+".txt", function(data) {
 		numberString = data;
 		level = parseInt($("#startFrom")[0].value) - 1;
 		if (isNaN(level)) level = 0;
-		if (level>999) level = 999;
+		if (level>1000) level = 1000;
 		$("#menu").hide();
 		startLevel();
 	});
@@ -54,12 +61,16 @@ function play() {
 
 function startLevel() {
 	level++;
-	$("#levelNumber").text(level);
 	userString = "";
 	userCanType = false;
 	for (numkey in numpad) {
 		numpad[numkey].className = "";
 	}
+	if (level>maxLevel) {
+		$("#menu").show();
+		return;
+	}
+	$("#levelNumber").text(level);
 	currentDigit = 0;
 	setTimeout(sayNumber, 1000);
 }
@@ -104,19 +115,21 @@ function onUserInput(key) {
 			} else {
 				playSfx(parseInt(key)+1);
 			}
-			if (userString == numberString.substring(0, level)) {
-				userCanType = false;
-				for (numkey in numpad) {
-					if (numberString[userString.length-1] != numkey) {
-						numpad[numkey].className = "";
-					}
-				}
-				setTimeout(startLevel, 500);
-			}
+			if (userString == numberString.substring(0, level)) nextLevel();
 		} else {
 			gameOver();
 		}
 	}
+}
+
+function nextLevel() {
+	userCanType = false;
+	for (numkey in numpad) {
+		if (numberString[userString.length-1] != numkey) {
+			numpad[numkey].className = "";
+		}
+	}
+	setTimeout(startLevel, 500);
 }
 
 function gameOver() {
@@ -147,31 +160,9 @@ function gameOver() {
 	}, 100);
 }
 
-function playSfx(int) {
-	snd[int].currentTime = 0;
-	snd[int].play();
-}
-
-function setVolume(mute) {
-	let volume = parseFloat($("#volumeSlider")[0].value);
-	if (mute) {
-		volume = (volume > 0) ? 0 : 1;
-		$("#volumeSlider")[0].value = volume;
-	}
-	for (audio in snd) {
-		snd[audio].volume = volume;
-	}
-	if (volume == 0) {
-		$("#volumeIcon").text("volume_off");
-	} else if (volume <= 0.5) {
-		$("#volumeIcon").text("volume_down");
-	} else {
-		$("#volumeIcon").text("volume_up");
-	}
-}
-
 function startFromUpdate() {
+	// activated by the start from level controll
 	let v = parseInt($("#startFrom")[0].value);
-	if (v > 1000) $("#startFrom")[0].value = 1000;
+	if (v > maxLevel) $("#startFrom")[0].value = maxLevel;
 	if (v < 1) $("#startFrom")[0].value = 1;
 }
