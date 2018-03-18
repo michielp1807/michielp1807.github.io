@@ -26,8 +26,16 @@ $(function () { // on document ready
 
 	// keyboard events
 	$(this).keydown(function(e) {
-		if (e.which == 13) {
+		if (e.keyCode == 13) {
 			if ($("#menu").is(":visible")) play();
+			return;
+		} else if (e.keyCode == 27 || e.keyCode == 8) {
+			// on esc or backspace go to menu
+			userCanType = false;
+			for (let numkey in numpad) {
+				numpad[numkey].className = "";
+			}
+			$("#menu").show();
 			return;
 		}
 		let numkey = numpad[e.key];
@@ -76,6 +84,7 @@ function startLevel() {
 }
 
 function sayNumber() {
+	if ($("#menu").is(":visible")) return;
 	let numkey = numpad[numberString[currentDigit]];
 	numkey.className = "active";
 	if (numberString[currentDigit] == ".") {
