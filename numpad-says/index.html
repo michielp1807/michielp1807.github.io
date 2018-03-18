@@ -5,10 +5,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="simon-audio.js"></script>
+	<script src="simon-ui.js"></script>
 	<script src="simon.js"></script>
 	<link rel="icon" href="favicon.png" sizes="16x16 32x32" type="image/png">
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata:700" rel="stylesheet">
 </head>
 <body>
 	<h1>Numpad Says Number Constants</h1>
@@ -20,7 +22,7 @@
 					<h3>Numpad Says</h3>
 				</div>
 				<div>
-					<select id="whichConstant">
+					<select id="whichConstant" onchange="loadHighscore()">
 					  <option value="pi">π</option>
 						<option value="tau">τ</option>
 					  <option value="e">e</option>
@@ -34,6 +36,9 @@
 				<div>
 					Start from:
 					<input id="startFrom" type="number" onchange="startFromUpdate()" placeholder="1" min="1" max="1001">
+				</div>
+				<div id="highscore">
+					<span>PB: Level <span id="highscoreNumber">100</span></span>
 				</div>
 			</div>
 			<div id="level">

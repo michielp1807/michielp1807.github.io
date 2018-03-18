@@ -12,6 +12,9 @@ $(function () { // on document ready
 	// set max level of level selector
 	$("#startFrom")[0].max = maxLevel;
 
+	// load highscore
+	loadHighscore();
+
 	// load volume from local storage
 	loadVolume();
 
@@ -31,11 +34,7 @@ $(function () { // on document ready
 			return;
 		} else if (e.keyCode == 27 || e.keyCode == 8) {
 			// on esc or backspace go to menu
-			userCanType = false;
-			for (let numkey in numpad) {
-				numpad[numkey].className = "";
-			}
-			$("#menu").show();
+			showMenu();
 			return;
 		}
 		let numkey = numpad[e.key];
@@ -70,13 +69,13 @@ function play() {
 function startLevel() {
 	level++;
 	userString = "";
+	if (level>maxLevel) {
+		showMenu();
+		return;
+	}
 	userCanType = false;
 	for (numkey in numpad) {
 		numpad[numkey].className = "";
-	}
-	if (level>maxLevel) {
-		$("#menu").show();
-		return;
 	}
 	$("#levelNumber").text(level);
 	currentDigit = 0;
@@ -138,6 +137,9 @@ function nextLevel() {
 			numpad[numkey].className = "";
 		}
 	}
+	if (localStorage.getItem(whichConstant) < level) {
+		localStorage.setItem(whichConstant, level);
+	}
 	setTimeout(startLevel, 500);
 }
 
@@ -160,18 +162,11 @@ function gameOver() {
 					setTimeout(function() {
 						correctKey.className = "";
 						setTimeout(function() {
-							$("#menu").show();
+							showMenu();
 						}, 200);
 					}, 100);
 				}, 100);
 			}, 100);
 		}, 100);
 	}, 100);
-}
-
-function startFromUpdate() {
-	// activated by the start from level controll
-	let v = parseInt($("#startFrom")[0].value);
-	if (v > maxLevel) $("#startFrom")[0].value = maxLevel;
-	if (v < 1) $("#startFrom")[0].value = 1;
 }
