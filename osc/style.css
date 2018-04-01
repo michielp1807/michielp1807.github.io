@@ -1,0 +1,25 @@
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	text-align: center;
+	padding: 32px;
+}
+
+input[type="range"] {
+	position: relative;
+	top: -4px;
+	-webkit-appearance: none;
+	appearance: none;
+	width: 120px;
+	height: 3px;
+	border-radius: 1.5px;
+	background: #eee;
+}
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+		background: #aaa;
+    cursor: pointer;
+}
