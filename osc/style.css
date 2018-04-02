@@ -23,3 +23,31 @@ input[type="range"]::-webkit-slider-thumb {
 		background: #aaa;
     cursor: pointer;
 }
+
+#keys {
+	position: fixed;
+	bottom: 10px;
+	left: 50%;
+	height: 160px;
+	width: 800px;
+	margin-left: -400px;
+	background-color: #999;
+}
+
+.whiteKeys {
+	/* position: absolute; */
+	background-color: white;
+	font-weight: bold;
+	padding-top: 15%;
+	height: 100%;
+}
+
+.blackKeys {
+	position: absolute;
+	top: 0px;
+	background-color: black;
+	font-weight: bold;
+	color: white;
+	padding-top: 8%;
+	height: 60%;
+}

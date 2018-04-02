@@ -3,6 +3,7 @@ let osc1;
 $(function(){
 	visualizerSetup();
 	osc1 = new osc("sine", 220);
+	keysSetup();
 });
 
 let ctx = new (window.AudioContext || window.webkitAudioContext)();
