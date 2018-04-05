@@ -1,0 +1,18 @@
+body {
+	text-align: center;
+	padding: 20px;
+	cursor: pointer;
+	min-height: 300px;
+}
+
+h1 {
+	font-family: Arial, Helvetica, sans-serif;
+	text-shadow: rgba(0,0,0,.2) 0 0 1px;
+	font-size: 32px;
+	color: black;
+}
+
+canvas {
+	max-width: 100%;
+	max-height: 100%;
+}
