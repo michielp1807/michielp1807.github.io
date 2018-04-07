@@ -11,7 +11,7 @@
 </head>
 <body>
 	<h1>Javascript Oscillator</h1>
-	<canvas width="400" height="160" id="visualizer"></canvas>
+	<canvas width="400" height="160" id="waveform"></canvas>
 	<p>Volume: <input type="range" min="0" max="1" value="0" step="0.01" onchange="inputChange('volume', value)"></p>
 	<p>Frequency: <input id="freqSlider" type="range" min="0" max="4.381" value="2.64" step="0.001" onchange="inputChange('frequency', value)" style="width: 240px;"> <span id="hertz">440.0</span> Hz</p>
 	<p>Wave Type: <select onchange="inputChange('waveType', value)">
@@ -20,6 +20,7 @@
 		<option value="sawtooth">sawtooth</option>
 		<option value="triangle">triangle</option>
 	</select></p>
+	<canvas width="600" height="200" id="freqbar"></canvas>
 
 	<div id="keys"></div>
 </body>

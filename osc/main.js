@@ -2,7 +2,7 @@ let osc1;
 
 $(function(){
 	visualizerSetup();
-	osc1 = new osc("sine", 220);
+	osc1 = new osc("sine", 440);
 	keysSetup();
 });
 

@@ -1,43 +1,66 @@
 let analyser;
 let bufferLength;
 let dataArray;
-let canvasCtx;
-const visWidth = 400;
-const visHeight = 160;
+let waveformCtx;
+let freqbarCtx;
+const waveformWidth = 400;
+const waveformHeight = 160;
+const freqbarWidth = 600;
+const freqbarHeight = 200;
 
 function visualizerSetup() {
 	analyser = ctx.createAnalyser();
 	analyser.connect(ctx.destination);
-	analyser.fftSize = 2048;
+	analyser.fftSize = 1024;
 	bufferLength = analyser.frequencyBinCount;
 	dataArray = new Uint8Array(bufferLength);
 
-	canvasCtx = $("#visualizer")[0].getContext("2d");
-	canvasCtx.clearRect(0, 0, visWidth, visHeight);
+	waveformCtx = $("#waveform")[0].getContext("2d");
+	waveformCtx.clearRect(0, 0, waveformWidth, waveformHeight);
 
-	visualizerDraw();
+	freqbarCtx = $("#freqbar")[0].getContext("2d");
+	freqbarCtx.clearRect(0, 0, freqbarWidth, freqbarHeight);
+
+	waveformDraw();
+	freqbarDraw();
 }
 
-function visualizerDraw() {
-	drawVisual = requestAnimationFrame(visualizerDraw);
+function waveformDraw() {
+	drawWaveform = requestAnimationFrame(waveformDraw);
 	analyser.getByteTimeDomainData(dataArray);
-	canvasCtx.fillStyle = '#eee';
-	canvasCtx.fillRect(0, 0, visWidth, visHeight);
-	canvasCtx.lineWidth = 2;
-  canvasCtx.strokeStyle = '#555';
-  canvasCtx.beginPath();
-	let sliceWidth = visWidth * 1.0 / bufferLength;
+	waveformCtx.fillStyle = '#eee';
+	waveformCtx.fillRect(0, 0, waveformWidth, waveformHeight);
+	waveformCtx.lineWidth = 2;
+  waveformCtx.strokeStyle = '#555';
+  waveformCtx.beginPath();
+	let sliceWidth = waveformWidth * 1.0 / bufferLength;
   let x = 0;
-	for(var i = 0; i < bufferLength; i++) {
-    var v = dataArray[i] / 128.0;
-    var y = v * visHeight/2;
+	for(let i = 0; i < bufferLength; i++) {
+    let v = dataArray[i] / 128.0;
+    let y = v * waveformHeight/2;
     if(i === 0) {
-      canvasCtx.moveTo(x, y);
+      waveformCtx.moveTo(x, y);
     } else {
-      canvasCtx.lineTo(x, y);
+      waveformCtx.lineTo(x, y);
     }
     x += sliceWidth;
   }
-	canvasCtx.lineTo(visWidth, visHeight/2);
-  canvasCtx.stroke();
+	waveformCtx.lineTo(waveformWidth, waveformHeight/2);
+  waveformCtx.stroke();
+}
+
+function freqbarDraw() {
+	drawFreqbar = requestAnimationFrame(freqbarDraw);
+	analyser.getByteFrequencyData(dataArray);
+	freqbarCtx.fillStyle = '#eee';
+	freqbarCtx.fillRect(0, 0, freqbarWidth, freqbarHeight);
+	let barWidth = (freqbarWidth / bufferLength)*2;
+	let barHeight;
+	let x=0;
+	for(var i = 0; i < bufferLength; i++) {
+    barHeight = dataArray[i]/255*freqbarHeight;
+    freqbarCtx.fillStyle = 'hsla(0, 0%, 33%, '+dataArray[i]/255+')';
+		freqbarCtx.fillRect(x, freqbarHeight-barHeight, barWidth, barHeight);
+    x += barWidth;
+  }
 }
