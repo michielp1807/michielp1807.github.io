@@ -3,6 +3,8 @@ let bufferLength;
 let dataArray;
 let waveformCtx;
 let freqbarCtx;
+let freqSingleBarWidth;
+let showFiltersInVisualizer = false;
 const waveformWidth = 400;
 const waveformHeight = 160;
 const freqbarWidth = 600;
@@ -10,9 +12,10 @@ const freqbarHeight = 200;
 
 function visualizerSetup() {
 	analyser = ctx.createAnalyser();
-	analyser.connect(ctx.destination);
+	//analyser.connect(ctx.destination); NOW DONE IN MAIN.JS
 	analyser.fftSize = 1024;
 	bufferLength = analyser.frequencyBinCount;
+	freqSingleBarWidth = (freqbarWidth / bufferLength)*2;
 	dataArray = new Uint8Array(bufferLength);
 
 	waveformCtx = $("#waveform")[0].getContext("2d");
@@ -54,13 +57,22 @@ function freqbarDraw() {
 	analyser.getByteFrequencyData(dataArray);
 	freqbarCtx.fillStyle = '#eee';
 	freqbarCtx.fillRect(0, 0, freqbarWidth, freqbarHeight);
-	let barWidth = (freqbarWidth / bufferLength)*2;
 	let barHeight;
 	let x=0;
 	for(var i = 0; i < bufferLength; i++) {
     barHeight = dataArray[i]/255*freqbarHeight;
     freqbarCtx.fillStyle = 'hsla(0, 0%, 33%, '+dataArray[i]/255+')';
-		freqbarCtx.fillRect(x, freqbarHeight-barHeight, barWidth, barHeight);
-    x += barWidth;
+		freqbarCtx.fillRect(x, freqbarHeight-barHeight, freqSingleBarWidth, barHeight);
+    x += freqSingleBarWidth;
   }
+
+	if (filters[0] != undefined && showFiltersInVisualizer) {
+		for(let i=0; i<totalFilters; i++) {
+			freqbarCtx.strokeStyle= 'hsl('+360/totalFilters*i+', 50%, 25%)';
+			freqbarCtx.lineWidth=3;
+			freqbarCtx.beginPath();
+			freqbarCtx.arc(filters[i].x, filters[i].y, 10,0,2*Math.PI);
+			freqbarCtx.stroke();
+		}
+	}
 }

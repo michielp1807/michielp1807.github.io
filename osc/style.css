@@ -1,11 +1,12 @@
 body {
 	font-family: Arial, Helvetica, sans-serif;
 	text-align: center;
-	padding: 32px;
+	padding: 32px 32px 202px 32px;
 }
 
 input[type="range"] {
 	position: relative;
+	margin-top: 6px;
 	top: -4px;
 	-webkit-appearance: none;
 	appearance: none;
@@ -15,13 +16,36 @@ input[type="range"] {
 	background: #eee;
 }
 input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-		background: #aaa;
-    cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+	background: #aaa;
+  cursor: pointer;
+}
+
+p {
+	margin: 0.5em auto 0.5em auto;
+}
+
+h3 {
+
+	margin: 0.5em auto 0.2em auto;
+}
+
+table {
+	margin: 0.5em auto 0.5em auto;
+	border-collapse: collapse;
+	border: none;
+}
+td {
+	padding: 0 8px 0 8px;
+	text-align: center;
+	border-left: 3px solid #eee;
+}
+table td:first-child {
+	border-left: none;
 }
 
 #keys {
@@ -40,6 +64,7 @@ input[type="range"]::-webkit-slider-thumb {
 	font-weight: bold;
 	padding-top: 15%;
 	height: 100%;
+	cursor: pointer;
 }
 
 .blackKeys {
@@ -50,4 +75,5 @@ input[type="range"]::-webkit-slider-thumb {
 	color: white;
 	padding-top: 8%;
 	height: 60%;
+	cursor: pointer;
 }

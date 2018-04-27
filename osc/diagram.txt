@@ -1,0 +1,8 @@
+osc.js:
+ osc.osc -> osc.gain -> osc.vol -> analyser
+
+filter.js:
+ 
+
+visualizer.js:
+ analyser -> ctx.destination

@@ -31,7 +31,7 @@ function keysSetup() {
 function keyPress(i, mouse) {
 	let midiNumber = startingMIDI + i;
 	let freq = 440 * 2**((midiNumber-69)/12);
-	console.log(letters[i%12] + " (midi: " + midiNumber + ", " + freq.toFixed(1) + "Hz) " + mouse);
+	//console.log(letters[i%12] + " (midi: " + midiNumber + ", " + freq.toFixed(1) + "Hz) " + mouse);
 
 	if (mouse == "down") {
 		osc1.setFrequency(freq, 0);

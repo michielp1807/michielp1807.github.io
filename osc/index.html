@@ -4,6 +4,7 @@
   <title>Javascript Oscillator</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="osc.js"></script>
+	<script src="filter.js"></script>
 	<script src="visualizer.js"></script>
 	<script src="keys.js"></script>
 	<script src="main.js"></script>
@@ -21,6 +22,11 @@
 		<option value="triangle">triangle</option>
 	</select></p>
 	<canvas width="600" height="200" id="freqbar"></canvas>
+	<table id="filterTable">
+		<tr id="filterContainer">
+		</tr>
+	</table>
+	<p><a href="#" id="filtersShowHide" onclick="openOrCloseFilters()">Show filters</a></p>
 
 	<div id="keys"></div>
 </body>

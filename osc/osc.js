@@ -2,7 +2,7 @@ class osc {
 	constructor(type, frequency) {
 		this.vol = ctx.createGain();
 		this.vol.gain.setTargetAtTime(0, ctx.currentTime, 0);
-		this.vol.connect(analyser);
+		//this.vol.connect(analyser); NOW DONE IN MAIN.JS
 
 		this.gain = ctx.createGain();
 		this.gain.gain.setTargetAtTime(1, ctx.currentTime, 0);
