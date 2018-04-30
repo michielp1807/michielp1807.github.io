@@ -24,6 +24,20 @@ function visualizerSetup() {
 	freqbarCtx = $("#freqbar")[0].getContext("2d");
 	freqbarCtx.clearRect(0, 0, freqbarWidth, freqbarHeight);
 
+	// listen for mouse events (mouse events are located in filter.js)
+	$("#freqbar").mousedown(function (e) {
+	    handleMouseDown(e);
+	});
+	$("#freqbar").mousemove(function (e) {
+	    handleMouseMove(e);
+	});
+	$("#freqbar").mouseup(function (e) {
+	    handleMouseUpOrOut(e);
+	});
+	$("#freqbar").mouseout(function (e) {
+	    handleMouseUpOrOut(e);
+	});
+
 	waveformDraw();
 	freqbarDraw();
 }
@@ -58,6 +72,8 @@ function freqbarDraw() {
 	freqbarCtx.fillStyle = '#eee';
 	freqbarCtx.fillRect(0, 0, freqbarWidth, freqbarHeight);
 	let barHeight;
+
+	// draw frequency bars
 	let x=0;
 	for(var i = 0; i < bufferLength; i++) {
     barHeight = dataArray[i]/255*freqbarHeight;
@@ -66,13 +82,10 @@ function freqbarDraw() {
     x += freqSingleBarWidth;
   }
 
+	// draw filters
 	if (filters[0] != undefined && showFiltersInVisualizer) {
 		for(let i=0; i<totalFilters; i++) {
-			freqbarCtx.strokeStyle= 'hsl('+360/totalFilters*i+', 50%, 25%)';
-			freqbarCtx.lineWidth=3;
-			freqbarCtx.beginPath();
-			freqbarCtx.arc(filters[i].x, filters[i].y, 10,0,2*Math.PI);
-			freqbarCtx.stroke();
+			filters[i].draw(freqbarCtx, i);
 		}
 	}
 }
