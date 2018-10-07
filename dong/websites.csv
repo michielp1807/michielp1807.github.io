@@ -8,6 +8,7 @@ Groove Pizza,https://apps.musedlab.org/groovepizza/,Audio,Music,FALSE
 HTML5 Drum Kit,http://www.randomthink.net/labs/html5drums/,Audio,Music,FALSE
 In B Flat,http://www.inbflat.net/,Audio,Music,FALSE
 New Years Musicbox,https://www.newyearsmusicbox.com/,Audio,Music,FALSE
+Rave DJ,https://rave.dj/,Audio,Music,FALSE
 Record Tripping,http://www.recordtripping.com/,Audio,Music,TRUE
 Rick Astley Remixer,http://dinahmoelabs.com/rickastley,Audio,Music,FALSE
 Sampulator,http://sampulator.com/,Audio,Music,FALSE
@@ -18,6 +19,7 @@ Touch Pianist,http://touchpianist.com/,Audio,Music,FALSE
 Type Drummer,http://typedrummer.com/,Audio,Music,FALSE
 Cellular Tones,https://civim.org/experiment/eb2/,Audio,Other,FALSE
 Chrome Music Lab,https://musiclab.chromeexperiments.com/,Audio,Other,FALSE
+Javascript Oscillator Playground,https://michielp1807.github.io/osc/,Audio,Other,FALSE
 Key Light,https://lab.hakim.se/keylight/03b/,Audio,Other,FALSE
 Patatap,http://www.patatap.com/,Audio,Other,FALSE
 Radio Garden,http://radio.garden/live/,Audio,Other,FALSE
@@ -46,6 +48,7 @@ Skribbl.io,https://skribbl.io/,Games,Multiplayer,FALSE
 Slither.io,http://slither.io/,Games,Multiplayer,FALSE
 Splix.io,http://splix.io/,Games,Multiplayer,FALSE
 The Wiki Game,https://thewikigame.com/,Games,Multiplayer,FALSE
+Tix.tax,https://tix.tax/,Games,Multiplayer,FALSE
 Type Racer,http://play.typeracer.com/,Games,Multiplayer,FALSE
 Vertix.io,http://vertix.io/,Games,Multiplayer,FALSE
 Zlap.io,http://zlap.io/,Games,Multiplayer,FALSE
@@ -106,6 +109,7 @@ Trans Cube,http://code.jerev.be/ggo13-transcube/,Games,Other,FALSE
 ZType,http://zty.pe/,Games,Other,FALSE
 Baby Map,http://neal.fun/baby-map/,Informative,Earth,FALSE
 Flight Radar,https://www.flightradar24.com/,Informative,Earth,FALSE
+Google Earth,https://earth.google.com/web/,Informative,Earth,FALSE
 Ground Zero,http://www.carloslabs.com/projects/200712B/GroundZero-2-6.html,Informative,Earth,FALSE
 If It Were My Home,http://www.ifitweremyhome.com/,Informative,Earth,FALSE
 Jason Davies Map Projections,https://www.jasondavies.com/maps/,Informative,Earth,FALSE
@@ -192,7 +196,7 @@ Nice One Dad,http://niceonedad.com/,Random,,FALSE
 Ninjaflex,http://ninjaflex.com/,Random,,FALSE
 Nooooooooooooooo,http://nooooooooooooooo.com/,Random,,FALSE
 Noot Noot,https://noot.space/,Random,,FALSE
-Nulling The Void,http://www.nullingthevoid.com/,Random,,FALSE
+Nulling The Void,http://www.nullingthevoid.com/,Random,,TRUE
 OMFG Dogs,https://www.omfgdogs.com/,Random,,FALSE
 Ooooiiii,http://ooooiiii.com/,Random,,FALSE
 Pickle Donkey Knife,http://www.pickledonkeyknife.com/,Random,,FALSE
@@ -232,9 +236,11 @@ Your Game Idea Is Too Big,http://yourgameideaistoobig.com/,Random,,FALSE
 8bit Dash,http://www.8bitdash.com,Visual,,FALSE
 A Trippy Illusion,http://www.doctorhugo.org/illusions/illusion4.html,Visual,,FALSE
 Adobe Color Wheel,https://color.adobe.com/create/color-wheel/,Visual,,FALSE
+Art Palette,https://artsexperiments.withgoogle.com/artpalette/,Visual,,FALSE
 AsciiTube,https://asciitube.bgreco.net/,Visual,,FALSE
 Bomomo,http://bomomo.com/,Visual,,FALSE
 Colorful Fluid,https://www.yuichiroharai.com/experiments/fluid/,Visual,,FALSE
+Draw Your Island,http://neal.fun/draw-your-island/,Visual,,FALSE
 Even Stranger,http://evenstranger.pw/,Visual,,FALSE
 Geometrize Web,http://www.samcodes.co.uk/project/geometrize-haxe-web/,Visual,,FALSE
 Interactive Polyhedra,https://www.ibiblio.org/e-notes/webgl/polyhedra/polyhedra.htm,Visual,,FALSE
