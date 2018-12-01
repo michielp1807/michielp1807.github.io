@@ -14,15 +14,7 @@ $.ajax({
       }
     }
     console.log(websites);
-    let j=0;
-    let notChosen = [];
-    for (let i=0; i<websites.length; i++) {
-      if (websites[i].working == "") {
-        notChosen[j] = i;
-        j++;
-      }
-    }
-    let index = notChosen.splice(Math.floor(Math.random()*notChosen.length),1)[0];
+    let index = Math.floor(Math.random()*websites.length);
     window.location.href = websites[index].url;
   }
 });
