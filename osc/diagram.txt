@@ -1,8 +1,5 @@
+main.js:
+filter[0] -> ... -> filter[n] -> analyser -> ctx.destination
+
 osc.js:
- osc.osc -> osc.gain -> osc.vol -> analyser
-
-filter.js:
- 
-
-visualizer.js:
- analyser -> ctx.destination
+ osc.osc -> osc.gain -> osc.vol -> filter[0] or analyser

@@ -21,7 +21,7 @@ $(function(){
 
 function connectNodes() {
 	if (filters[0] != undefined) { // if filters are active
-		osc1.vol.connect(filters[0].f);
+		osc1.vol.connect(filters[0].f); // connect osc
 		for(let i=0; i<totalFilters-1; i++) {
 			filters[i].f.connect(filters[i+1].f);
 		}
