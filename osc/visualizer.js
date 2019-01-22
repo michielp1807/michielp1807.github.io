@@ -62,7 +62,7 @@ function waveformDraw() {
     }
     x += sliceWidth;
   }
-	waveformCtx.lineTo(waveformWidth, waveformHeight/2);
+	//waveformCtx.lineTo(waveformWidth, waveformHeight/2);
   waveformCtx.stroke();
 }
 

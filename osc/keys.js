@@ -13,7 +13,9 @@ function keysSetup() {
 	for (let i=0; i<totalKeys; i++) {
 		let key = document.createElement("button");
 		let letter = letters[i%12];
+		let midiNumber = startingMIDI + i;
 		key.innerHTML = letter;
+		key.id = "key" + midiNumber;
 		if (letter.length === 1) {
 			key.className = "whiteKeys";
 			key.style.width = whiteKeyWidth+"%";
@@ -22,10 +24,13 @@ function keysSetup() {
 			key.style.left = ((0.55+Math.floor(i/2 + i/12))*whiteKeyWidth)+"%";
 			key.style.width = blackKeyWidth+"%";
 		}
-		key.onmousedown = function() {keyPress(i, "down");};
-		key.onmouseup = function() {keyPress(i, "up");};
+		key.onmousedown = function() {mouseInput(midiNumber, "down")};
+		key.onmouseup = function() {mouseInput(midiNumber, "up")};
 		keys.append(key);
 	}
+
+	$(document).keydown(function(e) {keyboardInput(e.key, "down")});
+	$(document).keyup(function(e) {keyboardInput(e.key, "up")});
 }
 
 function activateNote(midiNumber) {
@@ -38,17 +43,16 @@ function activateNote(midiNumber) {
 }
 
 // mouse input
-function keyPress(i, mouse) {
-	let midiNumber = startingMIDI + i;
-	if (mouse == "down")
+function mouseInput(midiNumber, type) {
+	if (type == "down")
 		activateNote(midiNumber);
 }
 
 // keyboard input
-$(document).keypress(function(e){
-  //console.log(e);
+function keyboardInput(key, type) {
+  console.log(key + " (" + type + ")");
 	let midiNumber = 0;
-	switch(e.key.toLowerCase()) {
+	switch(key.toLowerCase()) {
 		case ']': midiNumber++; // G
 		case '=': midiNumber++; // F#
 		case '[': midiNumber++; // F
@@ -80,9 +84,15 @@ $(document).keypress(function(e){
 		case 'd': midiNumber++; // D#
 		case 'x': midiNumber++; // D
 		case 's': midiNumber++; // C#
-		case 'z': midiNumber += 60; // C4
+		case 'z': midiNumber += 48; // C4
 	}
 
-	if (midiNumber >= 60) // check if valid
-		activateNote(midiNumber);
-});
+	if (midiNumber >= 48) { // check if valid
+		if (type == "down") {
+			activateNote(midiNumber);
+			$("#key" + midiNumber).addClass('active');
+		} else if (type == "up") {
+			$("#key" + midiNumber).removeClass('active');
+		}
+	}
+}

@@ -58,6 +58,10 @@ table td:first-child {
 	background-color: #999;
 }
 
+#keys:focus {
+	outline: 0;
+}
+
 .whiteKeys {
 	/* position: absolute; */
 	background-color: white;
@@ -65,6 +69,10 @@ table td:first-child {
 	padding-top: 15%;
 	height: 100%;
 	cursor: pointer;
+}
+
+.whiteKeys:active, .whiteKeys.active {
+	background-color: #ccc;
 }
 
 .blackKeys {
@@ -76,4 +84,8 @@ table td:first-child {
 	padding-top: 8%;
 	height: 60%;
 	cursor: pointer;
+}
+
+.blackKeys:active, .blackKeys.active {
+	background-color: #333;
 }
