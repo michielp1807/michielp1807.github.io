@@ -1,0 +1,42 @@
+body {
+	font-family: helvetica, sans-serif;
+	text-align: center;
+	margin: 0px;
+	pointer-events: none;
+}
+
+#controls {
+	position: absolute;
+	bottom: 40px;
+	width: 100%;
+}
+
+table {
+	margin: auto;
+}
+
+td {
+	text-align: center;
+	padding: 0px 10px;
+	pointer-events: auto;
+}
+
+h1 {
+	position: fixed;
+	top: 40px;
+	margin: 0px;
+	width: 100%;
+	pointer-events: auto;
+}
+
+h4 {
+	margin: 0px;
+}
+
+canvas {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	pointer-events: auto;
+}
