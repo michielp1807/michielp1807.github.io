@@ -1,13 +1,14 @@
 const CONFIGS = [
+	[5, 72, 7, -1],
   [6, 330, 6, 0],
-	[5, 72, 7, -1]
+	[7, 51, 8, -1],
+	[8, 270, 7, 1],
+	[12, 75, 6, -2]
 ];
 
 function setup() {
 	let canvas = createCanvas(windowWidth,windowHeight);
 	let config = CONFIGS[Math.floor(Math.random()*CONFIGS.length)];
-
-	console.log(config);
 
 	$("#sidesSlider")[0].value = config[0];
 	$("#angleSlider")[0].value = config[1];
@@ -25,7 +26,9 @@ function draw() {
 	background(255);
 	stroke(0);
 	strokeWeight(1);
+
 	noFill();
+
 
 	translate(cameraX, cameraY);
 
@@ -40,12 +43,12 @@ function draw() {
 	$("#polyNum").text(polygons);
 
 	let offsetSlider = $("#offsetSlider")[0];
-  offsetSlider.min = -sides+1;
-  offsetSlider.max = sides-1;
+  offsetSlider.min = -sides;
+  offsetSlider.max = sides;
 	let offset = parseInt(offsetSlider.value);
-	if (offset < -sides+1)
+	if (offset < -sides)
 	 	offset = -sides+1;
-	else if (offset > sides-1)
+	else if (offset > sides)
 	 	offset = sides-1;
 	$("#offsetNum").text(offset);
 

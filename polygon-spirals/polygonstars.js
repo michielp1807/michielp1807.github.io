@@ -5,7 +5,7 @@ function render(sides, polygons, angle, offset) {
 	let x = 0;
 	let y = 0;
 
-	offset = ((offset%sides) + sides) % sides;// fix negative offset
+	offset = ((offset%sides) + sides) % sides; // fix negative offset
 
 	let coords = getCoordsOnCircle(x, y, zoom, sides, angle);
 

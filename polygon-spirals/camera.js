@@ -2,30 +2,38 @@ let cameraX;
 let cameraY;
 let xOffset = 0.0;
 let yOffset = 0.0;
-let canvasClicked = false;
+let canvasClickStatus = 0;
 let zoom = 150;
 
 function setupCamera(canvas) {
 	cameraX = width/2;
 	cameraY = height/2 + 50;
 
-	canvas.mousePressed(function() {
-		xOffset = mouseX - cameraX;
-		yOffset = mouseY - cameraY;
-		canvasClicked = true;
-	});
-
-	canvas.mouseReleased(function() {
-		canvasClicked = false;
-	});
-
+	canvas.touchStarted(clickDown);
+	canvas.touchEnded(clickUp);
 	canvas.mouseWheel(canvasZoom);
 }
 
-function mouseDragged() {
-	if (canvasClicked) {
+function clickDown() {
+	canvasClickStatus = 1;
+}
+
+function clickUp() {
+	canvasClickStatus = 0;
+}
+
+// global touch moved event
+function touchMoved() {
+	// don't rely on touchstarted, chrome android broke it
+	// so instead I use this click status thing
+	if (canvasClickStatus == 1) {
+		xOffset = mouseX - cameraX;
+		yOffset = mouseY - cameraY;
+		canvasClickStatus++;
+	} else if (canvasClickStatus == 2) {
   	cameraX = mouseX-xOffset;
   	cameraY = mouseY-yOffset;
+		return false;
   }
 }
 
