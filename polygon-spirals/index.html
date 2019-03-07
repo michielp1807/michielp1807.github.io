@@ -7,6 +7,7 @@
     <script src="./lib/p5.dom.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="sketch.js"></script>
+		<script src="camera.js"></script>
 		<script src="polygonstars.js"></script>
   </head>
   <body>
@@ -19,16 +20,16 @@
 						<input type="range" min="4" max="50" value="6" id="sidesSlider">
 					</td>
 					<td>
-						<h4>Size: <span id="sizeNum">150</span></h4>
-						<input type="range" min="10" max="500" value="150" id="sizeSlider">
-					</td>
-					<td>
-						<h4>Angle: <span id="angleNum">0</span>°</h4>
-						<input type="range" min="0" max="360" value="0" id="angleSlider">
+						<h4>Angle: <span id="angleNum">330</span>°</h4>
+						<input type="range" min="0" max="360" value="330" id="angleSlider">
 					</td>
 					<td>
 						<h4>Polygons: <span id="polyNum">6</span></h4>
 						<input type="range" min="1" max="20" value="6" id="polySlider">
+					</td>
+					<td>
+						<h4>Offset: <span id="offsetNum">0</span></h4>
+						<input type="range" min="-5" max="5" value="0" id="offsetSlider">
 					</td>
 				</tr>
 			</table>

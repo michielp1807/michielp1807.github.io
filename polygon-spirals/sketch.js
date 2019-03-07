@@ -1,35 +1,20 @@
-let cameraX;
-let cameraY;
-let xOffset = 0.0;
-let yOffset = 0.0;
-let canvasClicked = false;
+const CONFIGS = [
+  [6, 330, 6, 0],
+	[5, 72, 7, -1]
+];
 
 function setup() {
 	let canvas = createCanvas(windowWidth,windowHeight);
+	let config = CONFIGS[Math.floor(Math.random()*CONFIGS.length)];
 
-	// camera movement
-	cameraX = width/2;
-	cameraY = height/2;
-	canvas.mousePressed(function() {
-		xOffset = mouseX - cameraX;
-	  yOffset = mouseY - cameraY;
-		canvasClicked = true;
-	});
-	canvas.mouseReleased(function() {
-		canvasClicked = false;
-	});
-	canvas.mouseWheel(function(e) {
-		let delta = Math.sign(e.deltaY);
-		let size = $("#sizeSlider")[0].value;
-		$("#sizeSlider")[0].value = parseInt(size) - 20 * delta;
-	});
-}
+	console.log(config);
 
-function mouseDragged() {
-	if (canvasClicked) {
-  	cameraX = mouseX-xOffset;
-  	cameraY = mouseY-yOffset;
-  }
+	$("#sidesSlider")[0].value = config[0];
+	$("#angleSlider")[0].value = config[1];
+	$("#polySlider")[0].value = config[2];
+	$("#offsetSlider")[0].value = config[3];
+
+	setupCamera(canvas);
 }
 
 function windowResized() {
@@ -44,54 +29,25 @@ function draw() {
 
 	translate(cameraX, cameraY);
 
-	let sides = $("#sidesSlider")[0].value;
+	let sides = parseInt($("#sidesSlider")[0].value);
 	$("#sidesNum").text(sides);
 
-	let polygons = $("#polySlider")[0].value;
-	$("#polyNum").text(polygons);
-
-	let size = $("#sizeSlider")[0].value;
-	$("#sizeNum").text(size);
-
-	let angle = $("#angleSlider")[0].value;
+	let angle = parseInt($("#angleSlider")[0].value);
 	$("#angleNum").text(angle);
 	angle = (angle % 360)/360 * TWO_PI;
 
-	let x = 0;
-	let y = 0;
+	let polygons = parseInt($("#polySlider")[0].value);
+	$("#polyNum").text(polygons);
 
-	let coords = getCoordsOnCircle(x, y, size, sides, angle);
+	let offsetSlider = $("#offsetSlider")[0];
+  offsetSlider.min = -sides+1;
+  offsetSlider.max = sides-1;
+	let offset = parseInt(offsetSlider.value);
+	if (offset < -sides+1)
+	 	offset = -sides+1;
+	else if (offset > sides-1)
+	 	offset = sides-1;
+	$("#offsetNum").text(offset);
 
-	for (let i=0; i<polygons; i++) {
-		drawPolygonStar(coords);
-
-		if (i < polygons-1) {
-		  // new polygon is defined with corners coords[0], coords[2] and p:
-			let p = intersection(coords[0], coords[2], coords[1], coords[sides-1]);
-			//ellipse(p[0], p[1], 10); // for debugging
-
-		  let a = TWO_PI/sides;
-			let b = HALF_PI - a/2;
-
-			let newSideLength = dist(coords[0][0], coords[0][1], p[0], p[1]);
-			let newRadius = newSideLength / (2*cos(b));
-
-			x = p[0] + cos(b - angle) * newRadius;
-			y = p[1] - sin(b - angle) * newRadius;
-
-			if (sides%2 == 0)
-				angle += PI/sides;
-
-			coords = getCoordsOnCircle(x, y, newRadius, sides, angle);
-		}
-	}
-}
-
-function intersection(c1, c2, c3, c4) {
-	// https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection#Given_two_points_on_each_line
-	let px = ((c1[0]*c2[1]-c1[1]*c2[0])*(c3[0]-c4[0])-(c1[0]-c2[0])*(c3[0]*c4[1]-c3[1]*c4[0]))
-	 				/ ((c1[0]-c2[0])*(c3[1]-c4[1])-(c1[1]-c2[1])*(c3[0]-c4[0]));
-  let py = ((c1[0]*c2[1]-c1[1]*c2[0])*(c3[1]-c4[1])-(c1[1]-c2[1])*(c3[0]*c4[1]-c3[1]*c4[0]))
-	 				/ ((c1[0]-c2[0])*(c3[1]-c4[1])-(c1[1]-c2[1])*(c3[0]-c4[0]));
-  return [px, py];
+	render(sides, polygons, angle, offset);
 }
