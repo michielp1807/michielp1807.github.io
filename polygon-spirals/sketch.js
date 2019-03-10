@@ -29,15 +29,24 @@ function draw() {
 
 	noFill();
 
-
 	translate(cameraX, cameraY);
 
 	let sides = parseInt($("#sidesSlider")[0].value);
 	$("#sidesNum").text(sides);
 
-	let angle = parseInt($("#angleSlider")[0].value);
+	let angle = parseFloat($("#angleSlider")[0].value);
 	$("#angleNum").text(angle);
-	angle = (angle % 360)/360 * TWO_PI;
+
+	angle = radians(angle);
+
+	if (oldTouchAngle != touchAngle) {
+		angle = realMod(angle - (touchAngle - oldTouchAngle), TWO_PI);
+		let degreeAngle = degrees(angle).toFixed(3);
+		$("#angleSlider")[0].value = degreeAngle;
+		$("#angleNum").text(degreeAngle);
+		oldTouchAngle = touchAngle;
+	}
+
 
 	let polygons = parseInt($("#polySlider")[0].value);
 	$("#polyNum").text(polygons);
@@ -53,4 +62,10 @@ function draw() {
 	$("#offsetNum").text(offset);
 
 	render(sides, polygons, angle, offset);
+}
+
+function angleSliderClick() {
+	// when changing the angle with the slider, use steps of 1 degree,
+	// when using double touch, a step size of 0.001 is used.
+	$("#angleSlider")[0].step = "1";
 }
