@@ -6,9 +6,13 @@ let whichConstant = "";
 let level = 0;
 let currentDigit = 0;
 let pressedKeys = {};
+let skipping = false;
 const maxLevel = 1001;
 
 $(function () { // on document ready
+	// hide skip button
+	$("#skipButton").hide();
+
 	// set max level of level selector
 	$("#startFrom")[0].max = maxLevel;
 
@@ -53,6 +57,11 @@ $(function () { // on document ready
 	});
 });
 
+function skipButtonClick() {
+	skipping = true;
+	$("#skipButton").fadeOut();
+}
+
 function play() {
 	// activated when play button is pressed
 	whichConstant = $("#whichConstant")[0].value;
@@ -79,6 +88,12 @@ function startLevel() {
 	}
 	$("#levelNumber").text(level);
 	currentDigit = 0;
+
+  // show skip button
+	if (level >= 50) {
+		$("#skipButton").fadeIn();
+	}
+
 	setTimeout(sayNumber, 1000);
 }
 
@@ -100,7 +115,14 @@ function hideNumber(timeout) {
 	let numkey = numpad[numberString[currentDigit]];
 	numkey.className = "";
 	currentDigit++;
-	if (currentDigit >= level) {
+
+	// hide skip button
+	if (level - currentDigit < 10) {
+		$("#skipButton").fadeOut();
+	}
+
+	if (skipping || currentDigit >= level) {
+		skipping = false;
 		startUserInput();
 	} else {
 		setTimeout(sayNumber, timeout);

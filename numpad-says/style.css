@@ -56,6 +56,14 @@ h2 {
 
 button {
 	cursor: pointer;
+	width: 60px;
+	height: 30px;
+}
+
+#skipButton {
+	margin-top: 5em;
+	width: 60px;
+	height: 30px;
 }
 
 #container {
