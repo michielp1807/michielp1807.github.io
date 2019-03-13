@@ -252,7 +252,7 @@ Windows 93,http://www.windows93.net/,Random,,FALSE
 Yes No If,http://yesnoif.com/,Random,,FALSE
 Your Game Idea Is Too Big,http://yourgameideaistoobig.com/,Random,,FALSE
 8bit Dash,http://www.8bitdash.com,Visual,,FALSE
-A Trippy Illusion,http://www.doctorhugo.org/illusions/illusion4.html,Visual,,FALSE
+A Trippy Illusion,http://www.doctorhugo.org/illusions/illusion4.html,Visual,,TRUE
 Adobe Color Wheel,https://color.adobe.com/create/color-wheel/,Visual,,FALSE
 Art Palette,https://artsexperiments.withgoogle.com/artpalette/,Visual,,FALSE
 AsciiTube,https://asciitube.bgreco.net/,Visual,,FALSE
@@ -265,6 +265,7 @@ Even Stranger,http://evenstranger.pw/,Visual,,FALSE
 Geometrize Web,http://www.samcodes.co.uk/project/geometrize-haxe-web/,Visual,,FALSE
 Interactive Polyhedra,https://www.ibiblio.org/e-notes/webgl/polyhedra/polyhedra.htm,Visual,,FALSE
 Iso,http://wxs.ca/iso/,Visual,,FALSE
+JavaScript Particle System Sandbox,https://jarrodoverson.com/static/demos/particlesystem/,Visual,,FALSE
 Linify,http://linify.me/,Visual,,FALSE
 Pixel Chart,https://anvaka.github.io/pixchart/,Visual,,FALSE
 Poly,https://poly.google.com/,Visual,,FALSE
