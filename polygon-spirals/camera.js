@@ -41,6 +41,7 @@ function touchMoved() {
 	// canvasClickStatus = 2: next inputs of single touch
 	// canvasClickStatus = 3: first input of double touch
 	// canvasClickStatus = 4: next inputs of double touch
+	
 	if (canvasClickStatus == 1) {
 		xOffset = mouseX - cameraX;
 		yOffset = mouseY - cameraY;
@@ -48,7 +49,6 @@ function touchMoved() {
 	} else if (canvasClickStatus == 2) {
   	cameraX = mouseX-xOffset;
   	cameraY = mouseY-yOffset;
-		return false;
   } else if (canvasClickStatus == 3) {
 		touchX = touches[0].x;
 		touchY = touches[0].y;
@@ -73,8 +73,10 @@ function touchMoved() {
 		touchDist = newTouchDist;
 
 		// set camera position correctly after rotation + scaling
-		let rotatedCameraX = delta * (cos(touchAngle - newTouchAngle) * (cameraX - touchX) - sin(touchAngle - newTouchAngle) * (cameraY - touchY)) + touchX;
-		let rotatedCameraY = delta * (sin(touchAngle - newTouchAngle) * (cameraX - touchX) + cos(touchAngle - newTouchAngle) * (cameraY - touchY)) + touchY;
+		let sinOldNew = sin(touchAngle - newTouchAngle);
+		let cosOldNew = cos(touchAngle - newTouchAngle);
+		let rotatedCameraX = delta * (cosOldNew * (cameraX - touchX) - sinOldNew * (cameraY - touchY)) + touchX;
+		let rotatedCameraY = delta * (sinOldNew * (cameraX - touchX) + cosOldNew * (cameraY - touchY)) + touchY;
 		cameraX = rotatedCameraX;
 		cameraY = rotatedCameraY;
 
