@@ -1,1 +1,0 @@
-for /r %%I in (*.wav) do vlc -I dummy %%I ":sout=#transcode{acodec=mp3,ab=192}:std{dst=%%~nI.mp3,access=file}" vlc://quit

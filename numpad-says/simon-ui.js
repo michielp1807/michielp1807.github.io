@@ -10,7 +10,7 @@ function showMenu() {
 function startFromUpdate() {
 	// activated by the start from level control
 	let v = parseInt($("#startFrom")[0].value);
-	if (v > maxLevel) $("#startFrom")[0].value = maxLevel;
+	if (v > MAX_LEVEL) $("#startFrom")[0].value = MAX_LEVEL;
 	if (v < 1) $("#startFrom")[0].value = 1;
 }
 

@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="simon-audio.js"></script>
+	<script src="simon-io.js"></script>
 	<script src="simon-ui.js"></script>
 	<script src="simon.js"></script>
 	<link rel="icon" href="favicon.png" sizes="16x16 32x32" type="image/png">
@@ -42,6 +43,7 @@
 				</div>
 			</div>
 			<div id="level">
+				<i class="material-icons" id="skipIcon" style="display: none;">skip_next</i>
 				<table>
 					<tr>
 						<td>7</td>
@@ -68,7 +70,7 @@
 		<p>
 			Level: <span id="levelNumber">0</span>
 		</p>
-		<button id="skipButton" onclick="skipButtonClick()">Skip</button>
+		<button id="skipButton" onclick="skipButtonClick()" style="display: none;">Skip</button>
 	</div>
 	<p id="volumeControlls">
 		<i class="material-icons" onmousedown="setVolume(true)" id="volumeIcon">volume_up</i>

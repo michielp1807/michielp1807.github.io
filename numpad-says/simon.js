@@ -7,60 +7,25 @@ let level = 0;
 let currentDigit = 0;
 let pressedKeys = {};
 let skipping = false;
-const maxLevel = 1001;
+const MAX_LEVEL = 1001;
+const SKIP_SHOWS = 20;
 
 $(function () { // on document ready
 	// hide skip button
 	$("#skipButton").hide();
 
 	// set max level of level selector
-	$("#startFrom")[0].max = maxLevel;
+	$("#startFrom")[0].max = MAX_LEVEL;
 
-	// load highscore
+	// load highscore in simon-ui.js
 	loadHighscore();
 
-	// load volume from local storage
+	// load volume from local storage in simon-audio.js
 	loadVolume();
 
-	// set up numpad
-	let tds = $("td");
-	for (let i=0; i<tds.length; i++) {
-		tds[i].onmousedown = function() {
-      onUserInput(this.innerHTML);
-    };
-		numpad[tds[i].innerHTML] = tds[i];
-	}
-
-	// keyboard events
-	$(this).keydown(function(e) {
-		if (e.keyCode == 13) {
-			if ($("#menu").is(":visible")) play();
-			return;
-		} else if (e.keyCode == 27 || e.keyCode == 8) {
-			// on esc or backspace go to menu
-			showMenu();
-			return;
-		}
-		let numkey = numpad[e.key];
-		if (numkey != undefined && userCanType && pressedKeys[e.which] != true) {
-			pressedKeys[e.which] = true;
-			numkey.className = "active";
-			onUserInput(e.key);
-		}
-	});
-	$(this).keyup(function(e) {
-		let numkey = numpad[e.key];
-		if (numkey != undefined) {
-			pressedKeys[e.which] = false;
-			numkey.className = userCanType ? "allowed" : "";
-		}
-	});
+	// setup io in simon-io.js
+	setupIO();
 });
-
-function skipButtonClick() {
-	skipping = true;
-	$("#skipButton").fadeOut();
-}
 
 function play() {
 	// activated when play button is pressed
@@ -78,7 +43,7 @@ function play() {
 function startLevel() {
 	level++;
 	userString = "";
-	if (level>maxLevel) {
+	if (level>MAX_LEVEL) {
 		showMenu();
 		return;
 	}
@@ -99,15 +64,20 @@ function startLevel() {
 
 function sayNumber() {
 	if ($("#menu").is(":visible")) return;
+
 	let numkey = numpad[numberString[currentDigit]];
 	numkey.className = "active";
+
 	if (numberString[currentDigit] == ".") {
 		playSfx(0);
 	} else {
 		playSfx(parseInt(numberString[currentDigit])+1);
 	}
+
+	// calculate new timeout
 	let timeout = 400+40*(currentDigit-level+1);
-	if (timeout<100) timeout = 100;
+	if (timeout < 100) timeout = 100;
+
 	setTimeout(hideNumber, timeout, timeout);
 }
 
@@ -117,38 +87,40 @@ function hideNumber(timeout) {
 	currentDigit++;
 
 	// hide skip button
-	if (level - currentDigit < 10) {
+	if (level - currentDigit <= SKIP_SHOWS) {
 		$("#skipButton").fadeOut();
 	}
 
-	if (skipping || currentDigit >= level) {
+	if (skipping) {
 		skipping = false;
+		setTimeout(skipAnimation, 200);
+	} else if (currentDigit >= level) {
 		startUserInput();
 	} else {
 		setTimeout(sayNumber, timeout);
 	}
 }
 
+function skipAnimation() {
+	playSfx("skip");
+	$("#skipIcon").fadeIn(500, function() {
+		$("#skipIcon").fadeOut(500, function() {
+			$("#skipIcon").fadeIn(500, function() {
+				$("#skipIcon").fadeOut(500, function() {
+					setTimeout(function () {
+						currentDigit = level - SKIP_SHOWS;
+						sayNumber();
+					}, 500);
+				});
+			});
+		});
+	});
+}
+
 function startUserInput() {
 	userCanType = true;
 	for (numkey in numpad) {
 		numpad[numkey].className = "allowed";
-	}
-}
-
-function onUserInput(key) {
-	if (userCanType) {
-		userString += key;
-		if (userString == numberString.substring(0, userString.length)) {
-			if (key == ".") {
-				playSfx(0);
-			} else {
-				playSfx(parseInt(key)+1);
-			}
-			if (userString == numberString.substring(0, level)) nextLevel();
-		} else {
-			gameOver();
-		}
 	}
 }
 

@@ -9,49 +9,14 @@ body {
 }
 
 h1 {
-	font-size: 3em;
+	font-size: 2.5em;
 	margin-bottom: 0;
 }
+
 h2 {
 	font-size: 1.5em;
 	margin-top: 0;
 	margin-bottom: 60px;
-}
-@media only screen and (max-width: 850px)  {
-	body {
-		margin: 30px;
-	}
-	h1 {
-		font-size: 2em;
-	}
-	h2 {
-		font-size: 1em;
-		margin-bottom: 30px;
-	}
-}
-@media only screen and (max-width: 570px)  {
-	body {
-		margin: 25px;
-	}
-	h1 {
-		font-size: 1.6em;
-	}
-	h2 {
-		font-size: 0.8em;
-		margin-bottom: 25px;
-	}
-}
-@media only screen and (max-width: 460px)  {
-	body {
-		margin: 20px;
-	}
-	h1 {
-		font-size: 1.4em;
-	}
-	h2 {
-		font-size: 0.75em;
-		margin-bottom: 20px;
-	}
 }
 
 button {
@@ -64,6 +29,17 @@ button {
 	margin-top: 5em;
 	width: 60px;
 	height: 30px;
+}
+
+#skipIcon {
+	position: absolute;
+  font-size: 160px;
+  width: 100%;
+  left: 0px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #container {
