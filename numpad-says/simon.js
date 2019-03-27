@@ -32,8 +32,12 @@ function play() {
 	whichConstant = $("#whichConstant")[0].value;
 	$.get("numbers/"+whichConstant+".txt", function(data) {
 		numberString = data;
-		level = parseInt($("#startFrom")[0].value) - 1;
-		if (isNaN(level)) level = 0;
+		let startFrom = $("#startFrom")[0].value;
+		if (startFrom == "") {
+			level = parseInt($("#startFrom")[0].placeholder) - 1;
+		} else {
+			level = parseInt(startFrom) - 1;
+		}
 		if (level>1000) level = 1000;
 		$("#menu").hide();
 		startLevel();
