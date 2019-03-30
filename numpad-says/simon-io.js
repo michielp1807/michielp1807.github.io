@@ -35,8 +35,10 @@ function setupIO() {
 }
 
 function skipButtonClick() {
-	skipping = true;
-	$("#skipButton").fadeOut();
+	if (!skipping) {
+		skipping = true;
+		$("#skipButton").fadeOut(200);
+	}
 }
 
 function onUserInput(key) {
@@ -51,6 +53,8 @@ function onUserInput(key) {
 			} else {
 				playSfx(parseInt(key)+1);
 			}
+
+			setProgressBar();
 
 			// start next level
 			if (userString == numberString.substring(0, level))

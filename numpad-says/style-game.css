@@ -1,0 +1,102 @@
+#game {
+	position: relative;
+	margin: 0px auto;
+	height: 280px;
+}
+
+#level {
+	width: 100%;
+	height: 100%;
+}
+
+table {
+	background-color: #111;
+	margin: 0px auto;
+  border: 3px inset #ddd;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	 -khtml-user-select: none; /* Konqueror HTML */
+		 -moz-user-select: none; /* Firefox */
+			-ms-user-select: none; /* Internet Explorer/Edge */
+					user-select: none; /* Chrome and Opera */
+}
+td {
+	border: 4px outset #fff;
+	background-color: #444;
+	color: #fff;
+  padding: 15px 20px;
+	margin: 0px auto;
+	text-align: center;
+	font-size: 1.5em;
+	cursor: default;
+	shadow: none;
+	z-index: -1000;
+}
+td.allowed {
+	cursor: pointer;
+}
+td.allowed:hover {
+	border: 4px inset #ddd;
+	background-color: #222;
+}
+td.allowed:active, td.active {
+	border: 4px inset #ff6;
+	background-color: #442;
+	color: #ff6;
+	text-shadow: 0px 0px 5px #fff;
+	box-shadow: 0px 0px 15px #fff;
+	z-index: -900 !important;
+}
+td.wrong {
+	border: 4px inset #f22;
+	background-color: #411;
+	color: #f22;
+	text-shadow: 0px 0px 5px #fff;
+	box-shadow: 0px 0px 15px #fff;
+	z-index: -900 !important;
+}
+
+#progressBar {
+	position: relative;
+	font-size: 1.2em;
+	font-weight: bold;
+	width: 188px;
+	margin: 10 auto;
+	border: 3px inset #ddd;
+}
+#progressBarFillUser {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 100%;
+	background-color: #444;
+	z-index: -10;
+}
+#progressBarFillPreview {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 0%;
+	height: 100%;
+	background-color: #150A2D;
+	z-index: -9;
+}
+
+#skipButton {
+	margin: 0px;
+	width: 60px;
+	height: 30px;
+}
+
+#skipIcon {
+	position: absolute;
+  font-size: 160px;
+  width: 100%;
+  left: 0px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+	z-index: 5;
+}

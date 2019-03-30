@@ -89,6 +89,7 @@ function hideNumber(timeout) {
 	let numkey = numpad[numberString[currentDigit]];
 	numkey.className = "";
 	currentDigit++;
+	setProgressBar();
 
 	// hide skip button
 	if (level - currentDigit <= SKIP_SHOWS) {
@@ -96,7 +97,6 @@ function hideNumber(timeout) {
 	}
 
 	if (skipping) {
-		skipping = false;
 		setTimeout(skipAnimation, 200);
 	} else if (currentDigit >= level) {
 		startUserInput();
@@ -106,7 +106,9 @@ function hideNumber(timeout) {
 }
 
 function skipAnimation() {
+	skipping = false;
 	playSfx("skip");
+	skipProgressBar(2000);
 	$("#skipIcon").fadeIn(500, function() {
 		$("#skipIcon").fadeOut(500, function() {
 			$("#skipIcon").fadeIn(500, function() {
@@ -135,8 +137,8 @@ function nextLevel() {
 			numpad[numkey].className = "";
 		}
 	}
-	if (localStorage.getItem(whichConstant) < level) {
-		localStorage.setItem(whichConstant, level);
+	if (localStorage.getItem("NSNC" + whichConstant) < level) {
+		localStorage.setItem("NSNC" + whichConstant, level);
 	}
 	setTimeout(startLevel, 500);
 }

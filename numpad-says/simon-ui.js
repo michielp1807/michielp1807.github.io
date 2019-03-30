@@ -1,5 +1,8 @@
+// Menu Functions
+
 function showMenu() {
 	userCanType = false;
+	resetProgressBar();
 	for (let numkey in numpad) {
 		numpad[numkey].className = "";
 	}
@@ -17,8 +20,35 @@ function startFromUpdate() {
 function loadHighscore() {
 	// update highscore
 	whichConstant = $("#whichConstant")[0].value;
-	let highscore = localStorage.getItem(whichConstant);
-	if (!highscore) highscore = 0;
+	let highscore = localStorage.getItem("NSNC" + whichConstant);
+	if (!highscore) highscore = 1;
 	$("#highscoreNumber").text(highscore);
 	$("#startFrom")[0].placeholder = highscore;
+}
+
+// Progress Bar Functions
+
+function setProgressBar() {
+	if (userCanType) {
+		let percentage = (userString.length / level) * 100;
+		$("#progressBarFillPreview").hide();
+		$("#progressBarFillUser").width(percentage + "%");
+	} else {
+		let percentage = (currentDigit / level) * 100;
+		$("#progressBarFillPreview").width(percentage + "%");
+		$("#progressBarFillPreview").show();
+	}
+}
+
+function skipProgressBar(time) {
+	// activated when skipping animation starts
+	let newPercentage = ((level - SKIP_SHOWS) / level) * 100 + "%";
+	$("#progressBarFillPreview").animate({
+		width: newPercentage
+	}, time);
+}
+
+function resetProgressBar() {
+	// activated in showMenu();
+	$("#progressBarFillUser").width("100%");
 }
