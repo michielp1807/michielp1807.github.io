@@ -34,12 +34,12 @@
 					</select>
 					<button type="button" onclick="play()">Go!</button>
 				</div>
-				<div>
+				<p id="highscore">
+					PB: Level <span id="highscoreNumber">100</span>
+				</p>
+				<div id="startFromDiv">
 					Start from:
-					<input id="startFrom" type="number" onchange="startFromUpdate()" placeholder="0" min="0" max="1001">
-				</div>
-				<div id="highscore">
-					<span>PB: Level <span id="highscoreNumber">100</span></span>
+					<input id="startFrom" type="number" onchange="startFromUpdate()" placeholder="1" min="1" max="1001">
 				</div>
 			</div>
 			<div id="level">
@@ -67,12 +67,12 @@
 				</table>
 			</div>
 		</div>
-		<p>
+		<div id="progressBar">
 			Level: <span id="levelNumber">0</span>
-		</p>
+		</div>
 		<button id="skipButton" onclick="skipButtonClick()" style="display: none;">Skip</button>
 	</div>
-	<p id="volumeControlls">
+	<p id="volumeControls">
 		<i class="material-icons" onmousedown="setVolume(true)" id="volumeIcon">volume_up</i>
 		<input type="range" min="0" max="1" value="1" step="0.01" oninput="setVolume()" id="volumeSlider">
 	</p>

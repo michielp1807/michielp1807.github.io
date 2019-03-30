@@ -39,7 +39,7 @@ function play() {
 			level = parseInt(startFrom) - 1;
 		}
 		if (level>1000) level = 1000;
-		$("#menu").hide();
+		$("#menu").fadeOut(150);
 		startLevel();
 	});
 }
@@ -141,12 +141,13 @@ function nextLevel() {
 	setTimeout(startLevel, 500);
 }
 
-function gameOver() {
+function gameOver(key) {
 	userCanType = false;
 	playSfx("gameover");
-	for (numkey in numpad) {
-		numpad[numkey].className = "";
-	}
+
+	numkey = numpad[key];
+	numkey.className = "wrong";
+
 	let correctKey = numpad[numberString[userString.length-1]];
 	correctKey.className = "active";
 	setTimeout(function() {

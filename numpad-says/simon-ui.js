@@ -4,14 +4,14 @@ function showMenu() {
 		numpad[numkey].className = "";
 	}
 	loadHighscore();
-	$("#menu").show();
+	$("#menu").fadeIn(150);
 }
 
 function startFromUpdate() {
 	// activated by the start from level control
 	let v = parseInt($("#startFrom")[0].value);
 	if (v > MAX_LEVEL) $("#startFrom")[0].value = MAX_LEVEL;
-	if (v < 0) $("#startFrom")[0].value = 0;
+	if (v < 1) $("#startFrom")[0].value = 1;
 }
 
 function loadHighscore() {

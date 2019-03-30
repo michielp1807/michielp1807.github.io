@@ -42,15 +42,21 @@ function skipButtonClick() {
 function onUserInput(key) {
 	if (userCanType) {
 		userString += key;
+
+		// if pressed key was correct
 		if (userString == numberString.substring(0, userString.length)) {
+			// play sound effect
 			if (key == ".") {
 				playSfx(0);
 			} else {
 				playSfx(parseInt(key)+1);
 			}
-			if (userString == numberString.substring(0, level)) nextLevel();
+
+			// start next level
+			if (userString == numberString.substring(0, level))
+				nextLevel();
 		} else {
-			gameOver();
+			gameOver(key);
 		}
 	}
 }
