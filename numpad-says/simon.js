@@ -89,6 +89,8 @@ function hideNumber(timeout) {
 	let numkey = numpad[numberString[currentDigit]];
 	numkey.className = "";
 	currentDigit++;
+
+	if ($("#menu").is(":visible")) return;
 	setProgressBar();
 
 	// hide skip button

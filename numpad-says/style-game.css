@@ -2,6 +2,7 @@
 	position: relative;
 	margin: 0px auto;
 	height: 280px;
+	padding: 5;
 }
 
 #level {
@@ -12,6 +13,7 @@
 table {
 	background-color: #111;
 	margin: 0px auto;
+	width: 200px;
   border: 3px inset #ddd;
 	-webkit-touch-callout: none; /* iOS Safari */
 	-webkit-user-select: none; /* Safari */
@@ -59,10 +61,10 @@ td.wrong {
 #progressBar {
 	position: relative;
 	font-size: 1.2em;
-	font-weight: bold;
-	width: 188px;
-	margin: 10 auto;
+	width: 200px;
+	margin: 12px auto;
 	border: 3px inset #ddd;
+	box-shadow: 2px 2px 2px #000C;
 }
 #progressBarFillUser {
 	position: absolute;
@@ -79,7 +81,7 @@ td.wrong {
 	top: 0px;
 	width: 0%;
 	height: 100%;
-	background-color: #150A2D;
+	background-color: hsl(228, 64%, 11%);;
 	z-index: -9;
 }
 
