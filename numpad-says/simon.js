@@ -11,20 +11,26 @@ const MAX_LEVEL = 1001;
 const SKIP_SHOWS = 20;
 
 $(function () { // on document ready
-	// hide skip button
-	$("#skipButton").hide();
-
 	// set max level of level selector
 	$("#startFrom")[0].max = MAX_LEVEL;
 
 	// load highscore in simon-ui.js
 	loadHighscore();
 
+	// load options in simon-menu.js
+	loadOptions();
+
+	// load sfx
+	loadSfx();
+
 	// load volume from local storage in simon-audio.js
 	loadVolume();
 
 	// setup io in simon-io.js
 	setupIO();
+
+	// setup menu
+	showMenu();
 });
 
 function play() {
@@ -34,18 +40,17 @@ function play() {
 		numberString = data;
 		let startFrom = $("#startFrom")[0].value;
 		if (startFrom == "") {
-			level = parseInt($("#startFrom")[0].placeholder) - 1;
+			level = parseInt($("#startFrom")[0].placeholder);
 		} else {
-			level = parseInt(startFrom) - 1;
+			level = parseInt(startFrom);
 		}
 		if (level>1000) level = 1000;
-		$("#menu").fadeOut(150);
+		hideMenu();
 		startLevel();
 	});
 }
 
 function startLevel() {
-	level++;
 	userString = "";
 	if (level>MAX_LEVEL) {
 		showMenu();
@@ -72,15 +77,18 @@ function sayNumber() {
 	let numkey = numpad[numberString[currentDigit]];
 	numkey.className = "active";
 
-	if (numberString[currentDigit] == ".") {
-		playSfx(0);
-	} else {
-		playSfx(parseInt(numberString[currentDigit])+1);
+	if (!options.optMuteKeys) {
+		if (numberString[currentDigit] == ".") {
+			playSfx(0);
+		} else {
+			playSfx(parseInt(numberString[currentDigit])+1);
+		}
 	}
 
 	// calculate new timeout
 	let timeout = 400+40*(currentDigit-level+1);
 	if (timeout < 100) timeout = 100;
+	timeout = timeout / options.optPrevSpeed;
 
 	setTimeout(hideNumber, timeout, timeout);
 }
@@ -141,7 +149,9 @@ function nextLevel() {
 	}
 	if (localStorage.getItem("NSNC" + whichConstant) < level) {
 		localStorage.setItem("NSNC" + whichConstant, level);
+		$("#startFrom").val("");
 	}
+	level += options.optDigPerRound;
 	setTimeout(startLevel, 500);
 }
 

@@ -1,30 +1,3 @@
-// Menu Functions
-function showMenu() {
-	userCanType = false;
-	resetProgressBar();
-	for (let numkey in numpad) {
-		numpad[numkey].className = "";
-	}
-	loadHighscore();
-	$("#menu").fadeIn(150);
-}
-
-function startFromUpdate() {
-	// activated by the start from level control
-	let v = parseInt($("#startFrom")[0].value);
-	if (v > MAX_LEVEL) $("#startFrom")[0].value = MAX_LEVEL;
-	if (v < 1) $("#startFrom")[0].value = 1;
-}
-
-function loadHighscore() {
-	// update highscore
-	whichConstant = $("#whichConstant")[0].value;
-	let highscore = localStorage.getItem("NSNC" + whichConstant);
-	if (!highscore) highscore = 1;
-	$("#highscoreNumber").text(highscore);
-	$("#startFrom")[0].placeholder = highscore;
-}
-
 // Progress Bar Functions
 function setProgressBar() {
 	updateBackgroundColor();
@@ -56,15 +29,17 @@ function resetProgressBar() {
 // Background Color Functions
 let backgroundHue = 228;
 function updateBackgroundColor() {
-	backgroundHue = (backgroundHue + 0.5) % 360;
-	$('body').css('background-color', 'hsl('+backgroundHue+', 64%, 11%)');
-	$('#progressBarFillPreview').css('background-color',
-			'hsl('+backgroundHue+', 64%, 11%)');
-	$("#menu").css('background-color', 'hsl('+backgroundHue+', 64%, 11%, 0.75)');
+	if (!options.optDisBgColor) {
+		backgroundHue = (backgroundHue + 0.5) % 360;
+		let hex =  hslToHex(Math.floor(backgroundHue)/360, 0.64, 0.11);
 
-	// https://gordonlesti.com/change-theme-color-via-javascript/
-	var metaThemeColor = document.querySelector("meta[name=theme-color]");
-  metaThemeColor.setAttribute("content", hslToHex(backgroundHue/360, 0.64, 0.11));
+		$('body').css('background-color', hex);
+		$('#progressBarFillPreview').css('background-color', hex);
+
+		// https://gordonlesti.com/change-theme-color-via-javascript/
+		var metaThemeColor = document.querySelector("meta[name=theme-color]");
+	  metaThemeColor.setAttribute("content", hex);
+	}
 }
 
 function hslToHex(h, s, l){

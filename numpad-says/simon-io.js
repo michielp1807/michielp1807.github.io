@@ -11,11 +11,15 @@ function setupIO() {
 	// keyboard events
 	$(this).keydown(function(e) {
 		if (e.keyCode == 13) {
-			if ($("#menu").is(":visible")) play();
+			if ($("#mainMenu").is(":visible")) play();
 			return;
-		} else if (e.keyCode == 27 || e.keyCode == 8) {
-			// on esc or backspace go to menu
-			showMenu();
+		} else if (e.keyCode == 27) {
+			// on esc go to menu
+			if ($("#optionsMenu").is(":visible")) {
+				hideOptionsMenu();
+			} else {
+				showMenu();
+			}
 			return;
 		}
 		let numkey = numpad[e.key];
@@ -48,10 +52,12 @@ function onUserInput(key) {
 		// if pressed key was correct
 		if (userString == numberString.substring(0, userString.length)) {
 			// play sound effect
-			if (key == ".") {
-				playSfx(0);
-			} else {
-				playSfx(parseInt(key)+1);
+			if (!options.optMuteKeys) {
+				if (key == ".") {
+					playSfx(0);
+				} else {
+					playSfx(parseInt(key)+1);
+				}
 			}
 
 			setProgressBar();

@@ -10,6 +10,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="simon-audio.js"></script>
+	<script src="simon-menu.js"></script>
 	<script src="simon-io.js"></script>
 	<script src="simon-ui.js"></script>
 	<script src="simon.js"></script>
@@ -17,16 +18,16 @@
 	<link rel="stylesheet" type="text/css" href="style-game.css">
 </head>
 <body>
-	<h1>Numpad Says Number Constants</h1>
-	<h2>A Memory Game About Number Constants</h2>
-	<div id="container">
-		<div id="game">
-			<div id="menu">
+<h1>Numpad Says Number Constants</h1>
+<h2>A Memory Game About Number Constants</h2>
+	<div id="game">
+		<div id="menu">
+			<div id="mainMenu" class="menu">
 				<div>
 					<h3>Numpad Says</h3>
 				</div>
 				<div>
-					<select id="whichConstant" onchange="loadHighscore()">
+					<select id="whichConstant" onchange="loadHighscore()" title="Which constant?">
 					  <option value="pi">π</option>
 						<option value="tau">τ</option>
 					  <option value="e">e</option>
@@ -35,51 +36,82 @@
 						<option value="root3">√3</option>
 						<option value="root5">√5</option>
 					</select>
-					<button type="button" onclick="play()">Go!</button>
+					<button type="button" onclick="play()" title="Start the game!">Go!</button>
 				</div>
 				<p>
 					PB: Level <span id="highscoreNumber">100</span>
 				</p>
 				<div id="menuStartFromDiv">
 					Start from:
-					<input id="startFrom" type="number" onchange="startFromUpdate()" placeholder="1" min="1" max="1001">
+					<input id="startFrom" type="number" onchange="startFromUpdate()" placeholder="1" min="1" max="1001" title="Which level to start from?">
 				</div>
+				<i class="material-icons menuSettingsButton" onmousedown="showOptionsMenu()" id="menuSettingsButton" title="Options">
+					settings
+				</i>
 			</div>
-			<div id="level">
-				<i class="material-icons" id="skipIcon" style="display: none;">skip_next</i>
-				<table>
-					<tr>
-						<td>7</td>
-						<td>8</td>
-						<td>9</td>
-					</tr>
-					<tr>
-						<td>4</td>
-						<td>5</td>
-						<td>6</td>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td>2</td>
-						<td>3</td>
-					</tr>
-					<tr>
-						<td colspan="2">0</td>
-						<td>.</td>
-					</tr>
-				</table>
-				<div id="progressBar">
-					<div id="progressBarFillUser"></div>
-					<div id="progressBarFillPreview"></div>
-					Level: <span id="levelNumber">0</span>
+			<div id="optionsMenu" class="menu" style="display: none;">
+				<div>
+					<h3>Options</h3>
 				</div>
-				<button id="skipButton" onclick="skipButtonClick()" style="display: none;">Skip</button>
+				<p>
+					Mute keys:
+					<input type="checkbox" id="optMuteKeys" oninput="saveOptions()" title="Mute the numpad key sounds">
+				</p>
+				<p>
+					Disable background<br>color change:
+					<input type="checkbox" id="optDisBgColor" oninput="saveOptions()" title="Disable background color change">
+				</p>
+				<p>
+					New digits per<br>round:
+					<input type="number" id="optDigPerRound" value="1" min="1" max="10" oninput="saveOptions()" title="Number of digits that get added each round">
+				</p>
+				<p>
+					Preview speed:<br>
+					Slow
+					<input type="range" id="optPrevSpeed" min="0.5" max="1.5" value="1" step="0.1" oninput="saveOptions()" title="Speed of the preview at the start of a level">
+					Fast
+				</p>
+				<i class="material-icons menuSettingsButton" onmousedown="hideOptionsMenu()" title="Go back">
+					arrow_back
+				</i>
 			</div>
+		</div>
+		<div id="level">
+			<i class="material-icons" id="skipIcon" style="display: none;">skip_next</i>
+			<table>
+				<tr>
+					<td>7</td>
+					<td>8</td>
+					<td>9</td>
+				</tr>
+				<tr>
+					<td>4</td>
+					<td>5</td>
+					<td>6</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td>2</td>
+					<td>3</td>
+				</tr>
+				<tr>
+					<td colspan="2">0</td>
+					<td>.</td>
+				</tr>
+			</table>
+			<div id="progressBar">
+				<div id="progressBarFillUser"></div>
+				<div id="progressBarFillPreview"></div>
+				Level: <span id="levelNumber">0</span>
+			</div>
+			<button id="skipButton" onclick="skipButtonClick()" style="display: none;">Skip</button>
 		</div>
 	</div>
 	<p id="volumeControls">
-		<i class="material-icons" onmousedown="setVolume(true)" id="volumeIcon">volume_up</i>
-		<input type="range" min="0" max="1" value="1" step="0.01" oninput="setVolume()" id="volumeSlider">
+		<i class="material-icons" onmousedown="setVolume(true)" id="volumeIcon" title="Mute/unmute">
+			volume_up
+		</i>
+		<input type="range" min="0" max="1" value="1" step="0.1" oninput="setVolume()" id="volumeSlider" title="Sound volume">
 	</p>
 </body>
 </html>

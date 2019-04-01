@@ -1,3 +1,5 @@
+/* Main */
+
 body {
 	background-color: hsl(228, 64%, 11%);
 	color: #fff;
@@ -9,12 +11,12 @@ body {
 }
 
 h1 {
-	font-size: 4vh;
+	font-size: 2em;
 	margin-bottom: 0;
 }
 
 h2 {
-	font-size: 2.75vh;
+	font-size: 1.2em;
 	margin-top: 0;
 	margin-bottom: 60px;
 }
@@ -26,32 +28,48 @@ button {
 	box-shadow: 2px 2px 2px #000C;
 }
 
-#container {
-	position: relative;
-	margin-bottom: 110px;
+.material-icons {
+	cursor: pointer;
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none; /* Safari */
+	 -khtml-user-select: none; /* Konqueror HTML */
+		 -moz-user-select: none; /* Firefox */
+			-ms-user-select: none; /* Internet Explorer/Edge */
+					user-select: none; /* Chrome and Opera */
 }
+
+/* Menu */
 
 #menu {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
-	text-align: center;
 	position: absolute;
-	width: 100%;
-	height: 100%;
-	background-color: hsla(228, 64%, 11%, 0.75);
 	z-index: 10;
+	height: 100%;
+	width: 300px;
+  padding-bottom: 40px;
 }
-#menu div {
+.menu div {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	margin: 4px;
 	height: 30px;
 	font-size: 1.1em;
+	padding: 0px 40px;
 }
-#menu input {
+.menu {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	bottom: 50px;
+	left: 0px;
+}
+.menu input {
 	margin-left: 10px;
 	width: 50px;
 	height: 30px;
@@ -61,19 +79,41 @@ button {
 	border-radius: 0px;
 	border-color: rgb(169, 169, 169);
 }
-#menu select, #menu button {
+.menu input[type=checkbox] {
+	position: relative;
+	top: 4px;
+	width: 18px;
+	height: 18px;
+}
+.menu select, .menu button {
 	display: inline;
 	width: 60px;
 	height: 30px;
 	box-shadow: 2px 2px 2px #000C;
 }
-#menu p {
+.menu p {
 	margin: 4px;
 	font-size: 1.1em;
 }
 #menuStartFromDiv {
 	margin-top: 12px !important;
 }
+.menuSettingsButton {
+	position: absolute;
+  top: 34px;
+  right: 10px;
+}
+
+#optDigPerRound {
+	width: 40px;
+}
+#optPrevSpeed {
+	top: -4px;
+	margin-left: 0;
+	width: 100px;
+}
+
+/* Volume Controls */
 
 #volumeControls {
 	position: fixed;
@@ -104,14 +144,4 @@ input[type="range"]::-webkit-slider-thumb {
 	background: white;
   cursor: pointer;
 	box-shadow: 2px 2px 2px #000C;
-}
-
-.material-icons {
-	cursor: pointer;
-	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none; /* Safari */
-	 -khtml-user-select: none; /* Konqueror HTML */
-		 -moz-user-select: none; /* Firefox */
-			-ms-user-select: none; /* Internet Explorer/Edge */
-					user-select: none; /* Chrome and Opera */
 }
