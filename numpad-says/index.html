@@ -18,8 +18,8 @@
 	<link rel="stylesheet" type="text/css" href="style-game.css">
 </head>
 <body>
-<h1>Numpad Says Number Constants</h1>
-<h2>A Memory Game About Number Constants</h2>
+	<h1>Numpad Says Number Constants</h1>
+	<h2>A Memory Game About Number Constants</h2>
 	<div id="game">
 		<div id="menu">
 			<div id="mainMenu" class="menu">
@@ -45,7 +45,12 @@
 					Start from:
 					<input id="startFrom" type="number" onchange="startFromUpdate()" placeholder="1" min="1" max="1001" title="Which level to start from?">
 				</div>
-				<i class="material-icons menuSettingsButton" onmousedown="showOptionsMenu()" id="menuSettingsButton" title="Options">
+				<a href="./info" id="menuInfoButtonLink">
+					<i class="material-icons menuSettingsButton" id="menuInfoButton" title="Info">
+						info
+					</i>
+				</a>
+				<i class="material-icons menuSettingsButton" onmouseup="showOptionsMenu()" id="menuSettingsButton" title="Options">
 					settings
 				</i>
 			</div>
@@ -71,7 +76,7 @@
 					<input type="range" id="optPrevSpeed" min="0.5" max="1.5" value="1" step="0.1" oninput="saveOptions()" title="Speed of the preview at the start of a level">
 					Fast
 				</p>
-				<i class="material-icons menuSettingsButton" onmousedown="hideOptionsMenu()" title="Go back">
+				<i class="material-icons menuSettingsButton" onmouseup="hideOptionsMenu()" title="Go back">
 					arrow_back
 				</i>
 			</div>

@@ -84,6 +84,7 @@ button {
 	top: 4px;
 	width: 18px;
 	height: 18px;
+	cursor: pointer;
 }
 .menu select, .menu button {
 	display: inline;
@@ -102,6 +103,19 @@ button {
 	position: absolute;
   top: 34px;
   right: 10px;
+}
+#menuInfoButtonLink:link, #menuInfoButtonLink:visited {
+	color: white;
+}
+#menuInfoButton {
+  left: 10px;
+  right: auto;
+}
+.menuSettingsButton:hover {
+	color: #ddd;
+}
+.menuSettingsButton:active {
+	color: #bbb;
 }
 
 #optDigPerRound {
