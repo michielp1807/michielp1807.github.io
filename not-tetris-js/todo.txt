@@ -1,0 +1,5 @@
+maybe use a different physics engine instead of matter.js
+
+maybe "P2 Physics"
+
+https://www.codeandweb.com/physicseditor/tutorials/phaser-p2-physics-example-tutorial
