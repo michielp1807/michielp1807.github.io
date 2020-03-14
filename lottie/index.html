@@ -1,0 +1,35 @@
+<html>
+  <head>
+    <title>Lottie/TGS stuff</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.3/lottie.js"></script>
+  </head>
+  <body>
+		<div id="header">Lottie/TGS stuff</div>
+    <div id="content">
+      <table>
+        <col width="512px">
+        <col width="1400px">
+        <tr>
+          <th>Animation</th>
+          <th>Code</th>
+        </tr>
+        </tr>
+          <td>
+            <div id="animationArea"></div>
+            <p>
+              <button type="button" onclick="setAnimation()">Refresh</button>
+              <input type="checkbox" id="autoRefresh" name="autoRefresh" value="autoRefresh" checked>
+              <label for="autoRefresh">Auto refresh</label> ||
+              <button type="button" onclick="formatCode()">Format Code</button>
+            </p>
+          </td>
+          <td><textarea id="codeArea" spellcheck="false"></textarea></td>
+        </tr>
+      </table>
+    </div>
+    <div id="messageArea" onclick="hideMessage()"></div>
+    <script src="main.js"></script>
+  </body>
+</html>

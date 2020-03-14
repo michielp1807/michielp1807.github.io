@@ -1,0 +1,7 @@
+TGS/Lottie info: https://mattia.basaglia.gitlab.io/tgs/bezier_8py-example.html
+
+Play lottie animations with html/js: https://github.com/airbnb/lottie-web
+
+TGS files are gzip'ed lottie json files.
+
+Gzip: https://github.com/beatgammit/gzip-js
