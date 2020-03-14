@@ -2,15 +2,36 @@ let animationData = {"tgs":1,"v":"5.5.2","fr":30,"ip":0,"op":30,"w":512,"h":512,
 
 
 let anim;
-const codeArea = document.getElementById("codeArea");
-const animationArea = document.getElementById("animationArea");
-const autoRefresh = document.getElementById("autoRefresh");
-const messageArea = document.getElementById("messageArea");
+let editor;
+const TAB_SIZE = 4;
 
-codeArea.value = JSON.stringify(animationData, null, 2);
-setAnimation();
-codeArea.onchange = codeChange;
-codeArea.onkeyup = codeChange;
+window.onload = function() {
+  const animationArea = document.getElementById("animationArea");
+  const autoRefresh = document.getElementById("autoRefresh");
+  const messageArea = document.getElementById("messageArea");
+
+  editor = ace.edit("codeArea");
+  editor.setTheme("ace/theme/xcode");
+  editor.session.setMode("ace/mode/json");
+  editor.setValue(JSON.stringify(animationData, null, TAB_SIZE), 0);
+  editor.session.setTabSize(TAB_SIZE);
+  editor.on("change", codeChange);
+  editor.gotoLine(0);
+  setAnimation();
+  
+  messageArea.onclick = function() {
+    let err = messageArea.innerHTML;
+    if (err.indexOf("SyntaxError: JSON.parse: ") == 0) {
+      let lineCol = err.match(/\d+/g);
+      let line = parseInt(lineCol[0]);
+      let col = parseInt(lineCol[1]);
+      console.log(line);
+      editor.navigateTo(line-1, col-1);
+    }
+    hideMessage();
+  }
+}
+
 
 function codeChange() {
   if (autoRefresh.checked) {
@@ -20,16 +41,16 @@ function codeChange() {
 
 function formatCode() {
   try {
-    codeArea.value = JSON.stringify(JSON.parse(codeArea.value), null, "   ");
+    editor.setValue(JSON.stringify(JSON.parse(editor.getValue()), null, TAB_SIZE), 0);
     hideMessage();
   } catch (e) {
-    showMessage(e);
+    handleError(e);
   }
 }
 
 function setAnimation() {
   try {
-    animationData = JSON.parse(codeArea.value);
+    animationData = JSON.parse(editor.getValue());
     animationArea.innerHTML = "";
     let animData = {
       container: animationArea,
@@ -41,8 +62,12 @@ function setAnimation() {
     anim = bodymovin.loadAnimation(animData);
     hideMessage();
   } catch (e) {
-    showMessage(e);
+    handleError(e);
   }
+}
+
+function handleError(e) {
+  showMessage(e);
 }
 
 function showMessage(message) {

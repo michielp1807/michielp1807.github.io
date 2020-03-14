@@ -1,4 +1,3 @@
- - Instead of textarea, use so kind of custom json editor
  - Import/export json files
  - Import/export TGS files (requires gzip)
  - Add more examples

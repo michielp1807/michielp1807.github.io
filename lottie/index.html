@@ -1,21 +1,27 @@
 <html>
   <head>
     <title>Lottie/TGS stuff</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.3/lottie.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js"></script>
+    <script src="main.js"></script>
   </head>
   <body>
 		<div id="header">Lottie/TGS stuff</div>
     <div id="content">
       <table>
-        <col width="512px">
         <col width="1400px">
+        <col width="512px">
         <tr>
-          <th>Animation</th>
           <th>Code</th>
+          <th>Animation</th>
         </tr>
         </tr>
+          <td>
+            <div id="codeArea"></div>
+          </td>
           <td>
             <div id="animationArea"></div>
             <p>
@@ -25,11 +31,9 @@
               <button type="button" onclick="formatCode()">Format Code</button>
             </p>
           </td>
-          <td><textarea id="codeArea" spellcheck="false"></textarea></td>
         </tr>
       </table>
     </div>
-    <div id="messageArea" onclick="hideMessage()"></div>
-    <script src="main.js"></script>
+    <div id="messageArea"></div>
   </body>
 </html>
