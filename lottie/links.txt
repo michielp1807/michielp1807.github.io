@@ -4,4 +4,4 @@ Play lottie animations with html/js: https://github.com/airbnb/lottie-web
 
 TGS files are gzip'ed lottie json files.
 
-Gzip: https://github.com/beatgammit/gzip-js
+Gzip can be decoded with pako: https://github.com/nodeca/pako

@@ -1,3 +1,4 @@
- - Import/export json files
- - Import/export TGS files (requires gzip)
- - Add more examples
+ - Add drag & drop support for loading JSON/Gzip files (auto detect format or multiple drop zones?)
+ - Add automatic JSON/Gzip detection for singular load file button
+ - Add more example animations
+ - Add explanation

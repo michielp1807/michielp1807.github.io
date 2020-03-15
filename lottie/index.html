@@ -1,21 +1,22 @@
 <html>
   <head>
-    <title>Lottie/TGS stuff</title>
+    <title>Lottie/TGS Editor</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.3/lottie.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js"></script>
+    <script src="https://cdn.jsdelivr.net/pako/1.0.3/pako.min.js"></script>
     <script src="main.js"></script>
   </head>
   <body>
-		<div id="header">Lottie/TGS stuff</div>
+		<div id="header">Lottie/TGS Editor</div>
     <div id="content">
       <table>
         <col width="1400px">
         <col width="512px">
         <tr>
-          <th>Code</th>
+          <th>JSON Data</th>
           <th>Animation</th>
         </tr>
         </tr>
@@ -29,6 +30,13 @@
               <input type="checkbox" id="autoRefresh" name="autoRefresh" value="autoRefresh" checked>
               <label for="autoRefresh">Auto refresh</label> ||
               <button type="button" onclick="formatCode()">Format Code</button>
+              <br><br>
+              Load TGS/Gzip: <input type="file" id="gzipFileInput"></input>
+              <br>
+              Load Lottie/JSON: <input type="file" id="jsonFileInput"></input>
+              <br><br>
+              <button id="saveAsGzip">Save as TGS/Gzip</button>
+              <button id="saveAsJSON">Save as Lottie/JSON</button>
             </p>
           </td>
         </tr>
