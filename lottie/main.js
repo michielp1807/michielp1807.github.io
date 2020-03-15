@@ -139,9 +139,9 @@ function setAnimation() {
 
 function showMessage(message) {
   messageArea.innerHTML = message;
-  messageArea.style.opacity = 1;
+  messageArea.style.display = "block";
 }
 
 function hideMessage() {
-  messageArea.style.opacity = 0;
+  messageArea.style.display = "none";
 }
