@@ -10,11 +10,8 @@ window.addEventListener("load", function() {
   const autoRefresh = document.getElementById("autoRefresh");
   const messageArea = document.getElementById("messageArea");
   
-  const gzipFileInput = document.getElementById("gzipFileInput");
-  const jsonFileInput = document.getElementById("jsonFileInput");
-  
-  gzipFileInput.value = null;
-  jsonFileInput.value = null;
+  const fileInput = document.getElementById("fileInput");
+  fileInput.value = null;
   
   // Setup editor
   editor = ace.edit("codeArea");
@@ -41,36 +38,30 @@ window.addEventListener("load", function() {
     hideMessage();
   });
   
-  // Setup load Gzip button
-  gzipFileInput.addEventListener("change", function() {
-    try {
-      let reader = new FileReader();
-      reader.readAsBinaryString(gzipFileInput.files[0]);
-      reader.addEventListener("load", function(gzip) {
-        let jsonData = pako.ungzip(gzip.target.result);
-        let jsonString = new TextDecoder("utf-8").decode(jsonData);
+  // Setup load file button
+  fileInput.addEventListener("change", function() {
+    let reader = new FileReader();
+    reader.readAsBinaryString(fileInput.files[0]);
+    reader.addEventListener("load", function(data) {
+      let jsonString;
+      try {
+        let jsonData = pako.ungzip(data.target.result);
+        jsonString = new TextDecoder("utf-8").decode(jsonData);
+      } catch (e) {
+        if (e == "incorrect header check") {
+          jsonString = data.target.result;
+        } else {
+          showMessage(e);
+          console.log(e);
+        }
+      }
+      try {
         setCodeValue(JSON.parse(jsonString));
-        jsonFileInput.value = null;
-      });
-    } catch (e) {
-      showMessage(e);
-      console.log(e)
-    }
-  });
-  
-  // Setup load JSON button
-  jsonFileInput.addEventListener("change", function() {
-    try {
-      let reader = new FileReader();
-      reader.readAsBinaryString(jsonFileInput.files[0]);
-      reader.addEventListener("load", function(json) {
-        setCodeValue(JSON.parse(json.target.result));
-        gzipFileInput.value = null;
-      });
-    } catch (e) {
-      showMessage(e);
-      console.log(e)
-    }
+      } catch(e) {
+        showMessage("Error loading file: Only JSON and Gzip'ed JSON (such as TGS) are supported!");
+        console.log(e);
+      }
+    });
   });
   
   // Setup save Gzip button
@@ -79,25 +70,29 @@ window.addEventListener("load", function() {
     let gzipData = pako.gzip(JSON.stringify(animationData));
     //let gzipString = new TextDecoder("utf-8").decode(gzipData);
     
-    downloadDataAsFile("sticker.tgs", gzipData);
+    downloadDataAsFile(animationData.nm, ".tgs", gzipData);
   });
   
   // Setup save JSON button
   document.getElementById("saveAsJSON").addEventListener("click", function() {
     let animationData = JSON.parse(editor.getValue());
-    downloadDataAsFile("lottie.json", JSON.stringify(animationData));
+    downloadDataAsFile(animationData.nm, ".json", JSON.stringify(animationData));
   });
 });
 
-function downloadDataAsFile(filename, data) {
+function downloadDataAsFile(filename, extension, data) {
   let blob = new Blob([data], {
     type: "application/octet-stream"
   });
   let url = window.URL.createObjectURL(blob);
+  
+  if (!filename) {
+    filename = "sticker";
+  }
 
   let element = document.createElement('a');
   element.setAttribute("href", url);
-  element.setAttribute("download", filename);
+  element.setAttribute("download", filename + extension);
   element.style.display = 'none';
   
   document.body.appendChild(element);

@@ -1,4 +1,3 @@
- - Add drag & drop support for loading JSON/Gzip files (auto detect format or multiple drop zones?)
- - Add automatic JSON/Gzip detection for singular load file button
+ - Add drag & drop support for loading JSON/Gzip files
  - Add more example animations
  - Add explanation
