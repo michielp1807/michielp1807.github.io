@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.3/lottie.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/pako/1.0.3/pako.min.js"></script>
@@ -41,5 +42,11 @@
       </table>
     </div>
     <div id="messageArea"></div>
+    <div id="dropArea" class="overlay">
+      <p>Drop a TGS or JSON file here to open it!</p>
+      <p class="material-icons">open_in_browser</p>
+      <p>Warning: this will erase the current animation!</p>
+      <p class="small">(but you can still CTRL+Z it)</p>
+    </div>
   </body>
 </html>

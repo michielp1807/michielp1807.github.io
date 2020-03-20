@@ -1,3 +1,7 @@
- - Add drag & drop support for loading JSON/Gzip files
+ - Make CTRL+Z global (currently only works in code editor)
+ - Add info/settings menu
  - Add more example animations
  - Add explanation
+ - Dark theme?
+ - Time line editor?
+ - Shape/layer editor?

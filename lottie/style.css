@@ -67,3 +67,35 @@ p {
   text-align: left;
   padding: 10px;
 }
+
+.overlay {
+  position: fixed;
+  border-radius: 20px;
+  background-color: #ccc;
+  box-shadow: 5px 5px 5px #0005;
+}
+
+#dropArea {
+  display: none;
+  left: 10%;
+  right: 10%;
+  top: 10%;
+  bottom: 10%;
+  padding: 10%;
+}
+
+#dropArea p {
+  pointer-events: none;
+  font-size: 1.2em;
+  margin: 20px 0;
+}
+
+#droparea .material-icons {
+  font-size: 10em;
+  color: #444;
+}
+
+#dropArea .small {
+  font-size: 1em;
+  color: #444;
+}

@@ -9,6 +9,7 @@ window.addEventListener("load", function() {
   const animationArea = document.getElementById("animationArea");
   const autoRefresh = document.getElementById("autoRefresh");
   const messageArea = document.getElementById("messageArea");
+  const dropArea = document.getElementById("dropArea");
   
   const fileInput = document.getElementById("fileInput");
   fileInput.value = null;
@@ -26,6 +27,25 @@ window.addEventListener("load", function() {
   setCodeValue(exampleAnimation);
   setAnimation();
   
+  // Setup drop area
+  document.body.addEventListener("dragenter", function(ev) {
+    dropArea.style.display = "block";
+    ev.preventDefault();
+  });
+  dropArea.addEventListener("dragleave", function(ev) {
+    dropArea.style.display = "none";
+    ev.preventDefault();
+  });
+  dropArea.addEventListener("dragover", function(ev) {
+    ev.preventDefault();
+  });
+  dropArea.addEventListener("drop", function(ev) {
+    fileInput.files = ev.dataTransfer.files;
+    loadFromFile();
+    dropArea.style.display = "none";
+    ev.preventDefault();
+  });
+  
   // Setup message area
   messageArea.addEventListener("click", function() {
     let err = messageArea.innerHTML;
@@ -39,30 +59,7 @@ window.addEventListener("load", function() {
   });
   
   // Setup load file button
-  fileInput.addEventListener("change", function() {
-    let reader = new FileReader();
-    reader.readAsBinaryString(fileInput.files[0]);
-    reader.addEventListener("load", function(data) {
-      let jsonString;
-      try {
-        let jsonData = pako.ungzip(data.target.result);
-        jsonString = new TextDecoder("utf-8").decode(jsonData);
-      } catch (e) {
-        if (e == "incorrect header check") {
-          jsonString = data.target.result;
-        } else {
-          showMessage(e);
-          console.log(e);
-        }
-      }
-      try {
-        setCodeValue(JSON.parse(jsonString));
-      } catch(e) {
-        showMessage("Error loading file: Only JSON and Gzip'ed JSON (such as TGS) are supported!");
-        console.log(e);
-      }
-    });
-  });
+  fileInput.addEventListener("change", loadFromFile);
   
   // Setup save Gzip button
   document.getElementById("saveAsGzip").addEventListener("click", function() {
@@ -80,6 +77,33 @@ window.addEventListener("load", function() {
   });
 });
 
+// Load TGS or JSON data from file input field
+function loadFromFile() {
+  let reader = new FileReader();
+  reader.readAsBinaryString(fileInput.files[0]);
+  reader.addEventListener("load", function(data) {
+    let jsonString;
+    try {
+      let jsonData = pako.ungzip(data.target.result);
+      jsonString = new TextDecoder("utf-8").decode(jsonData);
+    } catch (e) {
+      if (e == "incorrect header check") {
+        jsonString = data.target.result;
+      } else {
+        showMessage(e);
+        console.log(e);
+      }
+    }
+    try {
+      setCodeValue(JSON.parse(jsonString));
+    } catch(e) {
+      showMessage("Error loading file: Only JSON and Gzip'ed JSON (such as TGS) are supported!");
+      console.log(e);
+    }
+  });
+}
+
+// Download some data as a file
 function downloadDataAsFile(filename, extension, data) {
   let blob = new Blob([data], {
     type: "application/octet-stream"
@@ -100,11 +124,13 @@ function downloadDataAsFile(filename, extension, data) {
   document.body.removeChild(element);
 }
 
+// Set the value of the code editor (replaces everything that was there before)
 function setCodeValue(json) {
   editor.setValue(JSON.stringify(json, null, TAB_SIZE), 0);
   editor.gotoLine(0);
 }
 
+// Format the code in the code editor by parsing it and stringifying it
 function formatCode() {
   try {
     editor.setValue(JSON.stringify(JSON.parse(editor.getValue()), null, TAB_SIZE), 0);
@@ -114,6 +140,7 @@ function formatCode() {
   }
 }
 
+// Load the code from the code editor as animation in the animation area
 function setAnimation() {
   try {
     let animationData = JSON.parse(editor.getValue());
@@ -132,11 +159,13 @@ function setAnimation() {
   }
 }
 
+// Show a error message at the bottom of the screen
 function showMessage(message) {
   messageArea.innerHTML = message;
   messageArea.style.display = "block";
 }
 
+// Hide the error message at the bottom of the screen
 function hideMessage() {
   messageArea.style.display = "none";
 }
