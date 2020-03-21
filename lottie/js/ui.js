@@ -1,9 +1,9 @@
 window.addEventListener("load", function() {
-  const animationArea = document.getElementById("animationArea");
+  const animationView = document.getElementById("animationView");
   const messageArea = document.getElementById("messageArea");
   const infoArea = document.getElementById("infoArea");
   const dropArea = document.getElementById("dropArea");
-  
+  const overlayBackground = document.getElementById("overlayBackground");
   const autoRefresh = document.getElementById("autoRefresh");
   const fileInput = document.getElementById("fileInput");
   fileInput.value = null;
@@ -22,34 +22,34 @@ window.addEventListener("load", function() {
     ev.stopPropagation();
   });
   document.getElementById("infoButton").addEventListener("click", function(ev) {
-    infoArea.style.display = "flex";
+    showOverlay(infoArea)
     ev.stopPropagation();
   });
   document.getElementById("closeInfoAreaButton").addEventListener("click", function(ev) {
-    infoArea.style.display = "none";
+    hideOverlay(infoArea);
   });
   document.body.addEventListener("click", function(ev) {
-    infoArea.style.display = "none";
+    hideOverlay(infoArea);
   });
   
   
   // Setup drop area
   document.body.addEventListener("dragenter", function(ev) {
-    dropArea.style.display = "flex";
+    showOverlay(dropArea);
+    ev.preventDefault();
+  });
+  overlayBackground.addEventListener("dragleave", function(ev) {
+    hideOverlay(dropArea);
     ev.preventDefault();
   });
   document.body.addEventListener("click", function(ev) {
-    dropArea.style.display = "none";
-  });
-  dropArea.addEventListener("dragleave", function(ev) {
-    dropArea.style.display = "none";
-    ev.preventDefault();
+    hideOverlay(dropArea);
   });
   dropArea.addEventListener("dragover", function(ev) {
     ev.preventDefault();
   });
   dropArea.addEventListener("drop", function(ev) {
-    dropArea.style.display = "none";
+    hideOverlay(dropArea);
     ev.preventDefault();
     fileInput.files = ev.dataTransfer.files;
     loadFromFile();
@@ -87,6 +87,31 @@ window.addEventListener("load", function() {
   });
 });
 
+function switchToTab(tab_name) {
+  // switch tab buttons
+  document.getElementsByClassName("tabSwitcher").forEach(e => {
+    e.classList.remove("active");
+  });
+  document.getElementById(tab_name + "Button").classList.add("active");
+  
+  // switch tabs
+  document.getElementsByClassName("tab").forEach(t => {
+    t.classList.remove("active");
+  });
+  document.getElementById(tab_name).classList.add("active");
+}
+
+// show an overlay
+function showOverlay(overlay) {
+  overlayBackground.style.display = "block";
+  overlay.style.display = "flex";
+}
+
+// hide an overlay
+function hideOverlay(overlay) {
+  overlayBackground.style.display = "none";
+  overlay.style.display = "none";
+}
 
 // Show a error message at the bottom of the screen
 function showMessage(message) {

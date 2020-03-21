@@ -9,6 +9,7 @@ window.addEventListener("load", function() {
   // Setup editor
   editor = ace.edit("codeArea");
   editor.setTheme("ace/theme/xcode");
+  editor.setShowPrintMargin(false);
   editor.session.setMode("ace/mode/json");
   editor.session.setTabSize(TAB_SIZE);
   editor.on("change", function() {
@@ -69,14 +70,14 @@ function downloadDataAsFile(filename, extension, data) {
     filename = "sticker";
   }
 
-  let element = document.createElement('a');
-  element.setAttribute("href", url);
-  element.setAttribute("download", filename + extension);
-  element.style.display = 'none';
+  let linkElement = document.createElement('a');
+  linkElement.setAttribute("href", url);
+  linkElement.setAttribute("download", filename + extension);
+  linkElement.style.display = 'none';
   
-  document.body.appendChild(element);
-  element.click();
-  document.body.removeChild(element);
+  document.body.appendChild(linkElement);
+  linkElement.click();
+  document.body.removeChild(linkElement);
 }
 
 // Set the value of the code editor (replaces everything that was there before)
@@ -99,9 +100,9 @@ function formatCode() {
 function setAnimation() {
   try {
     let animationData = JSON.parse(editor.getValue());
-    animationArea.innerHTML = "";
+    animationView.innerHTML = "";
     let animData = {
-      container: animationArea,
+      container: animationView,
       renderer: 'svg',
       loop: true,
       autoplay: true,

@@ -1,7 +1,4 @@
- - Make CTRL+Z global (currently only works in code editor)
- - Add info/settings menu
- - Add more example animations
- - Add explanation
+ - Add UI to load more example animations
  - Dark theme?
  - Time line editor?
  - Shape/layer editor?

@@ -1,0 +1,16 @@
+svg {
+  height: auto !important;
+}
+
+#IOdivider {
+  padding: 8px;
+}
+
+#animationView {
+  display: inline-block;
+  background-image: url("../background.jpg");
+  background-size: 16px 16px;
+  background-repeat: repeat;
+  border: solid black 1px;
+  user-select: none; 
+}

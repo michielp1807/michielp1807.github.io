@@ -1,0 +1,121 @@
+body {
+	font-family: helvetica, sans-serif;
+	text-align: center;
+	margin: 0px;
+  user-select: none; 
+  min-width: 500px;
+}
+
+table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+}
+
+th {
+  background-color: #ccc;
+  height: 30px;
+  padding: 0;
+}
+
+th .material-icons {
+  vertical-align: -6px;
+  padding: 0 10px;
+}
+
+td {
+  position: relative;
+}
+
+p {
+  text-align: center;
+}
+
+#header {
+  position: relative;
+  text-align: left;
+  font-size: 30px;
+  font-weight: bold;
+  background-color: #16b;
+  color: #fff;
+  text-shadow: 2px 2px #000;
+  padding: 15px;
+  height: 30px;
+  margin: 0px;
+}
+
+#headerButtons {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  text-align: right;
+  padding: 15px;
+}
+
+#content {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 60px;
+  background-color: #eee;
+}
+
+.material-icons {
+  opacity: 0;
+}
+
+#headerButtons .material-icons {
+  font-size: 30px;
+}
+
+.white-button {color: #fff; cursor: pointer;}
+.white-button:hover {color: #ddd;}
+.white-button:active {color: #eee;}
+
+.black-button {color: #000; cursor: pointer;}
+.black-button:hover {color: #555;}
+.black-button:active {color: #777;}
+
+.tabSwitcher {
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 10px;
+  padding: 0 0 0 14px;
+  color: #444;
+  border: 1px solid #ccc;
+}
+
+.tabSwitcher:hover {
+  text-decoration: underline;
+  border-color: #aaa;
+  color: #444;
+}
+
+.tabSwitcher:active {
+  border-color: #999;
+  background-color: #ddd;
+  color: #222;
+}
+
+.tabSwitcher.active {
+  cursor: default;
+  text-decoration: underline;
+  border-color: #888;
+  background-color: #eee;
+  color: #000;
+}
+
+.tab {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.tab.active {
+  display: block;
+}
