@@ -5,15 +5,7 @@ let anim;
 let editor;
 const TAB_SIZE = 4;
 
-window.addEventListener("load", function() {
-  const animationArea = document.getElementById("animationArea");
-  const autoRefresh = document.getElementById("autoRefresh");
-  const messageArea = document.getElementById("messageArea");
-  const dropArea = document.getElementById("dropArea");
-  
-  const fileInput = document.getElementById("fileInput");
-  fileInput.value = null;
-  
+window.addEventListener("load", function() { 
   // Setup editor
   editor = ace.edit("codeArea");
   editor.setTheme("ace/theme/xcode");
@@ -25,55 +17,18 @@ window.addEventListener("load", function() {
     }
   });
   setCodeValue(exampleAnimation);
+  editor.session.getUndoManager().reset();
   setAnimation();
   
-  // Setup drop area
-  document.body.addEventListener("dragenter", function(ev) {
-    dropArea.style.display = "block";
-    ev.preventDefault();
-  });
-  dropArea.addEventListener("dragleave", function(ev) {
-    dropArea.style.display = "none";
-    ev.preventDefault();
-  });
-  dropArea.addEventListener("dragover", function(ev) {
-    ev.preventDefault();
-  });
-  dropArea.addEventListener("drop", function(ev) {
-    fileInput.files = ev.dataTransfer.files;
-    loadFromFile();
-    dropArea.style.display = "none";
-    ev.preventDefault();
-  });
-  
-  // Setup message area
-  messageArea.addEventListener("click", function() {
-    let err = messageArea.innerHTML;
-    if (err.indexOf("SyntaxError: JSON.parse: ") == 0) {
-      let lineCol = err.match(/\d+/g);
-      let line = parseInt(lineCol[0]);
-      let col = parseInt(lineCol[1]);
-      editor.navigateTo(line-1, col-1);
+  // Setup global CTRL+Z and global CTRL+Y
+  document.body.addEventListener("keydown", function(ev) {
+    if (ev.key == "z" && ev.ctrlKey) { // CTRL+Z
+      editor.undo();
+      ev.preventDefault();
+    } else if (ev.key == "y" && ev.ctrlKey) { // CTRL+Y
+      editor.redo();
+      ev.preventDefault();
     }
-    hideMessage();
-  });
-  
-  // Setup load file button
-  fileInput.addEventListener("change", loadFromFile);
-  
-  // Setup save Gzip button
-  document.getElementById("saveAsGzip").addEventListener("click", function() {
-    let animationData = JSON.parse(editor.getValue());
-    let gzipData = pako.gzip(JSON.stringify(animationData));
-    //let gzipString = new TextDecoder("utf-8").decode(gzipData);
-    
-    downloadDataAsFile(animationData.nm, ".tgs", gzipData);
-  });
-  
-  // Setup save JSON button
-  document.getElementById("saveAsJSON").addEventListener("click", function() {
-    let animationData = JSON.parse(editor.getValue());
-    downloadDataAsFile(animationData.nm, ".json", JSON.stringify(animationData));
   });
 });
 
@@ -133,7 +88,7 @@ function setCodeValue(json) {
 // Format the code in the code editor by parsing it and stringifying it
 function formatCode() {
   try {
-    editor.setValue(JSON.stringify(JSON.parse(editor.getValue()), null, TAB_SIZE), 0);
+    setCodeValue(JSON.parse(editor.getValue()));
     hideMessage();
   } catch (e) {
     showMessage(e);
@@ -157,15 +112,4 @@ function setAnimation() {
   } catch (e) {
     showMessage(e);
   }
-}
-
-// Show a error message at the bottom of the screen
-function showMessage(message) {
-  messageArea.innerHTML = message;
-  messageArea.style.display = "block";
-}
-
-// Hide the error message at the bottom of the screen
-function hideMessage() {
-  messageArea.style.display = "none";
 }

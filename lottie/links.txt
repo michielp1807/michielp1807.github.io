@@ -1,4 +1,4 @@
-TGS/Lottie info: https://mattia.basaglia.gitlab.io/tgs/bezier_8py-example.html
+TGS/Lottie info: https://mattia.basaglia.gitlab.io/tgs/group__Lottie.html
 
 Play lottie animations with html/js: https://github.com/airbnb/lottie-web
 

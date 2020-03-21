@@ -8,17 +8,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.3/lottie.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/pako/1.0.3/pako.min.js"></script>
+    <script src="ui.js"></script>
     <script src="main.js"></script>
   </head>
-  <body>
-		<div id="header">Lottie/TGS Editor</div>
+  <body style="color: #0000 !important;">
+		<div id="header">
+      Lottie/TGS Editor
+      <div id="headerButtons">
+        <span id="infoButton" class="material-icons white-button">info</span>
+      </div>
+    </div>
     <div id="content">
       <table>
         <col width="1400px">
         <col width="512px">
         <tr>
-          <th>JSON Data</th>
-          <th>Animation</th>
+          <th>JSON Data <span class="material-icons">code</span></th>
+          <th>Animation <span class="material-icons">movie</span></th>
         </tr>
         </tr>
           <td>
@@ -26,10 +32,11 @@
           </td>
           <td>
             <div id="animationArea"></div>
-            <p>
+            <p id="userIO">
               <button type="button" onclick="setAnimation()">Refresh</button>
               <input type="checkbox" id="autoRefresh" name="autoRefresh" value="autoRefresh" checked>
-              <label for="autoRefresh">Auto refresh</label> ||
+              <label for="autoRefresh">Auto refresh</label>
+              <span id="IOdivider">||</span>
               <button type="button" onclick="formatCode()">Format Code</button>
               <br><br>
               Load file: <input type="file" id="fileInput"></input>
@@ -42,11 +49,28 @@
       </table>
     </div>
     <div id="messageArea"></div>
+    <div id="infoArea" class="overlay">
+      <div id="closeInfoAreaButton" class="material-icons black-button">close</div>
+      <h2>Lottie/TGS Editor</h2>
+      <p>This Lottie/TGS Editor was made as a tool to experiment with Lottie/TGS files.</p>
+      <p>
+        TGS files are used for animated stickers in Telegram Messenger.
+        TGS files are Gzip archives which contain Lottie data.
+        The Lottie data is stored in JSON format, as can be seen in the code editor on this page.
+      </p>      
+      <p>
+        A useful resource for figuring out how the Lottie format works is the following: <br>
+        <a target="blank" href="https://mattia.basaglia.gitlab.io/tgs/group__Lottie.html">
+          https://mattia.basaglia.gitlab.io/tgs/group__Lottie.html
+        </a>
+      </p>
+      <p>Note that the maximum file size for animated Telegram stickers is 64KB.</p>
+    </div>
     <div id="dropArea" class="overlay">
       <p>Drop a TGS or JSON file here to open it!</p>
       <p class="material-icons">open_in_browser</p>
       <p>Warning: this will erase the current animation!</p>
-      <p class="small">(but you can still CTRL+Z it)</p>
+      <p class="small">(but you can still undo with CTRL+Z)</p>
     </div>
   </body>
 </html>
