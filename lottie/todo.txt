@@ -1,4 +1,12 @@
- - Add UI to load more example animations
+ - Timeline editor to do:
+   - Children of layer in dropdown
+   - Change layer type with layer type icon buttons
+	 - Set parent of layer
+	 - Make visibility bars dragable to shift the entire layer along the timeline
+   - A way to edit pre-comps
+ - Play/pause and next/previous frame buttons
+ - UI for top level animation settings (width/height, framerate, ip/op, etc.)
+ - UI to load more example animations
  - Dark theme?
- - Time line editor?
- - Shape/layer editor?
+ - Shape/layer/path editor?
+ - SVG/PDF import?

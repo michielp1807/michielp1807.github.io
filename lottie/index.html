@@ -11,7 +11,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.3/lottie.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/pako/1.0.3/pako.min.js"></script>
+    <script src="js/bodymovin-data.js"></script>
     <script src="js/ui.js"></script>
+    <script src="js/timeline-layer-bar.js"></script>
+    <script src="js/timeline-layer.js"></script>
+    <script src="js/timeline.js"></script>
     <script src="js/main.js"></script>
   </head>
   <body style="color: #0000 !important;">
@@ -28,19 +32,28 @@
         <tr>
           <th>
             <span id="codeAreaButton" class="tabSwitcher active" onclick="switchToTab('codeArea')">
-              JSON Data<span class="material-icons">code</span>
+              JSON Data<span class="material-icons load">code</span>
             </span>
             <span id="timelineAreaButton" class="tabSwitcher" onclick="switchToTab('timelineArea')">
-              Timeline Editor<span class="material-icons">playlist_play</span>
+              Timeline Editor<span class="material-icons load">playlist_play</span>
             </span>
           </th>
-          <th>Animation <span class="material-icons">movie</span></th>
+          <th>Animation <span class="material-icons load">movie</span></th>
         </tr>
         </tr>
           <td>
             <div id="codeArea" class="tab active"></div>
             <div id="timelineArea" class="tab">
-              Coming soon...
+              <table id="timelineAreaTable">
+                <colgroup>
+                  <col style="width: 30%">
+                  <col style="width: 70%">
+                </colgroup>
+                <tr id="timeline">
+                  <th id="currentFrame">Current frame: <span id="currentFrameValue">0</span></th>
+                  <td id="frameBlocks"><span></span><span></span><span></span></td>
+                </tr>
+              </table>
             </div>
           </td>
           <td id="animationArea">
@@ -71,12 +84,12 @@
         TGS files are used for animated stickers in Telegram Messenger.
         TGS files are Gzip archives which contain Lottie data.
         The Lottie data is stored in JSON format, as can be seen in the code editor on this page.
-      </p>      
+      </p>
       <p>
-        A useful resource for figuring out how the Lottie format works is the following: <br>
-        <a target="_blank" href="https://mattia.basaglia.gitlab.io/tgs/group__Lottie.html">
-          https://mattia.basaglia.gitlab.io/tgs/group__Lottie.html
-        </a>
+        A useful resource for figuring out how the Lottie format works can be found
+        <a target="_blank" href="https://mattia.basaglia.gitlab.io/python-lottie/group__Lottie.html">
+          here
+        </a>.
       </p>
       <p>Note that there are some extra requirements for adding you sticker to Telegram, see <a target="_blank" href="https://core.telegram.org/animated_stickers">here</a>.</p>
     </div>

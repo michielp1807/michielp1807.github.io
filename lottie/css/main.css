@@ -62,7 +62,7 @@ p {
   background-color: #eee;
 }
 
-.material-icons {
+.material-icons.load {
   opacity: 0;
 }
 

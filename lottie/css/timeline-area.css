@@ -1,5 +1,90 @@
 #timelineArea {
-  padding: 20px;
-  text-align: center;
+  padding: 0px;
   background-color: #ddd;
+  text-align: left;
+  table-layout: fixed;
+}
+
+#timelineArea table {
+  width: 100%;
+  height: auto;
+}
+
+/* Top row (current frame and frame blocks) */
+
+#currentFrame {
+  /* background-color: #bbb; */
+  padding: 5px;
+}
+
+#frameBlocks {
+  /* background-color: #bbb; */
+  height: 100%;
+}
+
+#frameBlocks span {
+  display: inline-block;
+  vertical-align: top;
+  background-color: #ccc;
+  height: 99999%;
+  text-align: left;
+  overflow-x: visible;
+  padding: 6px 0 0 0;
+}
+
+#frameBlocks span:nth-child(even) {
+  background-color: #ddd0;
+}
+
+/* Layer rows  */
+
+.layer {
+  border-bottom: solid #bbb 1px;
+  background-color: #ddd;
+}
+
+.layer td {
+  padding: 5px;
+}
+
+.layer .material-icons {
+  vertical-align: -5px;
+}
+
+.layer-name {
+  margin: 0px;
+  padding: 5px;
+}
+
+.layer-name:hover {
+  background-color: #ccc;
+}
+
+.layer-name:focus {
+  background-color: #ccc;
+}
+
+/* Layer bar stuff */
+.layer-bar {
+  position: absolute;
+  border: outset #27c 3px;
+  background-color: #16b;
+  top: 4px;
+  bottom: 0;
+}
+
+.layer-bar-end {
+  position: absolute;
+  cursor: ew-resize;
+  background-color: #99f0;
+  opacity: 0;
+  top: 0;
+  width: 8px;
+  bottom: 0;
+  margin: 0 -4px;
+  z-index: 100;
+}
+
+.dropdown-closed {
+  transform: rotate(-90deg);
 }

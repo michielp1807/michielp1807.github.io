@@ -11,7 +11,7 @@ window.addEventListener("load", function() {
   
   // Show material design icons
   NodeList.prototype.forEach = HTMLCollection.prototype.forEach = Array.prototype.forEach;
-  document.getElementsByClassName("material-icons").forEach(e => {
+  document.getElementsByClassName("material-icons load").forEach(e => {
     e.style.opacity = 1;
   });
   document.body.style.removeProperty("color");
@@ -51,8 +51,10 @@ window.addEventListener("load", function() {
   dropArea.addEventListener("drop", function(ev) {
     hideOverlay(dropArea);
     ev.preventDefault();
-    fileInput.files = ev.dataTransfer.files;
-    loadFromFile();
+    if (ev.dataTransfer.files.length > 0) {
+      fileInput.files = ev.dataTransfer.files;
+      loadFromFile();
+    }
   });
   
   
@@ -75,19 +77,20 @@ window.addEventListener("load", function() {
   
   // Setup save Gzip button
   document.getElementById("saveAsGzip").addEventListener("click", function() {
-    let animationData = JSON.parse(editor.getValue());
-    let gzipData = pako.gzip(JSON.stringify(animationData));
-    downloadDataAsFile(animationData.nm, ".tgs", gzipData);
+    let gzipData = pako.gzip(JSON.stringify(jsonData));
+    downloadDataAsFile(jsonData.nm, ".tgs", gzipData);
   });
   
   // Setup save JSON button
   document.getElementById("saveAsJSON").addEventListener("click", function() {
-    let animationData = JSON.parse(editor.getValue());
-    downloadDataAsFile(animationData.nm, ".json", JSON.stringify(animationData));
+    downloadDataAsFile(jsonData.nm, ".json", JSON.stringify(jsonData));
   });
 });
 
 function switchToTab(tab_name) {
+  setCodeValue(jsonData);
+  updateTimelines();
+  
   // switch tab buttons
   document.getElementsByClassName("tabSwitcher").forEach(e => {
     e.classList.remove("active");

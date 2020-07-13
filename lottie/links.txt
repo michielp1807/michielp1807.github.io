@@ -1,7 +1,12 @@
-TGS/Lottie info: https://mattia.basaglia.gitlab.io/tgs/group__Lottie.html
+TGS/Lottie info:
+ - TGS files are gzip'ed Lottie json files
+ - https://mattia.basaglia.gitlab.io/python-lottie/group__Lottie.html
+ - https://github.com/airbnb/lottie-android/tree/master/lottie/src/main/java/com/airbnb/lottie
+ - Telegram only supports a subset of Lottie animations, see:
+   https://core.telegram.org/animated_stickers
 
-Play lottie animations with html/js: https://github.com/airbnb/lottie-web
+Play Lottie animations with html/js:
+ - https://github.com/airbnb/lottie-web
 
-TGS files are gzip'ed lottie json files.
-
-Gzip can be decoded with pako: https://github.com/nodeca/pako
+Gzip can be decoded with pako:
+ - https://github.com/nodeca/pako
