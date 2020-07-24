@@ -23,9 +23,10 @@ window.addEventListener("load", function () {
     }
   });
   setCodeValue();
+  setAnimation(); // needed in case auto refresh is off on load
   editor.session.getUndoManager().reset();
 
-  // Setup global CTRL+Z and global CTRL+Y
+  // Setup global shortcuts
   document.body.addEventListener("keydown", function (ev) {
     if (ev.key == "z" && ev.ctrlKey) { // CTRL+Z
       editor.undo();
@@ -37,6 +38,16 @@ window.addEventListener("load", function () {
       ev.preventDefault();
       if (activeTab == TAB_TIMELINE_EDITOR)
         updateTimelines();
+    } else if (ev.code === 'Space') { // Space to play/pause
+      playPause();
+    } else if (ev.code === 'ArrowLeft') { // Left arrow to go to previous frame
+      prevFrame();
+    } else if (ev.code === 'ArrowRight') { // Right arrow to go to next frame
+      nextFrame();
+    } else if (ev.code === 'ArrowUp') { // Up arrow to go to last frame
+      lastFrame();
+    } else if (ev.code === 'ArrowDown') { // Down arrow to go to first frame
+      firstFrame();
     }
   });
 });
@@ -114,19 +125,30 @@ function setAnimation() {
     if (activeTab == TAB_CODE_EDITOR)
       jsonData = JSON.parse(editor.getValue());
 
-    // create copy of json data for Lottie Web player,
+    // Create copy of json data for Lottie Web player,
     // otherwise it will modify the json data and add extra unneeded stuff
     let jsonDataForLottieWeb = JSON.parse(JSON.stringify(jsonData));
+
+    let play = !anim || !anim.isPaused;
+    let frame = anim ? anim.currentFrame : 0;
 
     animationView.innerHTML = "";
     let animData = {
       container: animationView,
       renderer: 'svg',
       loop: true,
-      autoplay: true,
+      autoplay: false,
       animationData: jsonDataForLottieWeb
     }
     anim = bodymovin.loadAnimation(animData);
+
+    // Make sure to continue at the same frame
+    if (play) {
+      anim.goToAndPlay(frame, true);
+    } else {
+      anim.goToAndStop(frame, true);
+    }
+
     hideMessage();
   } catch (e) {
     showMessage(e);

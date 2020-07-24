@@ -4,13 +4,23 @@ let uiLayers = [];
 window.addEventListener("load", function () {
 	const timelineAreaTable = document.getElementById("timelineAreaTable");
 	const currentFrameValue = document.getElementById("currentFrameValue");
-	setInterval(function () {
-		let frame = Math.floor(anim.currentFrame);
-		currentFrameValue.innerHTML = (frame < 10 ? "0" : "") + frame;
-	}, 1000 / 30);
+	const frameMarker = document.getElementById("frameMarker");
 	const frameBlocks = document.getElementById("frameBlocks");
 	const timelineColumn = document.getElementById("timelineColumn");
+
+	setInterval(timelineUIinterval, 1000 / 60);
 });
+
+// Execute 60 times per second, updates continuously changing UI elements
+function timelineUIinterval() {
+	// Update current frame number
+	let frame = Math.floor(anim.currentFrame);
+	currentFrameValue.innerHTML = (frame < 10 ? "0" : "") + frame;
+
+	// Update frame marker
+	frameMarker.style.height = timelineAreaTable.offsetHeight;
+	frameMarker.style.left = frame / anim.totalFrames * 100 + "%"
+}
 
 // Update the entire timeline editor with json data
 // TODO: this is currently inefficient because we regenerate everything
@@ -85,7 +95,3 @@ function startDrag(ev, onmove) {
 		setCodeValue(); // apply changes from drag
 	}
 }
-
-// TODO: Playback speed controls:
-//     Set current frame: anim.currentRawFrame
-//     Set playback speed: anim.frameModifier

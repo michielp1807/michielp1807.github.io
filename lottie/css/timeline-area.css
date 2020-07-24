@@ -1,14 +1,15 @@
 #timelineArea {
   position: relative;
   padding: 0px;
-  background-color: #ddd;
   text-align: left;
 	table-layout: fixed;
+  background-color: #ddd;
 }
 
-#timelineArea table {
+#timelineAreaTable {
   width: 100%;
   height: auto;
+  background-color: #ddd;
 }
 
 #currentFrameValue {
@@ -22,16 +23,31 @@
   padding: 5px;
 }
 
+#timelineHeader {
+  position: relative;
+}
+
 #frameBlocks {
   white-space: nowrap;
 }
 
 #frameBlocks span {
+  pointer-events: none;
   display: inline-block;
   vertical-align: top;
   text-align: left;
   overflow-x: visible;
   padding: 6px 0 0 0;
+}
+
+#frameMarker {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 50%;
+  width: 2px;
+  margin-left: -1px;
+  background-color: #16b;
 }
 
 /* Layer rows  */

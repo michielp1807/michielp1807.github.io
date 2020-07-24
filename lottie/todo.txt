@@ -1,18 +1,24 @@
- - Timeline editor to do:
-   	- Children of layer in dropdown (e.g. shapes for shape layer)
-   	- Change layer type with layer type icon buttons
-    - Make TL_Values dragable to easily change value
+- Timeline editor to do:
+    - Pause timelineUIinterval when animation is paused or timeline editor is closed
+	- Easier frame navigation:
+		- Make frame marker dragable to easily go through frames
+		- Click on the frame numbers to go to frame
+	- Keyframes for animated values
+	- Graph editor for animated values (cubic bezier curves)
+	- Children of layer in dropdown (e.g. shapes for shape layer)
+	- Change layer type with layer type icon buttons
+	- Make TL_Values dragable to easily change values
+	- Make scale linked by default (need to make TL_LinkedDimProperty)
 	- Set parent of layer
 	- Make visibility bars dragable to shift the entire layer along the timeline
-	- Graph editor for animated values (cubic bezier curves)
 	- Copy/paste/duplicate layers in timeline editor?
-   	- Fix new lines in input boxes
+	- Fix new lines and double click to select in input boxes
 	- Zoom in on timeline?
- - A way to edit pre-comps
- - Play/pause and next/previous frame buttons
- - UI for top level animation settings (width/height, framerate, ip/op, etc.)
- - UI to load more example animations
- - Dark theme?
- - Shape/layer/path editor?
- - SVG/PDF import?
- - Make Timeline Editor the main tab?
+	- A way to edit pre-comps
+- Preview speed with anim.setSpeed(speed) 
+- UI for top level animation settings (width/height, framerate, ip/op, etc.)
+- UI to load more example animations
+- Dark theme?
+- Shape/layer/path editor?
+- Import SVG/PDF as layer?
+- Make Timeline Editor the main tab?

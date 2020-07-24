@@ -12,6 +12,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.5.3/lottie.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.5/ace.js"></script>
   <script src="https://cdn.jsdelivr.net/pako/1.0.3/pako.min.js"></script>
+  <script src="js/tab.js"></script>
+  <script src="js/overlay.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/timeline-layer-child.js"></script>
   <script src="js/timeline-value.js"></script>
@@ -52,7 +54,10 @@
         </colgroup>
         <tr id="timeline">
           <th id="currentFrame">Current frame: <span id="currentFrameValue">0</span></th>
-          <td id="frameBlocks"><span></span><span></span><span></span></td>
+          <td id="timelineHeader">
+            <div id="frameMarker"></div>
+            <div id="frameBlocks"></div>
+          </td>
         </tr>
       </table>
     </div>
@@ -60,6 +65,17 @@
   <div id="animationArea">
     <div id="animationView"></div>
     <p id="userIO">
+      <span id="firstFrameButton" class="material-icons black-button" onclick="firstFrame()"
+        title="First frame (down arrow)">first_page</span>
+      <span id="prevFrameButton" class="material-icons black-button" onclick="prevFrame()"
+        title="Previous frame (left arrow)">chevron_left</span>
+      <span id="playPauseButton" class="material-icons black-button" onclick="playPause()"
+        title="Play/pause (spacebar)">pause</span>
+      <span id="nextFrameButton" class="material-icons black-button" onclick="nextFrame()"
+        title="Next frame (right arrow)">chevron_right</span>
+      <span id="lastFrameButton" class="material-icons black-button" onclick="lastFrame()"
+        title="Last frame (up arrow)">last_page</span>
+      <br><br>
       <button type="button" onclick="setAnimation()">Refresh</button>
       <input type="checkbox" id="autoRefresh" name="autoRefresh" value="autoRefresh" checked>
       <label for="autoRefresh">Auto refresh</label>
