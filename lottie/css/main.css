@@ -2,8 +2,11 @@ body {
 	font-family: helvetica, sans-serif;
 	text-align: center;
 	margin: 0px;
-  user-select: none; 
-  min-width: 500px;
+  user-select: none;
+  display: grid;
+  height: 100vh;
+  grid-template: auto auto 1fr / 3fr auto; /* Header and right column */
+  background-color: #eee;
 }
 
 table {
@@ -12,62 +15,74 @@ table {
   border-collapse: collapse;
 }
 
-th {
-  background-color: #ccc;
-  height: 30px;
-  padding: 0;
-}
-
-th .material-icons {
-  vertical-align: -6px;
-  padding: 0 10px;
-}
-
-td {
-  position: relative;
-}
-
 p {
   text-align: center;
 }
 
-#header {
-  position: relative;
+/* Header */
+
+#animationHeader {
+  grid-column: 2 / 3;
+}
+
+header {
+  grid-column: 1 / 3;
+  padding: 12px;
+  margin: 0px;
   text-align: left;
   font-size: 30px;
   font-weight: bold;
   background-color: #16b;
   color: #fff;
   text-shadow: 2px 2px #000;
-  padding: 15px;
-  height: 30px;
-  margin: 0px;
 }
 
 #headerButtons {
   position: absolute;
   top: 0;
-  bottom: 0;
   right: 0;
   text-align: right;
   padding: 15px;
 }
 
-#content {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 60px;
-  background-color: #eee;
+#headerButtons .material-icons {
+  font-size: 30px;
 }
+
+.subHeader {
+  padding: 2px;
+  background-color: #ccc;
+  font-weight: bold;
+  z-index: 10000;
+  position: sticky;
+  top: 0;
+}
+
+.subHeader .material-icons {
+  vertical-align: -6px;
+  padding: 0 10px;
+}
+
+
+/* Main */
+main {
+  grid-column: 1 / 2;
+  overflow: auto;
+  resize: horizontal;
+  min-width: calc(-512px + 100vw);
+  max-width: calc(-256px + 100vw);
+}
+
+#animationArea {
+  grid-column: 2 / 3;
+}
+
+
+
+/* Material Icons */
 
 .material-icons.load {
   opacity: 0;
-}
-
-#headerButtons .material-icons {
-  font-size: 30px;
 }
 
 .white-button {color: #fff; cursor: pointer;}
@@ -77,6 +92,16 @@ p {
 .black-button {color: #000; cursor: pointer;}
 .black-button:hover {color: #555;}
 .black-button:active {color: #777;}
+
+.button-active {color: #16b;}
+.button-active:hover {color: #19f;}
+.button-active:active {color: #1af;}
+
+/* Tabs */
+
+#tabHeader {
+  grid-column: 1 / 2;
+}
 
 .tabSwitcher {
   cursor: pointer;
@@ -108,12 +133,9 @@ p {
 }
 
 .tab {
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  display: none; 
+  width: 100%;
+  height: 100%;
 }
 
 .tab.active {

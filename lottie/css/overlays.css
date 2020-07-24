@@ -13,6 +13,7 @@
   border-radius: 20px;
   background-color: #eee;
   box-shadow: 5px 5px 5px #0005;
+  z-index: 10001;
 }
 
 #overlayBackground {
@@ -23,6 +24,7 @@
   right: 0;
   bottom: 0;
   background-color: #0005;
+  z-index: 10000;
 }
 
 #closeInfoAreaButton {
@@ -58,4 +60,5 @@
   color: #FFF;
   text-align: left;
   padding: 10px;
+  z-index: 9000;
 }

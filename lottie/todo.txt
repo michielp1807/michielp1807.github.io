@@ -1,12 +1,18 @@
  - Timeline editor to do:
-   - Children of layer in dropdown
-   - Change layer type with layer type icon buttons
-	 - Set parent of layer
-	 - Make visibility bars dragable to shift the entire layer along the timeline
-   - A way to edit pre-comps
+   	- Children of layer in dropdown (e.g. shapes for shape layer)
+   	- Change layer type with layer type icon buttons
+    - Make TL_Values dragable to easily change value
+	- Set parent of layer
+	- Make visibility bars dragable to shift the entire layer along the timeline
+	- Graph editor for animated values (cubic bezier curves)
+	- Copy/paste/duplicate layers in timeline editor?
+   	- Fix new lines in input boxes
+	- Zoom in on timeline?
+ - A way to edit pre-comps
  - Play/pause and next/previous frame buttons
  - UI for top level animation settings (width/height, framerate, ip/op, etc.)
  - UI to load more example animations
  - Dark theme?
  - Shape/layer/path editor?
  - SVG/PDF import?
+ - Make Timeline Editor the main tab?

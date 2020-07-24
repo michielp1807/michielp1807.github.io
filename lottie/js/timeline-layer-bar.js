@@ -4,18 +4,18 @@ class TL_Bar {
 		this.tlLayer = tlLayer; // The timeline layer of this bar
 
 		this.bar = document.createElement("div");
-	  this.bar.className = "layer-bar";
-	  tlLayer.barHolder.appendChild(this.bar);
+		this.bar.className = "layer-bar";
+		tlLayer.barHolder.appendChild(this.bar);
 
-	  this.barIP = document.createElement("div");
-	  this.barIP.className = "layer-bar-end";
-	  this.barIP.addEventListener("mousedown", (ev) => startDrag(ev, (ev) => this.ipOpMove(ev, "ip")));
-	  tlLayer.barHolder.appendChild(this.barIP);
+		this.barIP = document.createElement("div");
+		this.barIP.className = "layer-bar-end";
+		this.barIP.addEventListener("mousedown", (ev) => startDrag(ev, (ev) => this.ipOpMove(ev, "ip")));
+		tlLayer.barHolder.appendChild(this.barIP);
 
-	  this.barOP = document.createElement("div");
-	  this.barOP.className = "layer-bar-end";
-	  this.barOP.addEventListener("mousedown", (ev) => startDrag(ev, (ev) => this.ipOpMove(ev, "op")));
-	  tlLayer.barHolder.appendChild(this.barOP);
+		this.barOP = document.createElement("div");
+		this.barOP.className = "layer-bar-end";
+		this.barOP.addEventListener("mousedown", (ev) => startDrag(ev, (ev) => this.ipOpMove(ev, "op")));
+		tlLayer.barHolder.appendChild(this.barOP);
 	}
 
 	update() {
@@ -33,22 +33,22 @@ class TL_Bar {
 	}
 
 	ipOpMove(ev, ipOrOp) {
-	  let frameLength = frameBlocks.children[0].offsetWidth;
-	  let layer = jsonData.layers[this.tlLayer.index];
+		let frameLength = frameBlocks.children[0].offsetWidth / FRAME_BLOCK_STEP_SIZE;
+		let layer = jsonData.layers[this.tlLayer.index];
 
-	  let offsetX = ev.clientX - dragStartX;
-	  if (offsetX >= frameLength || offsetX <= -frameLength) {
-	    let ipOpOffset = Math.floor(offsetX/frameLength);
-	    if (ipOrOp == "ip") {
-	      ipOpOffset = Math.min(ipOpOffset, layer.op - layer.ip - 1); // ip upperbound
-	      ipOpOffset = Math.max(ipOpOffset, jsonData.ip - layer.ip); // ip underbound
-	    } else {
-	      ipOpOffset = Math.max(ipOpOffset, layer.ip - layer.op + 1); // op underbound
-	      ipOpOffset = Math.min(ipOpOffset, jsonData.op - layer.op); // op upperbound
-	    }
-	    layer[ipOrOp] += ipOpOffset;
-			this.tlLayer.update();
-	    dragStartX += ipOpOffset * frameLength;
-	  }
+		let offsetX = ev.clientX - dragStartX;
+		if (offsetX >= frameLength || offsetX <= -frameLength) {
+			let ipOpOffset = Math.round(offsetX / frameLength);
+			if (ipOrOp == "ip") {
+				ipOpOffset = Math.min(ipOpOffset, layer.op - layer.ip - 1); // ip upperbound
+				ipOpOffset = Math.max(ipOpOffset, jsonData.ip - layer.ip); // ip lowerbound
+			} else {
+				ipOpOffset = Math.max(ipOpOffset, layer.ip - layer.op + 1); // op underbound
+				ipOpOffset = Math.min(ipOpOffset, jsonData.op - layer.op); // op lowerbound
+			}
+			layer[ipOrOp] += ipOpOffset;
+			this.update();
+			dragStartX += ipOpOffset * frameLength;
+		}
 	}
 }
