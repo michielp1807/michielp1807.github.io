@@ -26,7 +26,7 @@ window.addEventListener("load", function () {
 					perc = Math.min(Math.max(perc, 0), 1);
 					let frame = Math.round(perc * anim.totalFrames);
 					anim.goToAndStop(frame, true);
-				});
+				}, true);
 			}
 		}
 	});
@@ -57,7 +57,7 @@ window.addEventListener("load", function () {
 		editingFrameValue = false;
 	});
 
-	setInterval(timelineUIinterval, 1000 / 60);
+	window.requestAnimationFrame(timelineUIinterval);
 });
 
 // Execute 60 times per second, updates continuously changing UI elements
@@ -69,7 +69,9 @@ function timelineUIinterval() {
 
 	// Update frame marker
 	frameMarker.style.height = timelineAreaTable.offsetHeight;
-	frameMarker.style.left = anim.currentFrame / anim.totalFrames * 100 + "%"
+	frameMarker.style.left = anim.currentFrame / anim.totalFrames * 100 + "%";
+
+	window.requestAnimationFrame(timelineUIinterval);
 }
 
 // Update the entire timeline editor with json data
@@ -130,9 +132,11 @@ function updateFrameBlocks() {
 // like keyframes which can be dragged around)
 let dragStartX;
 let dragStartY;
-function startDrag(ev, onmove) {
-	ev.preventDefault();
-	ev.stopPropagation();
+function startDrag(ev, onmove, dontPreventDefault) {
+	if (!dontPreventDefault) {
+		ev.preventDefault();
+		ev.stopPropagation();
+	}
 
 	dragStartX = ev.clientX;
 	dragStartY = ev.clientY;
