@@ -11,7 +11,7 @@
 	- Change order of layers
 	- Make visibility bars dragable to shift the entire layer along the timeline
 	- Copy/paste/duplicate layers in timeline editor?
-	- Fix new lines and double click to select in input boxes
+	- Fix double click to select in input boxes which does not always allow you to type immediately
 	- Zoom in on timeline?
 	- A way to edit pre-comps
 - Preview speed with anim.setSpeed(speed) 

@@ -29,6 +29,7 @@ class TL_Layer extends TL_LayerChild {
 		this.name.addEventListener("keypress", function (ev) {
 			if (ev.which === 13) { // Prevent pressing enter in name
 				ev.preventDefault();
+				this.blur();
 			}
 		});
 
