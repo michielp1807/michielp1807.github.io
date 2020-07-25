@@ -1,6 +1,8 @@
 // array containing layer objects
 let uiLayers = [];
 
+let editingFrameValue = false; // true if currentFrameValue is being edited by the user
+
 window.addEventListener("load", function () {
 	const timelineAreaTable = document.getElementById("timelineAreaTable");
 	const currentFrameValue = document.getElementById("currentFrameValue");
@@ -8,18 +10,65 @@ window.addEventListener("load", function () {
 	const frameBlocks = document.getElementById("frameBlocks");
 	const timelineColumn = document.getElementById("timelineColumn");
 
+	// Set the current frame by clicking anywhere on the timeline
+	document.getElementById("timelineArea").addEventListener("mousedown", function (ev) {
+		if (ev.button === 0) { // Primary click (left in most cases)
+			// Move to frame closed to where clicked if clicked inside timeline
+			let rect = timelineColumn.getBoundingClientRect();
+			let perc = (ev.clientX - rect.x) / rect.width;
+			if (perc >= 0 && perc <= 1) {
+				let frame = Math.round(perc * anim.totalFrames);
+				anim.goToAndStop(frame, true);
+
+				// Allow the user to drag to different a different frame
+				startDrag(ev, function (ev) {
+					let perc = (ev.clientX - rect.x) / rect.width;
+					perc = Math.min(Math.max(perc, 0), 1);
+					let frame = Math.round(perc * anim.totalFrames);
+					anim.goToAndStop(frame, true);
+				});
+			}
+		}
+	});
+
+	// Setup up currentFrameValue to allow for setting current frame number
+	currentFrameValue.addEventListener("focusin", function () {
+		editingFrameValue = true;
+	});
+
+	currentFrameValue.addEventListener("keypress", function (ev) {
+		if (ev.which === 13) { // Prevent pressing enter in currentFrameValue
+			ev.preventDefault();
+		}
+	});
+
+	currentFrameValue.addEventListener("focusout", function () {
+		let value = this.innerHTML;
+		value = value.replace(/^(.*?)(?=[-.0-9])/, ""); // remove characters in front first number
+		value = parseInt(value);
+		if (isNaN(value)) {
+			value = Math.round(anim.currentFrame);
+		} else {
+			lottie.goToAndStop(value, true);
+			updatePlayPauseButton();
+		}
+		this.innerHTML = value;
+		editingFrameValue = false;
+	});
+
 	setInterval(timelineUIinterval, 1000 / 60);
 });
 
 // Execute 60 times per second, updates continuously changing UI elements
 function timelineUIinterval() {
 	// Update current frame number
-	let frame = Math.floor(anim.currentFrame);
-	currentFrameValue.innerHTML = (frame < 10 ? "0" : "") + frame;
+	let frame = Math.round(anim.currentFrame);
+	if (!editingFrameValue)
+		currentFrameValue.innerHTML = (frame < 10 && frame >= 0 ? "0" : "") + frame;
 
 	// Update frame marker
 	frameMarker.style.height = timelineAreaTable.offsetHeight;
-	frameMarker.style.left = frame / anim.totalFrames * 100 + "%"
+	frameMarker.style.left = anim.currentFrame / anim.totalFrames * 100 + "%"
 }
 
 // Update the entire timeline editor with json data
@@ -82,6 +131,7 @@ let dragStartX;
 let dragStartY;
 function startDrag(ev, onmove) {
 	ev.preventDefault();
+	ev.stopPropagation();
 
 	dragStartX = ev.clientX;
 	dragStartY = ev.clientY;

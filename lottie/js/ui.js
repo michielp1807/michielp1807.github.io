@@ -37,7 +37,7 @@ function firstFrame() {
 }
 
 function prevFrame() {
-	let frame = Math.floor(anim.currentFrame) - 1;
+	let frame = Math.round(anim.currentFrame) - 1;
 	if (frame < anim.firstFrame) { // Loop around if needed
 		frame += anim.totalFrames;
 	}
@@ -51,7 +51,7 @@ function playPause() {
 }
 
 function nextFrame() {
-	let frame = Math.floor(anim.currentFrame) + 1;
+	let frame = Math.round(anim.currentFrame) + 1;
 	if (frame >= anim.firstFrame + anim.totalFrames) { // Loop around if needed
 		frame -= anim.totalFrames;
 	}
@@ -60,7 +60,7 @@ function nextFrame() {
 }
 
 function lastFrame() {
-	lottie.goToAndStop(anim.firstFrame + anim.totalFrames - 1, true);
+	lottie.goToAndStop(anim.firstFrame + anim.totalFrames, true);
 	updatePlayPauseButton();
 }
 

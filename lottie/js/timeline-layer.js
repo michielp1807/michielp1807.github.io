@@ -21,11 +21,15 @@ class TL_Layer extends TL_LayerChild {
 		this.name.contentEditable = "true";
 		this.name.addEventListener("focusout", function () {
 			let name = this.innerHTML;
-			name = name.replace(/<\/?[^>]+(>|$)/g, " "); // remove HTML tags
 			name = name.split("&nbsp;").join("").replace(/\s\s+/g, " ").trim(); // fix spaces
 			this.innerHTML = name;
 			jsonData.layers[index].nm = name;
 			setCodeValue();
+		});
+		this.name.addEventListener("keypress", function (ev) {
+			if (ev.which === 13) { // Prevent pressing enter in name
+				ev.preventDefault();
+			}
 		});
 
 		// Visibility bar holder (top part of timeline area)

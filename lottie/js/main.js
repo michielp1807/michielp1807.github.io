@@ -6,151 +6,151 @@ let editor;
 const TAB_SIZE = 4;
 
 window.addEventListener("load", function () {
-  // Setup editor
-  editor = ace.edit("codeArea");
-  editor.setTheme("ace/theme/xcode");
-  editor.setShowPrintMargin(false);
-  editor.setOption("dragEnabled", false);
-  editor.session.setMode("ace/mode/json");
-  editor.session.setTabSize(TAB_SIZE);
-  editor.on("change", function () {
-    try {
-      if (autoRefresh.checked) {
-        setAnimation();
-      }
-    } catch (e) {
-      showMessage(e);
-    }
-  });
-  setCodeValue();
-  setAnimation(); // needed in case auto refresh is off on load
-  editor.session.getUndoManager().reset();
+	// Setup editor
+	editor = ace.edit("codeArea");
+	editor.setTheme("ace/theme/xcode");
+	editor.setShowPrintMargin(false);
+	editor.setOption("dragEnabled", false);
+	editor.session.setMode("ace/mode/json");
+	editor.session.setTabSize(TAB_SIZE);
+	editor.on("change", function () {
+		try {
+			if (autoRefresh.checked) {
+				setAnimation();
+			}
+		} catch (e) {
+			showMessage(e);
+		}
+	});
+	setCodeValue();
+	setAnimation(); // needed in case auto refresh is off on load
+	editor.session.getUndoManager().reset();
 
-  // Setup global shortcuts
-  document.body.addEventListener("keydown", function (ev) {
-    if (ev.key == "z" && ev.ctrlKey) { // CTRL+Z
-      editor.undo();
-      ev.preventDefault();
-      if (activeTab == TAB_TIMELINE_EDITOR)
-        updateTimelines();
-    } else if (ev.key == "y" && ev.ctrlKey) { // CTRL+Y
-      editor.redo();
-      ev.preventDefault();
-      if (activeTab == TAB_TIMELINE_EDITOR)
-        updateTimelines();
-    } else if (ev.code === 'Space') { // Space to play/pause
-      playPause();
-    } else if (ev.code === 'ArrowLeft') { // Left arrow to go to previous frame
-      prevFrame();
-    } else if (ev.code === 'ArrowRight') { // Right arrow to go to next frame
-      nextFrame();
-    } else if (ev.code === 'ArrowUp') { // Up arrow to go to last frame
-      lastFrame();
-    } else if (ev.code === 'ArrowDown') { // Down arrow to go to first frame
-      firstFrame();
-    }
-  });
+	// Setup global shortcuts
+	document.body.addEventListener("keydown", function (ev) {
+		if (ev.key == "z" && ev.ctrlKey) { // CTRL+Z
+			editor.undo();
+			ev.preventDefault();
+			if (activeTab == TAB_TIMELINE_EDITOR)
+				updateTimelines();
+		} else if (ev.key == "y" && ev.ctrlKey) { // CTRL+Y
+			editor.redo();
+			ev.preventDefault();
+			if (activeTab == TAB_TIMELINE_EDITOR)
+				updateTimelines();
+		} else if (ev.code === 'Space') { // Space to play/pause
+			playPause();
+		} else if (ev.code === 'ArrowLeft') { // Left arrow to go to previous frame
+			prevFrame();
+		} else if (ev.code === 'ArrowRight') { // Right arrow to go to next frame
+			nextFrame();
+		} else if (ev.code === 'ArrowUp') { // Up arrow to go to last frame
+			lastFrame();
+		} else if (ev.code === 'ArrowDown') { // Down arrow to go to first frame
+			firstFrame();
+		}
+	});
 });
 
 // Load TGS or JSON data from file input field
 function loadFromFile() {
-  let reader = new FileReader();
-  reader.readAsBinaryString(fileInput.files[0]);
-  reader.addEventListener("load", function (data) {
-    let jsonString;
-    try {
-      let jsonText = pako.ungzip(data.target.result);
-      jsonString = new TextDecoder("utf-8").decode(jsonText);
-    } catch (e) {
-      if (e == "incorrect header check") {
-        jsonString = data.target.result;
-      } else {
-        showMessage(e);
-        console.log(e);
-      }
-    }
-    try {
-      setCodeValue(JSON.parse(jsonString));
-      updateTimelines();
-    } catch (e) {
-      showMessage("Error loading file: Only JSON and Gzip'ed JSON (such as TGS) are supported!");
-      console.log(e);
-    }
-  });
+	let reader = new FileReader();
+	reader.readAsBinaryString(fileInput.files[0]);
+	reader.addEventListener("load", function (data) {
+		let jsonString;
+		try {
+			let jsonText = pako.ungzip(data.target.result);
+			jsonString = new TextDecoder("utf-8").decode(jsonText);
+		} catch (e) {
+			if (e == "incorrect header check") {
+				jsonString = data.target.result;
+			} else {
+				showMessage(e);
+				console.log(e);
+			}
+		}
+		try {
+			setCodeValue(JSON.parse(jsonString));
+			updateTimelines();
+		} catch (e) {
+			showMessage("Error loading file: Only JSON and Gzip'ed JSON (such as TGS) are supported!");
+			console.log(e);
+		}
+	});
 }
 
 // Download some data as a file
 function downloadDataAsFile(filename, extension, data) {
-  let blob = new Blob([data], {
-    type: "application/octet-stream"
-  });
-  let url = window.URL.createObjectURL(blob);
+	let blob = new Blob([data], {
+		type: "application/octet-stream"
+	});
+	let url = window.URL.createObjectURL(blob);
 
-  if (!filename) {
-    filename = "sticker";
-  }
+	if (!filename) {
+		filename = "sticker";
+	}
 
-  let linkElement = document.createElement('a');
-  linkElement.setAttribute("href", url);
-  linkElement.setAttribute("download", filename + extension);
-  linkElement.style.display = 'none';
+	let linkElement = document.createElement('a');
+	linkElement.setAttribute("href", url);
+	linkElement.setAttribute("download", filename + extension);
+	linkElement.style.display = 'none';
 
-  document.body.appendChild(linkElement);
-  linkElement.click();
-  document.body.removeChild(linkElement);
+	document.body.appendChild(linkElement);
+	linkElement.click();
+	document.body.removeChild(linkElement);
 }
 
 // Set the value of the code editor (replaces everything that was there before)
 function setCodeValue(json) {
-  if (json != null) {
-    jsonData = json;
-  }
-  editor.setValue(JSON.stringify(jsonData, null, TAB_SIZE), 0);
-  editor.gotoLine(0);
+	if (json != null) {
+		jsonData = json;
+	}
+	editor.setValue(JSON.stringify(jsonData, null, TAB_SIZE), 0);
+	editor.gotoLine(0);
 }
 
 // Format the code in the code editor by parsing it and stringifying it
 function formatCode() {
-  try {
-    setCodeValue();
-    hideMessage();
-  } catch (e) {
-    showMessage(e);
-  }
+	try {
+		setCodeValue();
+		hideMessage();
+	} catch (e) {
+		showMessage(e);
+	}
 }
 
 // Load the code from the code editor as animation in the animation area
 function setAnimation() {
-  try {
-    if (activeTab == TAB_CODE_EDITOR)
-      jsonData = JSON.parse(editor.getValue());
+	try {
+		if (activeTab == TAB_CODE_EDITOR)
+			jsonData = JSON.parse(editor.getValue());
 
-    // Create copy of json data for Lottie Web player,
-    // otherwise it will modify the json data and add extra unneeded stuff
-    let jsonDataForLottieWeb = JSON.parse(JSON.stringify(jsonData));
+		// Create copy of json data for Lottie Web player,
+		// otherwise it will modify the json data and add extra unneeded stuff
+		let jsonDataForLottieWeb = JSON.parse(JSON.stringify(jsonData));
 
-    let play = !anim || !anim.isPaused;
-    let frame = anim ? anim.currentFrame : 0;
+		let play = !anim || !anim.isPaused;
+		let frame = anim ? anim.currentFrame : 0;
 
-    animationView.innerHTML = "";
-    let animData = {
-      container: animationView,
-      renderer: 'svg',
-      loop: true,
-      autoplay: false,
-      animationData: jsonDataForLottieWeb
-    }
-    anim = bodymovin.loadAnimation(animData);
+		animationView.innerHTML = "";
+		let animData = {
+			container: animationView,
+			renderer: 'svg',
+			loop: true,
+			autoplay: false,
+			animationData: jsonDataForLottieWeb
+		}
+		anim = bodymovin.loadAnimation(animData);
 
-    // Make sure to continue at the same frame
-    if (play) {
-      anim.goToAndPlay(frame, true);
-    } else {
-      anim.goToAndStop(frame, true);
-    }
+		// Make sure to continue at the same frame
+		if (play) {
+			anim.goToAndPlay(frame, true);
+		} else {
+			anim.goToAndStop(frame, true);
+		}
 
-    hideMessage();
-  } catch (e) {
-    showMessage(e);
-  }
+		hideMessage();
+	} catch (e) {
+		showMessage(e);
+	}
 }

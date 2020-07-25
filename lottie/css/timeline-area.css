@@ -4,6 +4,7 @@
   text-align: left;
 	table-layout: fixed;
   background-color: #ddd;
+  overflow-x: hidden;
 }
 
 #timelineAreaTable {
@@ -12,18 +13,19 @@
   background-color: #ddd;
 }
 
+/* Top row (current frame and frame blocks) */
+
+#currentFrame {
+  padding: 5px;
+  border-bottom: solid #bbb 2px;
+}
+
 #currentFrameValue {
 	font-family: "Monaco", "Menlo", "Ubuntu Mono", "Consolas", "source-code-pro", monospace;
 }
 
-/* Top row (current frame and frame blocks) */
-
-#currentFrame {
-  /* background-color: #bbb; */
-  padding: 5px;
-}
-
 #timelineHeader {
+  border-bottom: solid #bbb 2px;
   position: relative;
 }
 
@@ -40,14 +42,19 @@
   padding: 6px 0 0 0;
 }
 
+/* Frame marker (blue line through timeline indicating the current frame) */
+
 #frameMarker {
   position: absolute;
+  cursor: ew-resize;
+  z-index: 10;
   top: 0px;
   bottom: 0px;
   left: 50%;
   width: 2px;
   margin-left: -1px;
-  background-color: #16b;
+  background-color: var(--secondary-color);
+  box-shadow: 0px 0px 1px #0006;
 }
 
 /* Layer rows  */
@@ -78,21 +85,21 @@
   padding: 3px;
 }
 
-.layer-value {
+.layer-value, #currentFrameValue {
   margin: 0px -3px;
   padding: 3px 3px;
 }
 
 .layer-name[contenteditable=true], .layer-value {
-  color: #16b;
+  color: var(--primary-color);
   font-weight: bold;
 }
 
-.layer-name[contenteditable=true]:hover, .layer-value:hover {
+.layer-name[contenteditable=true]:hover, .layer-value:hover, #currentFrameValue:hover {
   background-color: #ccc;
 }
 
-.layer-name[contenteditable=true]:focus, .layer-value:focus {
+.layer-name[contenteditable=true]:focus, .layer-value:focus, #currentFrameValue:focus {
   background-color: #d0d0d0;
 }
 
@@ -103,8 +110,8 @@
 /* Layer bar stuff */
 .layer-bar {
   position: absolute;
-  border: outset #27c 3px;
-  background-color: #16b;
+  border: outset var(--primary-color-outset-border) 3px;
+  background-color: var(--primary-color);
   top: 4px;
 	height: 1.0em;
 }

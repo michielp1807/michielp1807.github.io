@@ -46,7 +46,7 @@ class TL_Bar {
 				ipOpOffset = Math.max(ipOpOffset, layer.ip - layer.op + 1); // op underbound
 				ipOpOffset = Math.min(ipOpOffset, jsonData.op - layer.op); // op lowerbound
 			}
-			layer[ipOrOp] += ipOpOffset;
+			layer[ipOrOp] += ipOpOffset; // update json data
 			this.update();
 			dragStartX += ipOpOffset * frameLength;
 		}

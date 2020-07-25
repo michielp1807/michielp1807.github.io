@@ -1,3 +1,12 @@
+:root {
+  --primary-color: #16b;
+  --primary-color-outset-border: #27c;
+
+  --secondary-color: #ba3720;
+  --secondary-color-light: #de1c0f;
+  --secondary-color-lighter: #e71d0f;
+}
+
 body {
 	font-family: helvetica, sans-serif;
 	text-align: center;
@@ -32,7 +41,7 @@ header {
   text-align: left;
   font-size: 30px;
   font-weight: bold;
-  background-color: #16b;
+  background-color: var(--primary-color);
   color: #fff;
   text-shadow: 2px 2px #000;
 }
@@ -93,9 +102,9 @@ main {
 .black-button:hover {color: #555;}
 .black-button:active {color: #777;}
 
-.button-active {color: #16b;}
-.button-active:hover {color: #19f;}
-.button-active:active {color: #1af;}
+.button-active {color: var(--secondary-color);}
+.button-active:hover {color: var(--secondary-color-light);}
+.button-active:active {color: var(--secondary-color-lighter);}
 
 /* Tabs */
 

@@ -1,8 +1,5 @@
 - Timeline editor to do:
     - Pause timelineUIinterval when animation is paused or timeline editor is closed
-	- Easier frame navigation:
-		- Make frame marker dragable to easily go through frames
-		- Click on the frame numbers to go to frame
 	- Keyframes for animated values
 	- Graph editor for animated values (cubic bezier curves)
 	- Children of layer in dropdown (e.g. shapes for shape layer)
@@ -10,6 +7,8 @@
 	- Make TL_Values dragable to easily change values
 	- Make scale linked by default (need to make TL_LinkedDimProperty)
 	- Set parent of layer
+	- Set ip/op of layer
+	- Change order of layers
 	- Make visibility bars dragable to shift the entire layer along the timeline
 	- Copy/paste/duplicate layers in timeline editor?
 	- Fix new lines and double click to select in input boxes

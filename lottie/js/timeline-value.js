@@ -18,6 +18,11 @@ class TL_Value {
             this.innerHTML = value;
             property.saveValuesToData(value, index);
         });
+        this.value.addEventListener("keypress", function (ev) {
+            if (ev.which === 13) { // Prevent pressing enter in value
+                ev.preventDefault();
+            }
+        });
 
         if (before == null) {
             valueHolder.appendChild(this.value);
