@@ -7,8 +7,8 @@ const do_command = (command, parameters, original_input) => {
 	} else {
 		try {
 			output_line(eval(original_input));
-		} catch(e) {
-			output_line("'"+original_input+"' is not recognized as a command or as valid javascript...");
+		} catch (e) {
+			output_line("'" + original_input + "' is not recognized as a command or as valid javascript...");
 			output_line(" (" + e + ")", "error");
 		}
 	}
@@ -16,8 +16,51 @@ const do_command = (command, parameters, original_input) => {
 
 // the commands all have a do() function and a description
 const COMMANDS = {
+	"ASCII": {
+		"do": function (parameters) {
+			// get mode
+			let split = split_first_parameter(parameters);
+			let mode = split[0].toUpperCase();
+			parameters = split[1];
+
+			// get base
+			split = split_first_parameter(parameters);
+			let base = parseInt(split[0].toLowerCase());
+			let text = split[1];
+
+			if (text.length == 0) {
+				output_line("It appears you are missing a parameter, make sure you've added the mode, key and text parameters");
+				output_line(" (SyntaxError: Missing parameter)", "error");
+				return;
+			}
+
+			// compute result
+			let output = "";
+			switch (mode) {
+				case "ENCODE":
+					for (let i = 0; i < text.length; i++) {
+						output += text.charCodeAt(i).toString(base);
+						output += i < text.length - 1 ? " " : "";
+					}
+					break;
+				case "DECODE":
+					text = text.split(" ");
+					for (let i = 0; i < text.length; i++) {
+						output += String.fromCharCode(parseInt(text[i], base));
+					}
+					break;
+				default:
+					output_line("The first parameter should be either 'ENCODE' or 'DECODE'");
+					output_line(" (SyntaxError: Incorrect parameter)", "error");
+					return;
+			}
+			output_line(output);
+		},
+		"parameters": "mode base text",
+		"description": "Encodes/decodes with ASCII, for example: 'ASCII DECODE 16 41 53 43 49 49 21'"
+	},
 	"BASE64": {
-		"do": function(parameters) {
+		"do": function (parameters) {
 			let split = split_first_parameter(parameters);
 			let mode = split[0].toUpperCase();
 			let text = split[1];
@@ -41,17 +84,17 @@ const COMMANDS = {
 			}
 		},
 		"parameters": "mode text",
-		"description":"Encodes/decodes base64 strings, mode can either be 'ENCODE' or 'DECODE'"
+		"description": "Encodes/decodes base64 strings, mode can either be 'ENCODE' or 'DECODE'"
 	},
 	"CLEAR": {
-		"do": function() {
+		"do": function () {
 			$("#output").empty();
-			output_line("Welcome to H4X0R (v0.0.2)");
+			output_line("Welcome to " + document.title);
 		},
-		"description":"Clears the screen"
+		"description": "Clears the screen"
 	},
 	"HELP": {
-		"do": function() {
+		"do": function () {
 			output_line("Here's a list of all the available commands:");
 			output_line(" ");
 			for (c in COMMANDS) {
@@ -59,21 +102,21 @@ const COMMANDS = {
 				let params = COMMANDS[c].parameters;
 				if (params)
 					com += " " + params;
-				output_line(add_spaces_until("  "+com, 24) + COMMANDS[c].description);
+				output_line(add_spaces_until("  " + com, 24) + COMMANDS[c].description);
 			}
 			output_line(" ");
 			output_line("It is also possible to input javascript code, for example '1+1' will return 2");
 		},
-		"description":"Shows help information for the available commands"
+		"description": "Shows help information for the available commands"
 	},
 	"MORSE": {
-		"do": function(parameters) {
+		"do": function (parameters) {
 			let split = split_first_parameter(parameters.toUpperCase());
 			let mode = split[0].toUpperCase();
 			let output = "";
 			switch (mode) {
 				case "ENCODE":
-					for (let i=0; i<split[1].length; i++) {
+					for (let i = 0; i < split[1].length; i++) {
 						let c = MORSE[split[1][i]];
 						if (c) output += c;
 						output += " ";
@@ -82,8 +125,7 @@ const COMMANDS = {
 					break;
 				case "DECODE":
 					let chars = split[1].split(" ");
-					console.log(chars);
-					for (let i=0; i<chars.length; i++) {
+					for (let i = 0; i < chars.length; i++) {
 						let c = "#";
 						for (m in MORSE) {
 							if (MORSE[m] == chars[i]) c = m;
@@ -98,19 +140,19 @@ const COMMANDS = {
 			}
 		},
 		"parameters": "mode text",
-		"description":"Encodes/decodes morse code strings with dots and dashes, mode can either be 'ENCODE' or 'DECODE'"
+		"description": "Encodes/decodes morse code strings with dots and dashes, mode can either be 'ENCODE' or 'DECODE'"
 	},
 	"ROT": {
-		"do": function(parameters) {
+		"do": function (parameters) {
 			// get x
 			let split = split_first_parameter(parameters);
 			let text = split[1];
 			let x = parseInt(split[0]);
 
 			if (split[0] && x) {
-		    text = text.replace(/[a-zA-Z]/g, function (c) {
+				text = text.replace(/[a-zA-Z]/g, function (c) {
 					return rot(c, x);
-		    });
+				});
 				output_line(text);
 			} else {
 				output_line("Please specify the amount of places to rotate by, for example: 'ROT 13 Ebg");
@@ -118,22 +160,22 @@ const COMMANDS = {
 			}
 		},
 		"parameters": "x text",
-		"description":"Rotates text by x places, for example: 'ROT 13 Ebg'"
+		"description": "Rotates text by x places, for example: 'ROT 13 Ebg'"
 	},
 	"ROTALL": {
-		"do": function(parameters) {
-			for (let i=0; i<26; i++) {
+		"do": function (parameters) {
+			for (let i = 0; i < 26; i++) {
 				let text = parameters.replace(/[a-zA-Z]/g, function (c) {
-		     	return rot(c, i);
-		    });
-				output_line("ROT " + i + ": '" + text + "'");
+					return rot(c, i);
+				});
+				output_line("ROT " + i + ": " + (i < 10 ? " " : "") + "'" + text + "'");
 			}
 		},
 		"parameters": "text",
-		"description":"Rotates text for all 26 possibilities, for example: 'ROTALL Ebg'"
+		"description": "Rotates text for all 26 possibilities, for example: 'ROTALL Ebg'"
 	},
 	"VIG": {
-		"do": function(parameters) {
+		"do": function (parameters) {
 			// get mode
 			let split = split_first_parameter(parameters);
 			let mode = split[0].toUpperCase();
@@ -166,25 +208,20 @@ const COMMANDS = {
 
 			let key = [];
 			key_word.replace(/[a-z]/g, function (c) {
-				key.push(c.charCodeAt(0)-97);
+				key.push(c.charCodeAt(0) - 97);
 				return c;
 			});
-			console.log(key_word);
-			console.log(key);
-			console.log(text);
 
 			let i = -1;
 			text = text.replace(/[a-zA-Z]/g, function (c) {
 				i++;
-				return rot(c, mult*key[i % key.length]);
+				return rot(c, mult * key[i % key.length]);
 			});
-
-			console.log(text);
 
 			output_line(text);
 		},
 		"parameters": "mode key text",
-		"description":"Encodes/decodes with Vigenère cipher, for example: 'VIG DECODE Key Fmeorcbi'"
+		"description": "Encodes/decodes with Vigenère cipher, for example: 'VIG DECODE Key Fmeorcbi'"
 	}
 };
 
