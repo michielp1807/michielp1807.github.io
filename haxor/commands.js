@@ -2,15 +2,15 @@
 
 // executes a command, activated by do_input()
 const do_command = (command, parameters, original_input) => {
-	if (COMMANDS[command] != undefined) {
-		COMMANDS[command].do(parameters);
-	} else {
-		try {
+	try {
+		if (COMMANDS[command] != undefined) {
+			COMMANDS[command].do(parameters);
+		} else {
 			output_line(eval(original_input));
-		} catch (e) {
-			output_line("'" + original_input + "' is not recognized as a command or as valid javascript...");
-			output_line(" (" + e + ")", "error");
 		}
+	} catch (e) {
+		output_line("'" + original_input + "' is not recognized as a command or as valid javascript...");
+		output_line(" (" + e + ")", "error");
 	}
 }
 
@@ -29,7 +29,7 @@ const COMMANDS = {
 			let text = split[1];
 
 			if (text.length == 0) {
-				output_line("It appears you are missing a parameter, make sure you've added the mode, key and text parameters");
+				output_line("It appears you are missing a parameter, make sure you've added the mode, base and text parameters");
 				output_line(" (SyntaxError: Missing parameter)", "error");
 				return;
 			}
