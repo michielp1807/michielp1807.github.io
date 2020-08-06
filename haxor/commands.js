@@ -1,6 +1,6 @@
 // This file contains all the commands
 
-// executes a command, activated by do_input()
+// Executes a command, activated by do_input()
 const do_command = (command, parameters, original_input) => {
     if (COMMANDS[command] != undefined) {
         try {
