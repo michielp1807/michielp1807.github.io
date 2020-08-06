@@ -147,6 +147,13 @@ const COMMANDS = {
         "parameters": "mode text",
         "description": "Encodes/decodes morse code strings with dots and dashes, mode can either be 'ENCODE' or 'DECODE'"
     },
+    "REVERSE": {
+        "do": function(text) {
+            output_line(text.split("").reverse().join(""));
+        },
+        "parameters": "text",
+        "description": "Reverse text, for example: 'REVERSE !esreveR'"
+    },
     "ROT": {
         "do": function(parameters) {
             // get x
