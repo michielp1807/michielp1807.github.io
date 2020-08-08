@@ -7,14 +7,14 @@ const do_command = (command, parameters, original_input) => {
             COMMANDS[command].do(parameters);
         } catch (e) {
             output_line("The command '" + command + "' produced an error...");
-            output_line(" (" + e + ")", "error");
+            output_line("(" + e + ")", "error");
         }
     } else {
         try {
             output_line(eval(original_input));
         } catch (e) {
             output_line("'" + original_input + "' is not recognized as a command or as valid javascript...");
-            output_line(" (" + e + ")", "error");
+            output_line("(" + e + ")", "error");
         }
     }
 }
@@ -35,7 +35,7 @@ const COMMANDS = {
 
             if (text.length == 0) {
                 output_line("It appears you are missing a parameter, make sure you've added the mode, base and text parameters");
-                output_line(" (SyntaxError: Missing parameter)", "error");
+                output_line("(SyntaxError: Missing parameter)", "error");
                 return;
             }
 
@@ -56,7 +56,7 @@ const COMMANDS = {
                     break;
                 default:
                     output_line("The first parameter should be either 'ENCODE' or 'DECODE'");
-                    output_line(" (SyntaxError: Incorrect parameter)", "error");
+                    output_line("(SyntaxError: Incorrect parameter)", "error");
                     return;
             }
             output_line(output);
@@ -72,7 +72,7 @@ const COMMANDS = {
 
             if (text.length == 0) {
                 output_line("It appears you are missing a parameter, make sure you've added the mode and text parameters");
-                output_line(" (SyntaxError: Missing parameter)", "error");
+                output_line("(SyntaxError: Missing parameter)", "error");
                 return;
             }
 
@@ -85,7 +85,7 @@ const COMMANDS = {
                     break;
                 default:
                     output_line("The first parameter should be either 'ENCODE' or 'DECODE'");
-                    output_line(" (SyntaxError: Incorrect parameter)", "error");
+                    output_line("(SyntaxError: Incorrect parameter)", "error");
             }
         },
         "parameters": "mode text",
@@ -101,15 +101,21 @@ const COMMANDS = {
     "HELP": {
         "do": function() {
             output_line("Here's a list of all the available commands:");
-            output_line(" ");
+            let texts = [];
             for (c in COMMANDS) {
+                // Color parameters dark green
                 let com = c;
                 let params = COMMANDS[c].parameters;
                 if (params)
-                    com += " " + params;
-                output_line(add_spaces_until("  " + com, 24) + COMMANDS[c].description);
+                    com += ' <span class="dark_green">' + params + "</span>";
+                texts.push(com);
+                // Color quotes in description dark green
+                let desc = " " + COMMANDS[c].description + " ";
+                desc = desc.replace(/ '/g, " <span class=\"dark_green\">'");
+                desc = desc.replace(/' /g, "'</span> ");
+                texts.push(desc.trim());
             }
-            output_line(" ");
+            output_table(texts, 2);
             output_line("It is also possible to input javascript code, for example '1+1' will return 2");
         },
         "description": "Shows help information for the available commands"
@@ -141,7 +147,7 @@ const COMMANDS = {
                     break;
                 default:
                     output_line("The first parameter should be either 'ENCODE' or 'DECODE'");
-                    output_line(" (SyntaxError: Incorrect parameter)", "error");
+                    output_line("(SyntaxError: Incorrect parameter)", "error");
             }
         },
         "parameters": "mode text",
@@ -168,7 +174,7 @@ const COMMANDS = {
                 output_line(text);
             } else {
                 output_line("Please specify the amount of places to rotate by, for example: 'ROT 13 Ebg");
-                output_line(" (SyntaxError: Incorrect parameter)", "error");
+                output_line("(SyntaxError: Incorrect parameter)", "error");
             }
         },
         "parameters": "x text",
@@ -203,7 +209,7 @@ const COMMANDS = {
                     break;
                 default:
                     output_line("The first parameter should be either 'ENCODE' or 'DECODE'");
-                    output_line(" (SyntaxError: Incorrect parameter)", "error");
+                    output_line("(SyntaxError: Incorrect parameter)", "error");
                     return;
             }
 
@@ -214,7 +220,7 @@ const COMMANDS = {
 
             if (text.length == 0) {
                 output_line("It appears you are missing a parameter, make sure you've added the mode, key and text parameters");
-                output_line(" (SyntaxError: Missing parameter)", "error");
+                output_line("(SyntaxError: Missing parameter)", "error");
                 return;
             }
 
