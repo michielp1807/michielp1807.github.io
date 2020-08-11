@@ -1,20 +1,20 @@
 // This file contains all the commands
 
 // Executes a command, activated by do_input()
-const do_command = (command, parameters, original_input) => {
+const doCommand = (command, parameters, original_input) => {
     if (COMMANDS[command] != undefined) {
         try {
             COMMANDS[command].do(parameters);
         } catch (e) {
-            output_line("The command '" + command + "' produced an error...");
-            output_line("(" + e + ")", "error");
+            printLine("The command '" + command + "' produced an error...");
+            printLine("(" + e + ")", "error");
         }
     } else {
         try {
-            output_line(eval(original_input));
+            printLine(eval(original_input));
         } catch (e) {
-            output_line("'" + original_input + "' is not recognized as a command or as valid javascript...");
-            output_line("(" + e + ")", "error");
+            printLine("'" + original_input + "' is not recognized as a command or as valid javascript...");
+            printLine("(" + e + ")", "error");
         }
     }
 }
@@ -24,18 +24,18 @@ const COMMANDS = {
     "ASCII": {
         "do": function(parameters) {
             // get mode
-            let split = split_first_parameter(parameters);
+            let split = splitFirstParameter(parameters);
             let mode = split[0].toUpperCase();
             parameters = split[1];
 
             // get base
-            split = split_first_parameter(parameters);
+            split = splitFirstParameter(parameters);
             let base = parseInt(split[0].toLowerCase());
             let text = split[1];
 
             if (text.length == 0) {
-                output_line("It appears you are missing a parameter, make sure you've added the mode, base and text parameters");
-                output_line("(SyntaxError: Missing parameter)", "error");
+                printLine("It appears you are missing a parameter, make sure you've added the mode, base and text parameters");
+                printLine("(SyntaxError: Missing parameter)", "error");
                 return;
             }
 
@@ -55,37 +55,37 @@ const COMMANDS = {
                     }
                     break;
                 default:
-                    output_line("The first parameter should be either 'ENCODE' or 'DECODE'");
-                    output_line("(SyntaxError: Incorrect parameter)", "error");
+                    printLine("The first parameter should be either 'ENCODE' or 'DECODE'");
+                    printLine("(SyntaxError: Incorrect parameter)", "error");
                     return;
             }
-            output_line(output);
+            printLine(output);
         },
         "parameters": "mode base text",
         "description": "Encodes/decodes with ASCII, for example: 'ASCII DECODE 16 41 53 43 49 49 21'"
     },
     "BASE64": {
         "do": function(parameters) {
-            let split = split_first_parameter(parameters);
+            let split = splitFirstParameter(parameters);
             let mode = split[0].toUpperCase();
             let text = split[1];
 
             if (text.length == 0) {
-                output_line("It appears you are missing a parameter, make sure you've added the mode and text parameters");
-                output_line("(SyntaxError: Missing parameter)", "error");
+                printLine("It appears you are missing a parameter, make sure you've added the mode and text parameters");
+                printLine("(SyntaxError: Missing parameter)", "error");
                 return;
             }
 
             switch (mode) {
                 case "ENCODE":
-                    output_line(btoa(text));
+                    printLine(btoa(text));
                     break;
                 case "DECODE":
-                    output_line(atob(text));
+                    printLine(atob(text));
                     break;
                 default:
-                    output_line("The first parameter should be either 'ENCODE' or 'DECODE'");
-                    output_line("(SyntaxError: Incorrect parameter)", "error");
+                    printLine("The first parameter should be either 'ENCODE' or 'DECODE'");
+                    printLine("(SyntaxError: Incorrect parameter)", "error");
             }
         },
         "parameters": "mode text",
@@ -94,13 +94,13 @@ const COMMANDS = {
     "CLEAR": {
         "do": function() {
             $("#output").empty();
-            output_line("Welcome to " + document.title);
+            printLine("Welcome to " + document.title);
         },
         "description": "Clears the screen"
     },
     "HELP": {
         "do": function() {
-            output_line("Here's a list of all the available commands:");
+            printLine("Here's a list of all the available commands:");
             let texts = [];
             for (c in COMMANDS) {
                 // Color parameters dark green
@@ -115,14 +115,14 @@ const COMMANDS = {
                 desc = desc.replace(/' /g, "'</span> ");
                 texts.push(desc.trim());
             }
-            output_table(texts, 2);
-            output_line("It is also possible to input javascript code, for example '1+1' will return 2");
+            printTable(texts, 2);
+            printLine("It is also possible to input javascript code, for example '1+1' will return 2");
         },
         "description": "Shows help information for the available commands"
     },
     "MORSE": {
         "do": function(parameters) {
-            let split = split_first_parameter(parameters.toUpperCase());
+            let split = splitFirstParameter(parameters.toUpperCase());
             let mode = split[0].toUpperCase();
             let output = "";
             switch (mode) {
@@ -132,7 +132,7 @@ const COMMANDS = {
                         if (c) output += c;
                         output += " ";
                     }
-                    output_line(output.trim());
+                    printLine(output.trim());
                     break;
                 case "DECODE":
                     let chars = split[1].split(" ");
@@ -143,11 +143,11 @@ const COMMANDS = {
                         }
                         output += c;
                     }
-                    output_line(output.trim());
+                    printLine(output.trim());
                     break;
                 default:
-                    output_line("The first parameter should be either 'ENCODE' or 'DECODE'");
-                    output_line("(SyntaxError: Incorrect parameter)", "error");
+                    printLine("The first parameter should be either 'ENCODE' or 'DECODE'");
+                    printLine("(SyntaxError: Incorrect parameter)", "error");
             }
         },
         "parameters": "mode text",
@@ -155,7 +155,7 @@ const COMMANDS = {
     },
     "REVERSE": {
         "do": function(text) {
-            output_line(text.split("").reverse().join(""));
+            printLine(text.split("").reverse().join(""));
         },
         "parameters": "text",
         "description": "Reverse text, for example: 'REVERSE !esreveR'"
@@ -163,7 +163,7 @@ const COMMANDS = {
     "ROT": {
         "do": function(parameters) {
             // get x
-            let split = split_first_parameter(parameters);
+            let split = splitFirstParameter(parameters);
             let text = split[1];
             let x = parseInt(split[0]);
 
@@ -171,10 +171,10 @@ const COMMANDS = {
                 text = text.replace(/[a-zA-Z]/g, function(c) {
                     return rot(c, x);
                 });
-                output_line(text);
+                printLine(text);
             } else {
-                output_line("Please specify the amount of places to rotate by, for example: 'ROT 13 Ebg");
-                output_line("(SyntaxError: Incorrect parameter)", "error");
+                printLine("Please specify the amount of places to rotate by, for example: 'ROT 13 Ebg");
+                printLine("(SyntaxError: Incorrect parameter)", "error");
             }
         },
         "parameters": "x text",
@@ -186,7 +186,7 @@ const COMMANDS = {
                 let text = parameters.replace(/[a-zA-Z]/g, function(c) {
                     return rot(c, i);
                 });
-                output_line("ROT " + i + ": " + (i < 10 ? " " : "") + "'" + text + "'");
+                printLine("ROT " + i + ": " + (i < 10 ? " " : "") + "'" + text + "'");
             }
         },
         "parameters": "text",
@@ -195,7 +195,7 @@ const COMMANDS = {
     "VIG": {
         "do": function(parameters) {
             // get mode
-            let split = split_first_parameter(parameters);
+            let split = splitFirstParameter(parameters);
             let mode = split[0].toUpperCase();
             parameters = split[1];
 
@@ -208,19 +208,19 @@ const COMMANDS = {
                     mult = -1;
                     break;
                 default:
-                    output_line("The first parameter should be either 'ENCODE' or 'DECODE'");
-                    output_line("(SyntaxError: Incorrect parameter)", "error");
+                    printLine("The first parameter should be either 'ENCODE' or 'DECODE'");
+                    printLine("(SyntaxError: Incorrect parameter)", "error");
                     return;
             }
 
             // get key
-            split = split_first_parameter(parameters);
+            split = splitFirstParameter(parameters);
             let key_word = split[0].toLowerCase();
             let text = split[1];
 
             if (text.length == 0) {
-                output_line("It appears you are missing a parameter, make sure you've added the mode, key and text parameters");
-                output_line("(SyntaxError: Missing parameter)", "error");
+                printLine("It appears you are missing a parameter, make sure you've added the mode, key and text parameters");
+                printLine("(SyntaxError: Missing parameter)", "error");
                 return;
             }
 
@@ -236,7 +236,7 @@ const COMMANDS = {
                 return rot(c, mult * key[i % key.length]);
             });
 
-            output_line(text);
+            printLine(text);
         },
         "parameters": "mode key text",
         "description": "Encodes/decodes with Vigenère cipher, for example: 'VIG DECODE Key Fmeorcbi'"

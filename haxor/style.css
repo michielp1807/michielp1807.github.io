@@ -49,7 +49,7 @@ input,
 }
 
 #input {
-    width: 80%;
+    width: calc(100% - 4ch);
     border: none;
     padding: 0;
     margin: 0;
