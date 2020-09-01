@@ -1,57 +1,56 @@
 body {
-  background-color: #000;
-	color: #0F0;
-	font-family: 'Roboto Mono', monospace;
+    margin: 0;
+    padding: 8px 8px 8px 8px;
+    scrollbar-color: dark;
+    overflow-y: scroll;
+    color: #0F0;
 }
 
-#output_div {
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	right: -20px;
-	bottom: 40px;
-	margin: 8px 28px 8px 8px;
-	overflow: hidden;
-}
-
-#output {
-	width: 100%;
-	height: 100%;
-	padding-right: 20px;
-	padding-bottom: 20px;
-	overflow: scroll;
+body,
+input {
+    background-color: #000;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1em;
 }
 
 .new_line {
-	white-space: pre;
+    white-space: pre-wrap;
 }
 
-.new_line.input {
-	color: #0a0;
+table {
+    margin: 1em 1ch;
+    border-collapse: separate;
+    border-spacing: 1ch 0;
 }
 
-.new_line.gray {
-	color: #777;
+td {
+    vertical-align: top;
+    margin: 0;
+    padding: 0;
 }
 
-.new_line.error {
-	color: #a00;
+.indent,
+.error {
+    padding-left: 1ch;
 }
 
-#input_div {
-	position: fixed;
-	bottom: 0px;
-	left: 0px;
-	right: 0px;
-	margin: 8px;
+.inputLines,
+input,
+.dark_green {
+    color: #0a0;
+}
+
+.gray {
+    color: #777;
+}
+
+.error {
+    color: #a00;
 }
 
 #input {
-	width: 100%;
-	height: 32px;
-	background-color: #222;
-	color: #0F0;
-	font-family: 'Roboto Mono', monospace;
-	padding: 4px;
-	border: none;
+    width: calc(100% - 4ch);
+    border: none;
+    padding: 0;
+    margin: 0;
 }
