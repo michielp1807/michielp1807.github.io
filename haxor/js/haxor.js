@@ -1,7 +1,7 @@
 $(function() { // on page load
     $("#input").keydown(doKeyboardInput); // bind keypress event from input textarea
     $(document).keydown(function(e) {
-        if (!e.ctrlKey)
+        if (!e.ctrlKey && e.key !== "Control")
             $("#input").focus(); // focus on input textarea
     });
     COMMANDS.CLEAR.do(); // execute clear command
