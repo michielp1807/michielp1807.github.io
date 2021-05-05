@@ -3,7 +3,7 @@ let categories = {};
 let destination;
 let notChosen = [];
 let clicked = false;
-let flash = true;
+let flash = false;
 
 $(document).ready(function() {
   $.ajax({

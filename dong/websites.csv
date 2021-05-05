@@ -27,6 +27,7 @@ Key Light,https://lab.hakim.se/keylight/03b/,Audio,Other,FALSE
 Patatap,http://www.patatap.com/,Audio,Other,FALSE
 Radio Garden,http://radio.garden/live/,Audio,Other,FALSE
 Typatone,https://www.typatone.com/,Audio,Other,FALSE
+Wide-band WebSDR,http://websdr.ewi.utwente.nl:8901/,Audio,Other,FALSE
 AutoDraw,https://www.autodraw.com/,Creative,,FALSE
 Circular,http://vladgotlib.com/circular/,Creative,,FALSE
 Emoji Ink,http://emoji.ink/,Creative,,FALSE
@@ -123,7 +124,6 @@ Google Earth,https://earth.google.com/web/,Informative,Earth,FALSE
 Ground Zero,http://www.carloslabs.com/projects/200712B/GroundZero-2-6.html,Informative,Earth,FALSE
 If It Were My Home,http://www.ifitweremyhome.com/,Informative,Earth,FALSE
 Jason Davies Map Projections,https://www.jasondavies.com/maps/,Informative,Earth,FALSE
-Map Projections,http://www.gis.osu.edu/misc/map-projections/,Informative,Earth,FALSE
 Old Maps,http://www.oldmapsonline.org/,Informative,Earth,FALSE
 One Zoom,http://www.onezoom.org/life.html/,Informative,Earth,FALSE
 Scaling Everest,https://www.washingtonpost.com/graphics/world/scaling-everest/,Informative,Earth,FALSE
@@ -228,7 +228,6 @@ Republique Des Mangues,http://www.republiquedesmangues.fr/,Random,,FALSE
 RGB,http://www.rrrgggbbb.com/,Random,,FALSE
 Secret Door,http://ww3.safestyle-windows.co.uk/the-secret-door/,Random,,FALSE
 Short Trip,https://alexanderperrin.com.au/paper/shorttrip/,Random,,FALSE
-Show More,http://www.showmore.ch/,Random,,FALSE
 Something Nothing,http://somethingnothing.net/,Random,,FALSE
 Space Is Cool,http://www.spaceis.cool/,Random,,FALSE
 Spend Bill Gate's Money,http://neal.fun/spend/,Random,,FALSE
@@ -245,7 +244,6 @@ The Restart Page,http://www.therestartpage.com,Random,,FALSE
 This Is Sand,https://thisissand.com/,Random,,TRUE
 Traitor!,http://tr-8r.com/,Random,,FALSE
 Trash Loop,http://www.trashloop.com/,Random,,FALSE
-Trump Donald,http://trumpdonald.org/,Random,,FALSE
 Vsauce Party,http://vsauce.corgiorgy.com/,Random,,FALSE
 Way To Go,http://a-way-to-go.com/,Random,,FALSE
 Windows 93,http://www.windows93.net/,Random,,FALSE
@@ -270,7 +268,6 @@ Linify,http://linify.me/,Visual,,FALSE
 Pixel Chart,https://anvaka.github.io/pixchart/,Visual,,FALSE
 Poly,https://poly.google.com/,Visual,,FALSE
 Polygon Spirals,https://michielp1807.github.io/polygon-spirals/,Visual,,FALSE
-Prizma Space,http://www.prizmaspace.com/#/home,Visual,,FALSE
 Science VS Magic,https://sciencevsmagic.net/,Visual,,FALSE
 Star Wars Asciimation,http://www.asciimation.co.nz/,Visual,,FALSE
 Strobe Illusion,https://strobe.cool/,Visual,,FALSE
