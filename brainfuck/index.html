@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>Brainfuck Interpreter & Debugger</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <script src="./bf.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+  
+<body>
+    <header>
+        <h1>Brainfuck Interpreter & Debugger</h1>
+    </header>
+    <div id="code-area"></div>
+    <div id="io-area">
+        <div id="computer-container">
+            <div id="computer">
+                Program: <div id="program-tape" class="tape"></div>
+                Memory: <div id="memory-tape" class="tape"></div>
+                Input: <div id="input-tape" class="tape"></div>
+                Output: <div id="output-tape" class="tape"></div>
+            </div>
+            <div id="computer-buttons">
+                <button title="Ctrl+End" id="run-button" onclick="run()">Run</button>
+                <button title="Ctrl+⬇️" class="todo">To cursor</button>
+                <button title="Ctrl+➡️" onclick="step()">Step forward</button>
+                <button title="Ctrl+⬅️" class="todo">Step backward</button>
+                <button title="Ctrl+⬆️" onclick="reset()">Reset</button>
+            </div>
+        </div>
+        <div>Input: <textarea id="input-text"></textarea></div>
+        <div>Output: <textarea id="output-text" readonly></textarea></div>
+        <div>TODO:
+            <ul>
+                <li>To cursor</li>
+                <li>Step backward</li>
+                <li>Keyboard shortcuts</li>
+                <li>Run speed control</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
