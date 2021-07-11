@@ -2,7 +2,7 @@ let editor, editorMatchesExecutor, editorMap, progressMarker;
 let programTape, memoryTape, inputTape, outputTape, inputText, outputText;
 let program, memory, input, output, stack, pp, mp, ip, op, history, runTimeout, mpMin, mpMax;
 let runButton, toCursorButton, stepForwardButton, stepBackwardButton, resetButton;
-let computer;
+let computer, outOfSyncWarning;
 
 window.addEventListener("load", function () {
     // Get elements by ID
@@ -18,6 +18,7 @@ window.addEventListener("load", function () {
     stepBackwardButton = document.getElementById("step-backward-button");
     resetButton = document.getElementById("reset-button");
     computer = document.getElementById("computer");
+    outOfSyncWarning = document.getElementById("out-of-sync-warning");
 
     // Define brainfuck ace mode
     define('ace/mode/bf', [], function(require, exports, module) {
@@ -70,6 +71,7 @@ window.addEventListener("load", function () {
         if (progressMarker != undefined) editor.session.removeMarker(progressMarker);
         editorMatchesExecutor = false;
         toCursorButton.disabled = true;
+        outOfSyncWarning.style.display = "block";
     });
 
     runButton.onclick = () => run();
@@ -125,6 +127,7 @@ function reset() {
     }
     editorMatchesExecutor = true;
     toCursorButton.disabled = false;
+    outOfSyncWarning.style.display = "none";
     memory = [];
     input = inputText.value;
     output = "";
@@ -155,11 +158,11 @@ function stop() {
     // Change button back to Run
     runButton.innerHTML = "Run";
     runButton.onclick = () => run();
-    computer.style.backgroundColor = "#ffffff";
+    computer.classList.remove("running");
 }
 function run(until, backward) {
     stopping = false;
-    computer.style.backgroundColor = "#fff3b0";
+    computer.classList.add("running");
     if (backward) {
         const runStepBackward = function() {
             if (pp <= (until ?? 0)) stop();

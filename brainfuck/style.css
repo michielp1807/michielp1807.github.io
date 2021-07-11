@@ -46,6 +46,11 @@ header h1 {
   box-shadow: 0 2px 4px #0002;
 }
 
+#out-of-sync-warning {
+  text-align: center;
+  font-weight: bold;
+}
+
 #input-text:hover {
   border: 1px solid black;
 }
@@ -60,6 +65,10 @@ header h1 {
   width: 100%;
   background-color: #ffffff;
   padding: 1rem;
+}
+
+#computer.running {
+  background-color: #fff5b1;
 }
 
 #computer-buttons {
