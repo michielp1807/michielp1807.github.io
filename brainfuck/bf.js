@@ -1,6 +1,6 @@
 let editor, editorMatchesExecutor, editorMap, progressMarker;
 let programTape, memoryTape, inputTape, outputTape, inputText, outputText;
-let program, memory, input, output, stack, pp, mp, ip, op, history, runTimeout;
+let program, memory, input, output, stack, pp, mp, ip, op, history, runTimeout, mpMin, mpMax;
 let runButton, toCursorButton, stepForwardButton, stepBackwardButton, resetButton;
 let computer;
 
@@ -125,7 +125,7 @@ function reset() {
     }
     editorMatchesExecutor = true;
     toCursorButton.disabled = false;
-    memory = new Array(32).fill(0);
+    memory = [];
     input = inputText.value;
     output = "";
     stack = [];
@@ -133,6 +133,8 @@ function reset() {
     mp = 0;
     ip = 0;
     op = 0;
+    mpMin = 0;
+    mpMax = 31;
     update();
 }
 
@@ -197,9 +199,11 @@ function step() {
     switch (program[pp]) {
         case ">":
             mp++;
+            mpMax = Math.max(mp, mpMax);
             break;
         case "<":
             mp--;
+            mpMin = Math.min(mp, mpMin);
             break;
         case "+":
             memory[mp] = ((memory[mp] || 0) + 1) % 256;
@@ -289,14 +293,21 @@ function update() { // Update HTML elements to reflect program state
     }
 
     programTape.innerHTML = tapeString(program, pp);
-    memoryTape.innerHTML = memory.reduce((a, b, i) => {
-        b = (b<100 ? (b<10 ? "00" : "0") : "") + b;
+    let memoryTapeStr = "";
+    const formatMem = i => {
+        let v = memory[i];
+        v = v ? (v<100 ? (v<10 ? "00" : "0") : "") + v : "000";
         if (i == mp) {
-            return a + ` <span class="tape-selected">${b}</span>`;
+            return  `<span class="tape-selected">${v}</span>`;
         } else {
-            return a + " " + b;
+            return v;
         }
-    }, "");
+    };
+    memoryTapeStr += formatMem(mpMin);
+    for (let i=mpMin+1; i<=mpMax; i++) {
+        memoryTapeStr += " " + formatMem(i);
+    }
+    memoryTape.innerHTML = memoryTapeStr;
     inputTape.innerHTML = tapeString(input, ip);
     outputTape.innerHTML = tapeString(output, op);
     outputText.value = output;
