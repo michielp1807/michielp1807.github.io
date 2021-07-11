@@ -74,6 +74,7 @@ button {
   border-radius: 5px;
   background-color: #ffffff;
   padding: 0.2rem 0.5rem;
+  cursor: pointer;
 }
 
 button:hover {
@@ -84,8 +85,10 @@ button:active {
   background-color: #dddddd;
 }
 
-button.todo {
+button.todo,
+button:disabled {
   background-color: #cccccc;
+  color: #444444;
   cursor: not-allowed;
 }
 

@@ -23,9 +23,9 @@
             </div>
             <div id="computer-buttons">
                 <button title="Ctrl+End" id="run-button" onclick="run()">Run</button>
-                <button title="Ctrl+⬇️" class="todo">To cursor</button>
+                <button title="Ctrl+⬇️" id="to-cursor-button" onclick="runToCursor()">To cursor</button>
                 <button title="Ctrl+➡️" onclick="step()">Step forward</button>
-                <button title="Ctrl+⬅️" class="todo">Step backward</button>
+                <button title="Ctrl+⬅️" id="step-backward-button" onclick="stepBackward()">Step backward</button>
                 <button title="Ctrl+⬆️" onclick="reset()">Reset</button>
             </div>
         </div>
@@ -33,10 +33,10 @@
         <div>Output: <textarea id="output-text" readonly></textarea></div>
         <div>TODO:
             <ul>
-                <li>To cursor</li>
-                <li>Step backward</li>
                 <li>Keyboard shortcuts</li>
                 <li>Run speed control</li>
+                <li>Fix memory tape when adding new slots that are separate from know slots</li>
+                <li>Better indicate when editor is out of sync with computer</li>
             </ul>
         </div>
     </div>

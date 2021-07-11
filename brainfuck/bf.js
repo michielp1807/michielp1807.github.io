@@ -1,7 +1,7 @@
 let editor, editorMatchesExecutor, editorMap, progressMarker;
 let programTape, memoryTape, inputTape, outputTape, inputText, outputText;
-let program, memory, input, output, stack, pp, mp, ip, op;
-let runButton;
+let program, memory, input, output, stack, pp, mp, ip, op, history;
+let runButton, toCursorButton, stepBackwardButton;
 
 window.addEventListener("load", function () {
     // Get elements by ID
@@ -12,6 +12,8 @@ window.addEventListener("load", function () {
     inputText = document.getElementById("input-text");
     outputText = document.getElementById("output-text");
     runButton = document.getElementById("run-button");
+    toCursorButton = document.getElementById("to-cursor-button");
+    stepBackwardButton = document.getElementById("step-backward-button")
 
     // Define brainfuck ace mode
     define('ace/mode/bf', [], function(require, exports, module) {
@@ -63,6 +65,7 @@ window.addEventListener("load", function () {
     editor.on("change", function(e) {
         if (progressMarker != undefined) editor.session.removeMarker(progressMarker);
         editorMatchesExecutor = false;
+        toCursorButton.disabled = true;
     });
 });
 
@@ -70,6 +73,7 @@ function reset() {
     let code = editor.getValue();
     program = code.replaceAll(/[^<>+-.,\[\]]/g, "");
     editorMap = [];
+    history = [];
     for (let i=0, j=0; i<program.length; i++) {
         while (code[j] != program[i]) {
             j++;
@@ -78,6 +82,8 @@ function reset() {
         j++;
     }
     editorMatchesExecutor = true;
+    toCursorButton.disabled = false;
+    stepBackwardButton.disabled = true;
     memory = new Array(32).fill(0);
     input = inputText.value;
     output = "";
@@ -89,32 +95,63 @@ function reset() {
     update();
 }
 
-let stopping = false;
-function run() {
-    stopping = false;
-    const runStep = function() {
-        if (pp < program.length && !stopping) {
-            step();
-            setTimeout(runStep, 1);
-        } else {
-            // Change button back to Run
-            runButton.innerHTML = "Run";
-            runButton.onclick = run;
-        }
+function runToCursor() {
+    let index = editor.session.doc.positionToIndex(editor.getCursorPosition());
+    let i;
+    for (i=0; i<editorMap.length; i++) {
+        if (editorMap[i] >= index) break;
     }
-    setTimeout(runStep, 1);
-    // Change button to Stop
-    runButton.innerHTML = "Stop";
-    runButton.onclick = stop;
+    let backward = pp > i;
+    run(i, backward);
 }
 
-function stop() {
-    stopping = true;
+let stopping = false;
+function run(until, backward) {
+    stopping = false;
+    if (backward) {
+        const runStepBackward = function() {
+            if (pp > (until ?? 0) && !stopping) {
+                stepBackward();
+                setTimeout(runStepBackward, 1);
+            } else {
+                // Change button back to Run
+                runButton.innerHTML = "Run";
+                runButton.onclick = () => run();
+            }
+        }
+        setTimeout(runStepBackward, 1);
+    } else {
+        const runStep = function() {
+            if (pp < (until ?? program.length) && !stopping) {
+                step();
+                setTimeout(runStep, 1);
+            } else {
+                // Change button back to Run
+                runButton.innerHTML = "Run";
+                runButton.onclick = () => run();
+            }
+        }
+        setTimeout(runStep, 1);
+    }
+    // Change button to Stop
+    runButton.innerHTML = "Stop";
+    runButton.onclick = () => stopping = true;
+}
+
+function goToMatchingClosingBracket() {
+    let lvl = 1;
+    while (lvl > 0) {
+        pp++;
+        if (program[pp] == "[")
+            lvl++;
+        else if (program[pp] == "]")
+            lvl--;
+    }
 }
 
 function step() {
-    const char = program[pp];
-    switch (char) {
+    stepBackwardButton.disabled = false;
+    switch (program[pp]) {
         case ">":
             mp++;
             break;
@@ -132,28 +169,27 @@ function step() {
             op++;
             break;
         case ",":
+            history.push(memory[mp]);
             memory[mp] = input.charCodeAt(ip);
             ip++;
             break;
         case "[":
-            if (memory[mp]) {
+            if (memory[mp]) { // enter loop
                 stack.push(pp);
-            } else { // skip to matching "]"
-                let lvl = 1;
-                while (lvl > 0) {
-                    pp++;
-                    if (program[pp] == "[")
-                        lvl++;
-                    else if (program[pp] == "]")
-                        lvl--;
-                }
+                history.push(false);
+            } else { // skip loop
+                history.push(pp);
+                goToMatchingClosingBracket();
+                history.push(false);
             }
             break;
         case "]":
-            if (memory[mp]) {
+            if (memory[mp]) { // restart loop
                 pp = stack[stack.length-1];
-            } else {
-                stack.pop();
+                history.push(true);
+            } else { // exit loop
+                history.push(stack.pop());
+                history.push(true);
             }
             break;
     }
@@ -161,7 +197,51 @@ function step() {
     update();
 }
 
-function update() {
+function stepBackward() {
+    pp--;
+    switch (program[pp]) {
+        case ">":
+            mp--;
+            break;
+        case "<":
+            mp++;
+            break;
+        case "+":
+            memory[mp] = ((memory[mp] || 0) + 255) % 256;
+            break;
+        case "-":
+            memory[mp] = ((memory[mp] || 0) + 1) % 256;
+            break;
+        case ".":
+            output = output.slice(0, -1);
+            op--;
+            break;
+        case ",":
+            memory[mp] = history.pop();
+            ip--;
+            break;
+        case "[":
+            let cameFromRestart = history.pop();
+            if (cameFromRestart) {
+                goToMatchingClosingBracket(); // Is dit goed of moet het eentje meer of minder zijn?
+            } else {
+                stack.pop();
+            }
+            break;
+        case "]":
+            let cameFromInsideLoop = history.pop();
+            if (cameFromInsideLoop) {
+                stack.push(history.pop());
+            } else {
+                pp = history.pop();
+            }
+            break;
+    }
+    if (pp == 0) stepBackwardButton.disabled = true;
+    update();
+}
+
+function update() { // Update HTML elements to reflect program state
     function tapeString(str, i) {
         return str.substr(0, i) + `<span class="tape-selected">${str[i] || " "}</span>` + (str.substr(i+1) || "");
     }
