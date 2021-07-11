@@ -1,7 +1,8 @@
 let editor, editorMatchesExecutor, editorMap, progressMarker;
 let programTape, memoryTape, inputTape, outputTape, inputText, outputText;
-let program, memory, input, output, stack, pp, mp, ip, op, history;
-let runButton, toCursorButton, stepBackwardButton;
+let program, memory, input, output, stack, pp, mp, ip, op, history, runTimeout;
+let runButton, toCursorButton, stepForwardButton, stepBackwardButton, resetButton;
+let computer;
 
 window.addEventListener("load", function () {
     // Get elements by ID
@@ -13,7 +14,10 @@ window.addEventListener("load", function () {
     outputText = document.getElementById("output-text");
     runButton = document.getElementById("run-button");
     toCursorButton = document.getElementById("to-cursor-button");
-    stepBackwardButton = document.getElementById("step-backward-button")
+    stepForwardButton = document.getElementById("step-forward-button");
+    stepBackwardButton = document.getElementById("step-backward-button");
+    resetButton = document.getElementById("reset-button");
+    computer = document.getElementById("computer");
 
     // Define brainfuck ace mode
     define('ace/mode/bf', [], function(require, exports, module) {
@@ -67,6 +71,44 @@ window.addEventListener("load", function () {
         editorMatchesExecutor = false;
         toCursorButton.disabled = true;
     });
+
+    runButton.onclick = () => run();
+    toCursorButton.onclick = () => {stop(); runToCursor()};
+    stepForwardButton.onclick = () => {stop(); step()};
+    stepBackwardButton.onclick = () => {stop(); stepBackward()};
+    resetButton.onclick = () => {stop(); reset()};
+
+    document.addEventListener("keydown", (e) => {
+        if (e.ctrlKey) {
+            switch (e.key) {
+                case "End":
+                    runButton.click();
+                    e.preventDefault(); 
+                    e.stopPropagation();
+                    break;
+                case "ArrowDown":
+                    toCursorButton.click();
+                    e.preventDefault(); 
+                    e.stopPropagation();
+                    break;
+                case "ArrowRight":
+                    stepForwardButton.click();
+                    e.preventDefault(); 
+                    e.stopPropagation();
+                    break;
+                case "ArrowLeft":
+                    stepBackwardButton.click();
+                    e.preventDefault(); 
+                    e.stopPropagation();
+                    break;
+                case "ArrowUp":
+                    resetButton.click();
+                    e.preventDefault(); 
+                    e.stopPropagation();
+                    break;
+            }
+        }
+    }, true);
 });
 
 function reset() {
@@ -83,7 +125,6 @@ function reset() {
     }
     editorMatchesExecutor = true;
     toCursorButton.disabled = false;
-    stepBackwardButton.disabled = true;
     memory = new Array(32).fill(0);
     input = inputText.value;
     output = "";
@@ -106,36 +147,39 @@ function runToCursor() {
 }
 
 let stopping = false;
+function stop() {
+    stopping = true;
+    if (runTimeout) clearTimeout(runTimeout);
+    // Change button back to Run
+    runButton.innerHTML = "Run";
+    runButton.onclick = () => run();
+    computer.style.backgroundColor = "#ffffff";
+}
 function run(until, backward) {
     stopping = false;
+    computer.style.backgroundColor = "#fff3b0";
     if (backward) {
         const runStepBackward = function() {
-            if (pp > (until ?? 0) && !stopping) {
+            if (pp <= (until ?? 0)) stop();
+            if (!stopping) {
                 stepBackward();
-                setTimeout(runStepBackward, 1);
-            } else {
-                // Change button back to Run
-                runButton.innerHTML = "Run";
-                runButton.onclick = () => run();
+                runTimeout = setTimeout(runStepBackward, 1);
             }
         }
-        setTimeout(runStepBackward, 1);
+        runTimeout = setTimeout(runStepBackward, 1);
     } else {
         const runStep = function() {
-            if (pp < (until ?? program.length) && !stopping) {
+            if (pp >= (until ?? program.length)) stop();
+            if (!stopping) {
                 step();
-                setTimeout(runStep, 1);
-            } else {
-                // Change button back to Run
-                runButton.innerHTML = "Run";
-                runButton.onclick = () => run();
+                runTimeout = setTimeout(runStep, 1);
             }
         }
-        setTimeout(runStep, 1);
+        runTimeout = setTimeout(runStep, 1);
     }
     // Change button to Stop
     runButton.innerHTML = "Stop";
-    runButton.onclick = () => stopping = true;
+    runButton.onclick = () => stop();
 }
 
 function goToMatchingClosingBracket() {
@@ -150,7 +194,6 @@ function goToMatchingClosingBracket() {
 }
 
 function step() {
-    stepBackwardButton.disabled = false;
     switch (program[pp]) {
         case ">":
             mp++;
@@ -237,7 +280,6 @@ function stepBackward() {
             }
             break;
     }
-    if (pp == 0) stepBackwardButton.disabled = true;
     update();
 }
 
@@ -263,6 +305,9 @@ function update() { // Update HTML elements to reflect program state
     memoryTape.getElementsByClassName("tape-selected")[0]?.scrollIntoView();
     inputTape.getElementsByClassName("tape-selected")[0]?.scrollIntoView();
     outputText.getElementsByClassName("tape-selected")[0]?.scrollIntoView();
+
+    stepBackwardButton.disabled = pp <= 0;
+    stepForwardButton.disabled = pp >= program.length;
 
     if (editorMatchesExecutor) {
         let position = editor.session.doc.indexToPosition(editorMap[pp], 0);
