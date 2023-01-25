@@ -1,7 +1,9 @@
 class osc {
 	constructor(type, frequency) {
 		this.vol = ctx.createGain();
-		this.vol.gain.setTargetAtTime(0, ctx.currentTime, 0);
+		let defaultVolume = 0.1
+		this.vol.gain.setTargetAtTime(defaultVolume, ctx.currentTime, 0);
+		$("#volumeSlider").val(defaultVolume)
 		//this.vol.connect(analyser); NOW DONE IN MAIN.JS
 
 		this.gain = ctx.createGain();

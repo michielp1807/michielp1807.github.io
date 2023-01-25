@@ -5,37 +5,37 @@ let startingMIDI;
 function keysSetup() {
 	let keys = $("#keys")[0];
 	octaves = 3;
-	startingMIDI = 60 - 12 * Math.floor(octaves/2);
-	let whiteKeyWidth = 100/(octaves * 7 + 1);
-	let blackKeyWidth = 90/(octaves * 7 + 1);
+	startingMIDI = 60 - 12 * Math.floor(octaves / 2);
+	let whiteKeyWidth = 100 / (octaves * 7 + 1);
+	let blackKeyWidth = 90 / (octaves * 7 + 1);
 	let totalKeys = octaves * 12 + 1;
 
-	for (let i=0; i<totalKeys; i++) {
+	for (let i = 0; i < totalKeys; i++) {
 		let key = document.createElement("button");
-		let letter = letters[i%12];
+		let letter = letters[i % 12];
 		let midiNumber = startingMIDI + i;
 		key.innerHTML = letter;
 		key.id = "key" + midiNumber;
 		if (letter.length === 1) {
 			key.className = "whiteKeys";
-			key.style.width = whiteKeyWidth+"%";
+			key.style.width = whiteKeyWidth + "%";
 		} else {
 			key.className = "blackKeys";
-			key.style.left = ((0.55+Math.floor(i/2 + i/12))*whiteKeyWidth)+"%";
-			key.style.width = blackKeyWidth+"%";
+			key.style.left = ((0.55 + Math.floor(i / 2 + i / 12)) * whiteKeyWidth) + "%";
+			key.style.width = blackKeyWidth + "%";
 		}
-		key.onmousedown = function() {mouseInput(midiNumber, "down")};
-		key.onmouseup = function() {mouseInput(midiNumber, "up")};
+		key.onmousedown = function () { mouseInput(midiNumber, "down") };
+		key.onmouseup = function () { mouseInput(midiNumber, "up") };
 		keys.append(key);
 	}
 
-	$(document).keydown(function(e) {keyboardInput(e.key, "down")});
-	$(document).keyup(function(e) {keyboardInput(e.key, "up")});
+	$(document).keydown(function (e) { keyboardInput(e.key, "down") });
+	$(document).keyup(function (e) { keyboardInput(e.key, "up") });
 }
 
 function activateNote(midiNumber) {
-	let freq = 440 * 2**((midiNumber-69)/12);
-	console.log(letters[midiNumber%12] + " (midi: " + midiNumber + ", " + freq.toFixed(1) + "Hz)");
+	let freq = 440 * 2 ** ((midiNumber - 69) / 12);
+	console.log(letters[midiNumber % 12] + " (midi: " + midiNumber + ", " + freq.toFixed(1) + "Hz)");
 
 	osc1.setFrequency(freq, 0);
 	$("#freqSlider")[0].value = Math.log10(freq);
@@ -44,15 +44,17 @@ function activateNote(midiNumber) {
 
 // mouse input
 function mouseInput(midiNumber, type) {
-	if (type == "down")
+	if (type == "down") {
+		if (!ctx) setup();
 		activateNote(midiNumber);
+	}
 }
 
 // keyboard input
 function keyboardInput(key, type) {
-  console.log(key + " (" + type + ")");
+	console.log(key + " (" + type + ")");
 	let midiNumber = 0;
-	switch(key.toLowerCase()) {
+	switch (key.toLowerCase()) {
 		case ']': midiNumber++; // G
 		case '=': midiNumber++; // F#
 		case '[': midiNumber++; // F
