@@ -17,6 +17,10 @@
             padding: 1rem;
             font-weight: bold;
         }
+
+        .mono {
+            font-family: monospace;
+        }
     </style>
 </head>
 
@@ -30,7 +34,7 @@
         <article>
 
             <header>
-                Which color is <b id="hex-code" style="font-family: monospace;">#000000</b>?
+                Which color is <b id="hex-code" class="mono">#000000</b>?
             </header>
             <div class="grid">
                 <button id="button-0" style="margin: 0;">?</button>
@@ -46,7 +50,30 @@
 
         <details>
             <summary>Help! I don't know what I'm doing!</summary>
-            *very useful information goes here*
+            <p>
+                Colors are often represented as <em><a href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet"
+                        target="_blank">hexadecimal triples</a></em>, these triplets consist of three hexadecimal values
+                corresponding to the red, green, and blue values of the color. Lower values (e.g. <span
+                    class="mono">00</span>)
+                represent that less of the color is present, while higher values (e.g. <span class="mono">FF</span>)
+                represent that more
+                red, green, or blue is present.
+            </p>
+            <p>
+                You can figure out the <em>hue</em> of the color by looking at which color (red, green, or blue) is most
+                prevalent in the hexicdemal code. For example, <span class="mono">#FA3742</span> is a bright red color,
+                because it mainly consists of red, with only a bit of green and blue. To know the exact hue, you
+                need to look at the ratio between the most prevalent color and the second most prevalent color. For
+                example, an orange color like <span class="mono">#FA7D37</span> will consist of mainly red with a bit of
+                extra green, while a yellow color like <span class="mono">#FAFC37</span> will have roughly equal
+                amounts of red and green.
+            </p>
+            <p>
+                The difference between the highest and the lowest value determines the <em>saturation</em> of the color.
+                For example, <span class="mono">#FF0000</span> is fully saturated red, while <span
+                    class="mono">#FFAAAA</span> is a less saturated pink color.
+            </p>
+            Have fun!
         </details>
     </main>
 
@@ -63,8 +90,11 @@
         let progress = 0;
         let maxProgress = 5; // Go to next level when you reach this amount of progress (also see max proproperty of progress element above)
 
+        let roundFinished = false;
+
         function startRound() {
             document.activeElement.blur(); // Deactive the buttons
+            roundFinished = false;
 
             const [r, g, b] = [randInt(256), randInt(256), randInt(256)];
             const hex = rgb2hex(r, g, b);
@@ -106,6 +136,8 @@
                 button.style.setProperty("--primary-inverse", isDark(_r, _g, _b) ? "#FFF" : "#000");
 
                 button.onclick = function () {
+                    if (roundFinished) return;
+                    roundFinished = true;
                     if (i === correctAnswer) {
                         progress++;
                         this.innerText = "✓";
@@ -118,7 +150,7 @@
                     setTimeout(() => {
                         if (progress >= maxProgress) {
                             minDistance = 128 - 100 * Math.min(level, 10) / 10;
-                            maxDistance = 441 - 380 * Math.min(level, 10) / 10;
+                            maxDistance = 441 - 400 * Math.min(level, 10) / 10;
                             console.log(minDistance, maxDistance);
 
                             level++;
@@ -133,10 +165,6 @@
                 }
             }
         }
-
-        // Correct answer -> +1 progress
-        // Wrong answer -> -1 progress
-        // Finish level (5? progress) -> next level (increase difficulty)
 
         startRound();
     </script>
