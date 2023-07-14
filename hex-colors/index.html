@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <title># Hex Color Guesser</title>
+    <style>
+        progress::-webkit-progress-value,
+        progress::-moz-progress-bar {
+            transition: width 2.5s ease-in-out;
+        }
+
+        button {
+            padding: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+        <hgroup>
+            <h1># Hex Color Guesser</h1>
+            <h2>Can you guess which color the hex code represents?</h2>
+        </hgroup>
+
+        <article>
+
+            <header>
+                Which color is <b id="hex-code" style="font-family: monospace;">#000000</b>?
+            </header>
+            <div class="grid">
+                <button id="button-0" style="margin: 0;">?</button>
+                <button id="button-1" style="margin: 0;">?</button>
+                <button id="button-2" style="margin: 0;">?</button>
+                <button id="button-3" style="margin: 0;">?</button>
+            </div>
+            <footer>
+                Level <span id="level">1</span>
+                <progress value="0" max="5" style="margin: 0;"></progress>
+            </footer>
+        </article>
+
+        <details>
+            <summary>Help! I don't know what I'm doing!</summary>
+            *very useful information goes here*
+        </details>
+    </main>
+
+    <script>
+        const randInt = (max) => Math.floor(Math.random() * max);
+        const b2hex = (v) => ("00" + v.toString(16).toUpperCase()).slice(-2);
+        const rgb2hex = (r, g, b) => "#" + b2hex(r) + b2hex(g) + b2hex(b);
+        const isDark = (r, g, b) => 0.2126 * r + 0.7152 * g + 0.0722 * b < 128; // https://en.wikipedia.org/wiki/Relative_luminance
+
+        let minDistance = 128; // Colors must be at least this much away from other colors, must be < 219
+        let maxDistance = 441; // Colors cannot be more than this much away from other colors, must be > minDistance
+
+        let level = 1;
+        let progress = 0;
+        let maxProgress = 5; // Go to next level when you reach this amount of progress (also see max proproperty of progress element above)
+
+        function startRound() {
+            document.activeElement.blur(); // Deactive the buttons
+
+            const [r, g, b] = [randInt(256), randInt(256), randInt(256)];
+            const hex = rgb2hex(r, g, b);
+            document.getElementById("hex-code").innerText = hex;
+
+            const correctAnswer = randInt(4); // Index of correct answer
+            const colors = [[r, g, b]]; // first element = correct color, other elements are colors of buttons
+
+            for (let i = 0; i < 4; i++) {
+                let [_r, _g, _b] = [r, g, b];
+                if (i !== correctAnswer) { // Pick new random color
+                    let smallestDistance = 0;
+                    let largestDistance = Infinity;
+                    let temp = 0;
+
+                    while (smallestDistance < minDistance || largestDistance > maxDistance) {
+                        [_r, _g, _b] = [randInt(256), randInt(256), randInt(256)];
+
+                        temp++;
+
+                        smallestDistance = Infinity;
+                        largestDistance = 0;
+                        for (let j = 0; j <= i; j++) {
+                            let [r, g, b] = colors[j];
+                            let distance = Math.sqrt((r - _r) ** 2 + (g - _g) ** 2 + (b - _b) ** 2);
+                            smallestDistance = Math.min(smallestDistance, distance);
+                            largestDistance = Math.max(smallestDistance, distance);
+                        }
+                    }
+                    console.log(`${i} recomputed ${temp - 1} times!`);
+                }
+
+                colors[i + 1] = [_r, _g, _b];
+
+                const button = document.getElementById(`button-${i}`);
+                button.style.setProperty("--primary", rgb2hex(_r, _g, _b));
+                button.style.setProperty("--primary-hover", rgb2hex(_r, _g, _b));
+                button.style.setProperty("--primary-focus", rgb2hex(_r, _g, _b));
+                button.style.setProperty("--primary-inverse", isDark(_r, _g, _b) ? "#FFF" : "#000");
+
+                button.onclick = function () {
+                    if (i === correctAnswer) {
+                        progress++;
+                        this.innerText = "✓";
+                    } else {
+                        progress = Math.max(0, progress - 1);
+                        this.innerText = "✘";
+                    }
+                    document.querySelector("progress").value = progress;
+
+                    setTimeout(() => {
+                        if (progress >= maxProgress) {
+                            minDistance = 128 - 100 * Math.min(level, 10) / 10;
+                            maxDistance = 441 - 380 * Math.min(level, 10) / 10;
+                            console.log(minDistance, maxDistance);
+
+                            level++;
+                            progress = 0;
+                            document.querySelector("progress").value = progress;
+                            document.getElementById("level").innerText = level;
+                        }
+
+                        this.innerText = "?";
+                        startRound();
+                    }, 500);
+                }
+            }
+        }
+
+        // Correct answer -> +1 progress
+        // Wrong answer -> -1 progress
+        // Finish level (5? progress) -> next level (increase difficulty)
+
+        startRound();
+    </script>
+</body>
+
+</html>
