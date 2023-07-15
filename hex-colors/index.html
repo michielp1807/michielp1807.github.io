@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <title># Hex Color Guesser</title>
+    <meta name="description" content="Can you guess which color the hex code represents?" />
+    <meta property="og:title" content="# Hex Color Guesser" />
+    <meta property="og:description" content="Can you guess which color the hex code represents?" />
     <style>
         progress::-webkit-progress-value,
         progress::-moz-progress-bar {
@@ -16,6 +19,16 @@
         button {
             padding: 1rem;
             font-weight: bold;
+            --button-hover-box-shadow: 0 0 0 calc(0.5 * var(--outline-width)) var(--primary-focus);
+            transition: opacity var(--transition), visibility var(--transition);
+            opacity: 1;
+            visibility: visible;
+            z-index: 2;
+        }
+
+        button.hidden {
+            opacity: 0;
+            visibility: hidden;
         }
 
         .mono {
@@ -36,14 +49,14 @@
             <header>
                 Which color is <b id="hex-code" class="mono">#000000</b>?
             </header>
-            <div class="grid">
+            <div class="grid" style="--grid-spacing-vertical: var(--grid-spacing-horizontal);">
                 <button id="button-0" style="margin: 0;">?</button>
                 <button id="button-1" style="margin: 0;">?</button>
                 <button id="button-2" style="margin: 0;">?</button>
                 <button id="button-3" style="margin: 0;">?</button>
             </div>
             <footer>
-                Level <span id="level">1</span>
+                Level <span id="level">1</span> <span id="emoji">🙂</span>
                 <progress value="0" max="5" style="margin: 0;"></progress>
             </footer>
         </article>
@@ -52,7 +65,7 @@
             <summary>Help! I don't know what I'm doing!</summary>
             <p>
                 Colors are often represented as <em><a href="https://en.wikipedia.org/wiki/Web_colors#Hex_triplet"
-                        target="_blank">hexadecimal triples</a></em>, these triplets consist of three hexadecimal values
+                        target="_blank">hexadecimal triples</a></em>, these triples consist of three hexadecimal values
                 corresponding to the red, green, and blue values of the color. Lower values (e.g. <span
                     class="mono">00</span>)
                 represent that less of the color is present, while higher values (e.g. <span class="mono">FF</span>)
@@ -63,15 +76,15 @@
                 You can figure out the <em>hue</em> of the color by looking at which color (red, green, or blue) is most
                 prevalent in the hexicdemal code. For example, <span class="mono">#FA3742</span> is a bright red color,
                 because it mainly consists of red, with only a bit of green and blue. To know the exact hue, you
-                need to look at the ratio between the most prevalent color and the second most prevalent color. For
-                example, an orange color like <span class="mono">#FA7D37</span> will consist of mainly red with a bit of
-                extra green, while a yellow color like <span class="mono">#FAFC37</span> will have roughly equal
-                amounts of red and green.
+                need to look at the ratio between the two most prevalent colors. For example, an orange color like <span
+                    class="mono">#FA7D37</span> will consist of mainly red with a bit of extra green, while a yellow
+                color like <span class="mono">#FAFC37</span> will have roughly equal amounts of red and green.
             </p>
             <p>
                 The difference between the highest and the lowest value determines the <em>saturation</em> of the color.
                 For example, <span class="mono">#FF0000</span> is fully saturated red, while <span
-                    class="mono">#FFAAAA</span> is a less saturated pink color.
+                    class="mono">#FFAAAA</span> is a less saturated pink color. If all values are similar to each other,
+                then the color will have little saturation, and will be close to a shade of gray.
             </p>
             Have fun!
         </details>
@@ -82,9 +95,12 @@
         const b2hex = (v) => ("00" + v.toString(16).toUpperCase()).slice(-2);
         const rgb2hex = (r, g, b) => "#" + b2hex(r) + b2hex(g) + b2hex(b);
         const isDark = (r, g, b) => 0.2126 * r + 0.7152 * g + 0.0722 * b < 128; // https://en.wikipedia.org/wiki/Relative_luminance
+        const shuffle = (arr) => arr.map(value => ({ value, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort)
+            .map(({ value }) => value); // https://stackoverflow.com/a/46545530
 
-        let minDistance = 128; // Colors must be at least this much away from other colors, must be < 219
-        let maxDistance = 441; // Colors cannot be more than this much away from other colors, must be > minDistance
+        let minDistance = 160; // Colors must be at least this much away from other colors, must be < 219
+        let maxDistance = 440; // Colors cannot be more than this much away from other colors, must be > minDistance
 
         let level = 1;
         let progress = 0;
@@ -92,76 +108,104 @@
 
         let roundFinished = false;
 
+        const emojis = ["🙂", "😃", "😄", "😁", "😇", "🤩", "😎", "😍", "😮", "🤯"]
+        const finalEmojis = ["🥳", "🎉", "🎈", "🎊", "😮", "🤩", "😎"]
+
         function startRound() {
             document.activeElement.blur(); // Deactive the buttons
             roundFinished = false;
 
+            // Pick color to guess
             const [r, g, b] = [randInt(256), randInt(256), randInt(256)];
             const hex = rgb2hex(r, g, b);
             document.getElementById("hex-code").innerText = hex;
 
-            const correctAnswer = randInt(4); // Index of correct answer
-            const colors = [[r, g, b]]; // first element = correct color, other elements are colors of buttons
+            // Pick other colors
+            const colors = [[r, g, b]]; // first element = correct color
+            for (let i = 1; i < 4; i++) {
+                let _r, _g, _b;
+                let smallestDistance = 0;
+                let largestDistance = Infinity;
+                let temp = 0;
+                while (smallestDistance < minDistance || largestDistance > maxDistance) {
+                    [_r, _g, _b] = [randInt(256), randInt(256), randInt(256)];
 
-            for (let i = 0; i < 4; i++) {
-                let [_r, _g, _b] = [r, g, b];
-                if (i !== correctAnswer) { // Pick new random color
-                    let smallestDistance = 0;
-                    let largestDistance = Infinity;
-                    let temp = 0;
+                    temp++;
 
-                    while (smallestDistance < minDistance || largestDistance > maxDistance) {
-                        [_r, _g, _b] = [randInt(256), randInt(256), randInt(256)];
-
-                        temp++;
-
-                        smallestDistance = Infinity;
-                        largestDistance = 0;
-                        for (let j = 0; j <= i; j++) {
-                            let [r, g, b] = colors[j];
-                            let distance = Math.sqrt((r - _r) ** 2 + (g - _g) ** 2 + (b - _b) ** 2);
-                            smallestDistance = Math.min(smallestDistance, distance);
-                            largestDistance = Math.max(smallestDistance, distance);
-                        }
+                    smallestDistance = Infinity;
+                    largestDistance = 0;
+                    for (let j = 0; j < colors.length; j++) {
+                        let [r, g, b] = colors[j];
+                        let distance = Math.sqrt((r - _r) ** 2 + (g - _g) ** 2 + (b - _b) ** 2);
+                        smallestDistance = Math.min(smallestDistance, distance);
+                        largestDistance = Math.max(smallestDistance, distance);
                     }
-                    console.log(`${i} recomputed ${temp - 1} times!`);
                 }
+                if (temp > 1) console.log(`${i} recomputed ${temp - 1} times!`);
+                colors[i] = [_r, _g, _b];
+            }
 
-                colors[i + 1] = [_r, _g, _b];
+            // Assign colors to buttons
+            const colorOrder = shuffle([0, 1, 2, 3]);
+            const correctAnswer = colorOrder.indexOf(0);
+            for (let i = 0; i < 4; i++) {
+                const [_r, _g, _b] = colors[colorOrder[i]];
+                const hex = rgb2hex(_r, _g, _b);
 
                 const button = document.getElementById(`button-${i}`);
-                button.style.setProperty("--primary", rgb2hex(_r, _g, _b));
-                button.style.setProperty("--primary-hover", rgb2hex(_r, _g, _b));
-                button.style.setProperty("--primary-focus", rgb2hex(_r, _g, _b));
+                button.style.setProperty("--primary", hex);
+                button.style.setProperty("--primary-hover", hex);
+                button.style.setProperty("--primary-focus", hex);
                 button.style.setProperty("--primary-inverse", isDark(_r, _g, _b) ? "#FFF" : "#000");
+                button.innerText = "?";
+                button.classList.remove("hidden");
 
                 button.onclick = function () {
                     if (roundFinished) return;
+
                     roundFinished = true;
-                    if (i === correctAnswer) {
+                    if (i === correctAnswer) { // Correct answer
                         progress++;
                         this.innerText = "✓";
-                    } else {
-                        progress = Math.max(0, progress - 1);
-                        this.innerText = "✘";
-                    }
-                    document.querySelector("progress").value = progress;
-
-                    setTimeout(() => {
-                        if (progress >= maxProgress) {
-                            minDistance = 128 - 100 * Math.min(level, 10) / 10;
-                            maxDistance = 441 - 400 * Math.min(level, 10) / 10;
-                            console.log(minDistance, maxDistance);
-
-                            level++;
-                            progress = 0;
-                            document.querySelector("progress").value = progress;
-                            document.getElementById("level").innerText = level;
+                        for (let i = 0; i < 4; i++) {
+                            if (i !== correctAnswer)
+                                document.getElementById(`button-${i}`).classList.add("hidden");
                         }
 
-                        this.innerText = "?";
-                        startRound();
-                    }, 500);
+                        setTimeout(() => {
+                            if (progress >= maxProgress) { // Go to next level
+                                minDistance = 160 - 120 * Math.min(level, 10) / 10;
+                                maxDistance = 440 - 380 * Math.min(level, 10) / 10;
+                                console.log(minDistance, maxDistance);
+
+                                level++;
+                                progress = 0;
+                                document.querySelector("progress").value = progress;
+                                document.getElementById("level").innerText = level;
+                                if (level <= 10)
+                                    document.getElementById("emoji").innerText = emojis[level - 1];
+                                else
+                                    document.getElementById("emoji").innerText += finalEmojis[randInt(finalEmojis.length)];
+                            }
+
+                            startRound();
+                        }, 500);
+                    } else { // Incorrect answer
+                        progress = Math.max(0, progress - 1);
+                        this.innerText = "✘";
+
+                        setTimeout(() => {
+                            for (let i = 0; i < 4; i++) {
+                                if (i !== correctAnswer)
+                                    document.getElementById(`button-${i}`).classList.add("hidden");
+                            }
+                            document.getElementById(`button-${correctAnswer}`).innerText = "✓";
+                            setTimeout(() => {
+                                startRound();
+                            }, 1000);
+                        }, 500);
+                    }
+                    document.querySelector("progress").value = progress;
                 }
             }
         }
