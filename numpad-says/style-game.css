@@ -5,12 +5,12 @@
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none; /* Safari */
-	 -khtml-user-select: none; /* Konqueror HTML */
-		 -moz-user-select: none; /* Firefox */
-			-ms-user-select: none; /* Internet Explorer/Edge */
-					user-select: none; /* Chrome and Opera */
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 #level {
@@ -21,14 +21,15 @@
 	background-color: #111;
 	margin: 0px auto;
 	width: 200px;
-  border: 3px inset #ddd;
+	border: 3px inset #ddd;
 	box-shadow: 2px 2px 2px #000C;
 }
+
 #level td {
 	border: 4px outset #fff;
 	background-color: #444;
 	color: #fff;
-  padding: 15px 20px;
+	padding: 15px 20px;
 	margin: 0px auto;
 	text-align: center;
 	font-size: 1.5em;
@@ -36,14 +37,18 @@
 	shadow: none;
 	z-index: -1000;
 }
+
 #level td.allowed {
 	cursor: pointer;
 }
+
 #level td.allowed:hover {
 	border: 4px inset #ddd;
 	background-color: #222;
 }
-#level td.allowed:active, #level td.active {
+
+#level td.allowed:active,
+#level td.active {
 	border: 4px inset #ff6;
 	background-color: #442;
 	color: #ff6;
@@ -51,6 +56,7 @@
 	box-shadow: 0px 0px 15px #fff;
 	z-index: -900 !important;
 }
+
 #level td.wrong {
 	border: 4px inset #f22;
 	background-color: #411;
@@ -68,6 +74,7 @@
 	border: 3px inset #ddd;
 	box-shadow: 2px 2px 2px #000C;
 }
+
 #progressBarFillUser {
 	position: absolute;
 	left: 0px;
@@ -77,13 +84,15 @@
 	background-color: #444;
 	z-index: -10;
 }
+
 #progressBarFillPreview {
 	position: absolute;
 	left: 0px;
 	top: 0px;
 	width: 0%;
 	height: 100%;
-	background-color: hsl(228, 64%, 11%);;
+	background-color: hsl(228, 64%, 11%);
+	;
 	z-index: -9;
 }
 
@@ -95,12 +104,12 @@
 
 #skipIcon {
 	position: absolute;
-  font-size: 160px;
-  width: 100%;
-  left: 0px;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	font-size: 160px;
+	width: 100%;
+	left: 0px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	z-index: 5;
 }

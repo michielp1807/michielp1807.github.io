@@ -1,19 +1,19 @@
 function setupIO() {
 	// set up numpad
 	let tds = $("td");
-	for (let i=0; i<tds.length; i++) {
-		tds[i].onmousedown = function() {
-      onUserInput(this.innerHTML);
-    };
+	for (let i = 0; i < tds.length; i++) {
+		tds[i].onmousedown = function () {
+			onUserInput(this.innerHTML);
+		};
 		numpad[tds[i].innerHTML] = tds[i];
 	}
 
 	// keyboard events
-	$(this).keydown(function(e) {
-		if (e.keyCode == 13) {
+	$(this).keydown(ev => {
+		if (ev.keyCode == 13) {
 			if ($("#mainMenu").is(":visible")) play();
 			return;
-		} else if (e.keyCode == 27) {
+		} else if (ev.keyCode == 27) {
 			// on esc go to menu
 			if ($("#optionsMenu").is(":visible")) {
 				hideOptionsMenu();
@@ -22,17 +22,17 @@ function setupIO() {
 			}
 			return;
 		}
-		let numkey = numpad[e.key];
-		if (numkey != undefined && userCanType && pressedKeys[e.which] != true) {
-			pressedKeys[e.which] = true;
+		let numkey = numpad[ev.key];
+		if (numkey != undefined && userCanType && pressedKeys[ev.which] != true) {
+			pressedKeys[ev.which] = true;
 			numkey.className = "active";
-			onUserInput(e.key);
+			onUserInput(ev.key);
 		}
 	});
-	$(this).keyup(function(e) {
-		let numkey = numpad[e.key];
+	$(this).keyup(ev => {
+		let numkey = numpad[ev.key];
 		if (numkey != undefined) {
-			pressedKeys[e.which] = false;
+			pressedKeys[ev.which] = false;
 			numkey.className = userCanType ? "allowed" : "";
 		}
 	});
@@ -56,7 +56,7 @@ function onUserInput(key) {
 				if (key == ".") {
 					playSfx(0);
 				} else {
-					playSfx(parseInt(key)+1);
+					playSfx(parseInt(key) + 1);
 				}
 			}
 

@@ -1,14 +1,15 @@
 <html>
+
 <head>
-  <meta charset="UTF-8">
-  <title>Numpad Says Number Constants</title>
+	<meta charset="UTF-8">
+	<title>Numpad Says Number Constants</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="theme-color" content="#0a112e">
 	<link rel="icon" href="favicon32.png" sizes="32x32" type="image/png">
 	<link rel="icon" href="favicon192.png" sizes="192x192" type="image/png">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:500" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="simon-audio.js"></script>
 	<script src="simon-menu.js"></script>
 	<script src="simon-io.js"></script>
@@ -17,6 +18,7 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 	<link rel="stylesheet" type="text/css" href="style-game.css">
 </head>
+
 <body>
 	<h1>Numpad Says Number Constants</h1>
 	<h2>A Memory Game About Number Constants</h2>
@@ -27,10 +29,15 @@
 					<h3>Numpad Says</h3>
 				</div>
 				<div>
-					<select id="whichConstant" onchange="loadHighscore()" title="Which constant?">
-					  <option value="pi">π</option>
+					<span id="previewContext">3.1415926535</span>
+					<span id="previewMistake"></span>
+					<span id="previewCorrection"></span>...
+				</div>
+				<div>
+					<select id="whichConstant" onchange="selectConstant()" title="Which constant?">
+						<option value="pi">π</option>
 						<option value="tau">τ</option>
-					  <option value="e">e</option>
+						<option value="e">e</option>
 						<option value="phi">φ</option>
 						<option value="root2">√2</option>
 						<option value="root3">√3</option>
@@ -39,18 +46,20 @@
 					<button type="button" onclick="play()" title="Start the game!">Go!</button>
 				</div>
 				<p>
-					PB: Level <span id="highscoreNumber">100</span>
+					PB: Level <span id="highscoreNumber">0</span>
 				</p>
 				<div id="menuStartFromDiv">
 					Start from:
-					<input id="startFrom" type="number" onchange="startFromUpdate()" placeholder="1" min="1" max="1001" title="Which level to start from?">
+					<input id="startFrom" type="number" onchange="startFromUpdate()" placeholder="1" min="1" max="1001"
+						title="Which level to start from?">
 				</div>
 				<a href="./info" id="menuInfoButtonLink">
 					<i class="material-icons menuSettingsButton" id="menuInfoButton" title="Info">
 						info
 					</i>
 				</a>
-				<i class="material-icons menuSettingsButton" onmouseup="showOptionsMenu()" id="menuSettingsButton" title="Options">
+				<i class="material-icons menuSettingsButton" onmouseup="showOptionsMenu()" id="menuSettingsButton"
+					title="Options">
 					settings
 				</i>
 			</div>
@@ -64,16 +73,19 @@
 				</p>
 				<p>
 					Disable background<br>color change:
-					<input type="checkbox" id="optDisBgColor" oninput="saveOptions()" title="Disable background color change">
+					<input type="checkbox" id="optDisBgColor" oninput="saveOptions()"
+						title="Disable background color change">
 				</p>
 				<p>
 					New digits per<br>round:
-					<input type="number" id="optDigPerRound" value="1" min="1" max="10" oninput="saveOptions()" title="Number of digits that get added each round">
+					<input type="number" id="optDigPerRound" value="1" min="1" max="10" oninput="saveOptions()"
+						title="Number of digits that get added each round">
 				</p>
 				<p>
 					Preview speed:<br>
 					Slow
-					<input type="range" id="optPrevSpeed" min="0.5" max="1.5" value="1" step="0.1" oninput="saveOptions()" title="Speed of the preview at the start of a level">
+					<input type="range" id="optPrevSpeed" min="0.5" max="1.5" value="1" step="0.1"
+						oninput="saveOptions()" title="Speed of the preview at the start of a level">
 					Fast
 				</p>
 				<i class="material-icons menuSettingsButton" onmouseup="hideOptionsMenu()" title="Go back">
@@ -116,7 +128,9 @@
 		<i class="material-icons" onmousedown="setVolume(true)" id="volumeIcon" title="Mute/unmute">
 			volume_up
 		</i>
-		<input type="range" min="0" max="1" value="1" step="0.1" oninput="setVolume()" id="volumeSlider" title="Sound volume">
+		<input type="range" min="0" max="1" value="1" step="0.05" oninput="setVolume()" id="volumeSlider"
+			title="Sound volume">
 	</p>
 </body>
+
 </html>

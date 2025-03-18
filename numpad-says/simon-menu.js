@@ -4,13 +4,13 @@ function showMenu() {
 	for (let numkey in numpad) {
 		numpad[numkey].className = "";
 	}
-	loadHighscore();
-	$("#level").animate({opacity: 0.3}, 150);
+	selectConstant();
+	$("#level").animate({ opacity: 0.3 }, 150);
 	$("#menu").fadeIn(150);
 }
 
 function hideMenu() {
-	$("#level").animate({opacity: 1}, 150);
+	$("#level").animate({ opacity: 1 }, 150);
 	$("#menu").fadeOut(150);
 }
 
@@ -24,18 +24,38 @@ function startFromUpdate() {
 		$("#startFrom")[0].value = 1;
 }
 
-function loadHighscore() {
+function selectConstant() {
+	if ($("#whichConstant")[0].value != whichConstant) {
+		whichConstant = $("#whichConstant")[0].value;
+		userString = "";
+		$.get("numbers/" + whichConstant + ".txt", data => {
+			numberString = data;
+			selectConstant();
+		});
+		return;
+	}
+
 	// update highscore
-	whichConstant = $("#whichConstant")[0].value;
 	let highscore = localStorage.getItem("NSNC" + whichConstant);
 	if (!highscore) highscore = 0;
 	$("#highscoreNumber").text(highscore);
+
+	// update start from place holder
 	let startFromLevel = parseInt(highscore) + options.optDigPerRound;
-	if (startFromLevel > MAX_LEVEL)
-		startFromLevel = MAX_LEVEL;
-	if (startFromLevel < 1)
-		startFromLevel = 1;
+	startFromLevel = Math.min(startFromLevel, MAX_LEVEL);
+	startFromLevel = Math.max(startFromLevel, 1);
 	$("#startFrom")[0].placeholder = startFromLevel;
+
+	// update preview
+	if (userString == "") {
+		$("#previewContext").text(numberString.slice(0, 12));
+		$("#previewMistake").text("");
+		$("#previewCorrection").text("");
+	} else {
+		$("#previewContext").text((userString.length > 10 ? "..." : "") + userString.slice(-10, -1));
+		$("#previewMistake").text(userString[userString.length - 1]);
+		$("#previewCorrection").text(numberString[userString.length - 1]);
+	}
 }
 
 // Option menu functions:
@@ -45,8 +65,8 @@ function showOptionsMenu() {
 }
 
 function hideOptionsMenu() {
-	// reload highscore for potential startFrom update
-	loadHighscore();
+	// reload for potential startFrom update
+	selectConstant();
 
 	$("#optionsMenu").fadeOut(150);
 	$("#mainMenu").fadeIn(150);
@@ -74,8 +94,8 @@ function saveOptions() {
 	options.optMuteKeys = 0 + $("#optMuteKeys").is(":checked");
 	options.optDisBgColor = 0 + $("#optDisBgColor").is(":checked");
 	options.optDigPerRound = parseInt($("#optDigPerRound").val());
-	if (options.optDigPerRound > 10) {
-		options.optDigPerRound = 10;
+	if (options.optDigPerRound > 99) {
+		options.optDigPerRound = 99;
 	} else if (options.optDigPerRound < 1) {
 		options.optDigPerRound = 1;
 	}

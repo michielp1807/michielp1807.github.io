@@ -2,8 +2,8 @@
 let snd = [];
 
 function loadSfx() {
-	for (let i=0; i<11; i++) {
-		snd[i] = new Audio("snd/snd"+(i+1)+".mp3")
+	for (let i = 0; i < 11; i++) {
+		snd[i] = new Audio(`snd/snd${i + 1}.mp3`)
 	}
 	snd["gameover"] = new Audio("snd/gameover.mp3");
 	snd["skip"] = new Audio("snd/skip.mp3");
