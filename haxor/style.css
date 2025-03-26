@@ -51,6 +51,7 @@ input,
 #input {
     width: calc(100% - 4ch);
     border: none;
+    outline: none;
     padding: 0;
     margin: 0;
 }
