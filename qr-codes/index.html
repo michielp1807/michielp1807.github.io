@@ -1,13 +1,15 @@
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Hoe Lees Je QR-Codes Zonder Scanner - Interactieve Digitale Handleiding</title>
-	<meta name="description" content="Ben je benieuwd hoe QR-Codes werken en wil je weten hoe je ze zelf kan lezen zonder scanner, kijk dan hier!"/>
-	<script language="javascript" src="libraries/p5.js"></script>
-	<script language="javascript" src="libraries/p5.dom.js"></script>
+	<meta name="description"
+		content="Ben je benieuwd hoe QR-Codes werken en wil je weten hoe je ze zelf kan lezen zonder scanner, kijk dan hier!" />
+	<script language="javascript" src="libraries/notp5.js"></script>
 	<script language="javascript" src="./scripts/errCorGeneration.js"></script>
 	<link rel="stylesheet" type="text/css" href="./style.css">
 </head>
+
 <body>
 	<div id="content">
 		<h1>Hoe Lees Je QR-Codes</h1>
@@ -17,10 +19,13 @@
 
 		<h3>Stap 1: Hoe groot is de QR-Code?</h3>
 		<div class="wrapper">
-			<div class="collumn">
+			<div class="column">
 				<h4>QR-Code Versions</h4>
-				<p>Er bestaan veel schillende groottes QR-Codes, deze worden ook wel <i>"versions"</i> genoemd. Version 1 is de kleinste, 21 bij 21 vakjes groot, en de grootste is version 40, met 177 bij 177 vakjes.</p>
-				<p>Kies een version: <select id="versionNumber" onchange="QRCode1.reload()" title="Selecteer hier een versie...">
+				<p>Er bestaan veel verschillende groottes QR-Codes, deze worden ook wel <i>"versions"</i> genoemd.
+					Version 1 is de kleinste, 21 bij 21 vakjes groot, en de grootste is version 40, met 177 bij 177
+					vakjes.</p>
+				<p>Kies een version: <select id="versionNumber" onchange="QRCodePreview.reload()"
+						title="Selecteer hier een versie...">
 						<option value="1">1 (21x21)</option>
 						<option value="2">2 (25x25)</option>
 						<option value="3">3 (29x29)</option>
@@ -37,34 +42,53 @@
 					</select>
 				</p>
 				<h4>Vaste patronen</h4>
-				<p>De drie grote vierkanten in de hoeken van de QR-Code zijn de <i>"Finder Patterns"</i>, door deze patronen herkent de scanner de QR-Code.</p>
-				<p>De Finder Patterns worden met elkaar verbonden door een stippellijn, deze lijnen zijn de <i>"Timing Patterns"</i>, deze helpen de scanner de positie van de andere vakjes te herkennen.</p>
-				<p>Bij alle versions behalve de aller kleinste zie je ook een kleiner vierkant van 5 bij 5 vakjes in de hoek rechts onder, dit is zijn <i>"Alignment Patterns"</i>, deze zorgen ervoor dat de scanner de code beter kan uitlijnen. Bij grotere codes komen er meerdere Alignment Patterns voor.</p>
+				<p>De drie grote vierkanten in de hoeken van de QR-Code zijn de <i>"Finder Patterns"</i>, door deze
+					patronen herkent de scanner de QR-Code.</p>
+				<p>De Finder Patterns worden met elkaar verbonden door een stippellijn, deze lijnen zijn de <i>"Timing
+						Patterns"</i>, deze helpen de scanner de positie van de andere vakjes te herkennen.</p>
+				<p>Bij alle versions behalve de aller kleinste zie je ook een kleiner vierkant van 5 bij 5 vakjes in de
+					hoek rechts onder, dit is zijn <i>"Alignment Patterns"</i>, deze zorgen ervoor dat de scanner de
+					code beter kan uitlijnen. Bij grotere codes komen er meerdere Alignment Patterns voor.</p>
 			</div>
-			<div class="collumn">
-				<div id="QRCode1" class="QRCodes" title="Dit is de basis van de QR-Code..."></div>
+			<div class="column">
+				<div id="QRCodePreview" class="QRCodes" title="Dit is de basis van de QR-Code..."></div>
 				<script src="./scripts/qrcodePreview.js"></script>
 			</div>
 		</div>
 		<h4>Welke version is het?</h4>
-		<p>Om er achter te komen welke version je hebt kan je natuurlijk gewoon vakjes gaan tellen, maar somige versions zijn makkelijker te herkennen. Één manier waaraan je de versions kan herkennen is het aantal Alignment Patterns die er in de code zitten, version 1 is de enige zonder Alignment Patterns, versions 2 t/m 6 hebben er precies één en dan moet je toch echt de vakjes gaan tellen om het version nummer te weten, maar hogere versions (vanaf 7) hebben meerdere Alignment Patterns. Als je vakjes moet gaan tellen dan is de makkelijkste manier om de lengte van de Timing Patterns te tellen want hier wisselt zwart en wit mooi af.</p>
+		<p>Om er achter te komen welke version je hebt kan je natuurlijk gewoon vakjes gaan tellen, maar somige versions
+			zijn makkelijker te herkennen. Één manier waaraan je de versions kan herkennen is het aantal Alignment
+			Patterns die er in de code zitten, version 1 is de enige zonder Alignment Patterns, versions 2 t/m 6 hebben
+			er precies één en dan moet je toch echt de vakjes gaan tellen om het version nummer te weten, maar hogere
+			versions (vanaf 7) hebben meerdere Alignment Patterns. Als je vakjes moet gaan tellen dan is de makkelijkste
+			manier om de lengte van de Timing Patterns te tellen want hier wisselt zwart en wit mooi af.</p>
 		<img src="./images/v7-version-number.png" style="width: 180px;" title="Hier vind je het version number...">
 		<h4>Version Info (alleen bij versie 7 en hoger)</h4>
-		<p>Bij versions 7 en hoger hebben ze de version in de code zelf staan (in de hiernaast groen gekleurde vakjes). Het versie nummer staat in binair genoteerd over zes verschillende vakjes, zie het plaatje hiernaast. In het plaatje hiernaast zie je dat de getallen 1, 2 en 3 op een donker vakje staan en de andere nummers op een licht vakje, alle donkere vakjes zijn 1'en en alle lichte vakjes zijn 0's, dus hieruit komt het binaire getal 000111, wat 7 is in decimaal, dus weet je dat de QR-Code uit het plaatje van version 7 is.</p>
-		<p>Overigens zijn er twee groene gebieden in iedere QR-Code van version 7 of hoger, maar deze twee gebieden zijn hetzelfde maar dan gedraait en gespiegeld.</p>
+		<p>Bij versions 7 en hoger hebben ze de version in de code zelf staan (in de hiernaast groen gekleurde vakjes).
+			Het versie nummer staat in binair genoteerd over zes verschillende vakjes, zie het plaatje hiernaast. In het
+			plaatje hiernaast zie je dat de getallen 1, 2 en 3 op een donker vakje staan en de andere nummers op een
+			licht vakje, alle donkere vakjes zijn 1'en en alle lichte vakjes zijn 0's, dus hieruit komt het binaire
+			getal 000111, wat 7 is in decimaal, dus weet je dat de QR-Code uit het plaatje van version 7 is.</p>
+		<p>Overigens zijn er twee groene gebieden in iedere QR-Code van version 7 of hoger, maar deze twee gebieden zijn
+			hetzelfde maar dan gedraait en gespiegeld.</p>
 		<div class="wrapper">
-			<div class="collumn">
-				<p>Vul hiernaast de zes rechter vakjes van de Version Info in als je een QR-Code van versie 7 of hoger hebt. (als je meer dan 1 Alignment Pattern ziet heb je versie 7 of hoger)</p>
+			<div class="column">
+				<p>Vul hiernaast de zes rechter vakjes van de Version Info in als je een QR-Code van versie 7 of hoger
+					hebt. (als je meer dan 1 Alignment Pattern ziet heb je versie 7 of hoger)</p>
 				<p>Er staat nu de code voor <b id="versionInfoNumber">Version 7</b>.</p>
 				<p id="versionInfoNumberAddon"><i>Klik op de vakjes aan de rechter kant om ze aan te passen.</i></p>
 			</div>
-			<div class="collumn">
-				<div id="VersionInfo" class="QRCodes" title="Klik op de vakjes hier rechts om ze aan te passen..."></div>
+			<div class="column">
+				<div id="VersionInfo" class="QRCodes" title="Klik op de vakjes hier rechts om ze aan te passen...">
+				</div>
 				<script src="./scripts/versionInfo.js"></script>
 			</div>
 		</div>
-		<p>De grijze vakjes die je hier links van de 6 vakjes met het version nummer ziet staan, zijn error correctie vakjes, deze zorgen er voor dat de scanner zeker weet dat hij de version info goed gescanned heeft. Als de scanner ziet dat hij de version info niet goed heeft gescanned kan hij alsnog het versie nummer berekenen met deze vakjes. Elke versie heeft een vaste bijbehoorende combinatie van error correctie vakjes die met een wiskundige formule berekend zijn.</p>
-
+		<p>De grijze vakjes die je hier links van de 6 vakjes met het version nummer ziet staan, zijn error correctie
+			vakjes, deze zorgen er voor dat de scanner zeker weet dat hij de version info goed gescanned heeft. Als de
+			scanner ziet dat hij de version info niet goed heeft gescanned kan hij alsnog het versie nummer berekenen
+			met deze vakjes. Elke versie heeft een vaste bijbehoorende combinatie van error correctie vakjes die met een
+			wiskundige formule berekend zijn.</p>
 
 
 
@@ -72,11 +96,17 @@
 
 		<h3>Stap 2: Welke mask word er gebruikt?</h3>
 		<div class="wrapper">
-			<div class="collumn">
+			<div class="column">
 				<h4>Data Masks</h4>
-				<p>Je hebt bij de vorige stap gezien dat een QR-Code een aantal vaste elementen heeft, maar de data die we willen lezen zit in het gebied dat in de QR-Code van de vorige stap grijs gekleurd is, dat grijze gebied bevat de data en ook een hoop vakjes die worden gebruikt voor error correctie.</p>
-				<p>Om te voorkomen dat er grote witte of zwarte vlakken in een QR-Code ontstaan zit er een <i>"mask"</i> over het gebied met de data en de error correctie heen. Deze mask (hiernaast weergegeven) is een patroon dat sommige vakjes omkeert, dus alle vakjes die hiernaast zwart zijn gekleurd zijn in de QR-Code het tegenovergestelde van wat ze eigenlijk horen te zijn.</p>
-				<p>Kies een mask: <select id="maskNumber" onchange="QRCode2.generateMask()" title="Selecteer hier een mask...">
+				<p>Je hebt bij de vorige stap gezien dat een QR-Code een aantal vaste elementen heeft, maar de data die
+					we willen lezen zit in het gebied dat in de QR-Code van de vorige stap grijs gekleurd is, dat grijze
+					gebied bevat de data en ook een hoop vakjes die worden gebruikt voor error correctie.</p>
+				<p>Om te voorkomen dat er grote witte of zwarte vlakken in een QR-Code ontstaan zit er een <i>"mask"</i>
+					over het gebied met de data en de error correctie heen. Deze mask (hiernaast weergegeven) is een
+					patroon dat sommige vakjes omkeert, dus alle vakjes die hiernaast zwart zijn gekleurd zijn in de
+					QR-Code het tegenovergestelde van wat ze eigenlijk horen te zijn.</p>
+				<p>Kies een mask: <select id="maskNumber" onchange="QRCodeMask.generateMask()"
+						title="Selecteer hier een mask...">
 						<option value="0">0</option>
 						<option value="1">1</option>
 						<option value="2">2</option>
@@ -88,31 +118,42 @@
 					</select>
 				</p>
 				<h4>Welke mask wordt er gebruikt?</h4>
-				<p>In totaal zijn er 8 verschillende patronen, genummerd 0 t/m 7, die de mask kan gebruiken, welke er gebruikt wordt kan je aflezen uit de QR-Code.</p>
+				<p>In totaal zijn er 8 verschillende patronen, genummerd 0 t/m 7, die de mask kan gebruiken, welke er
+					gebruikt wordt kan je aflezen uit de QR-Code.</p>
 			</div>
-			<div class="collumn">
-				<div id="QRCode2" class="QRCodes" title="Zo ziet de mask er uit..."></div>
+			<div class="column">
+				<div id="QRCodeMask" class="QRCodes" title="Zo ziet de mask er uit..."></div>
 				<script src="./scripts/qrcodeMask.js"></script>
 			</div>
 		</div>
 		<img src="./images/format-info.png" style="width: 180px;" title="Hier vind je de formating info...">
 		<h4>Formating Info</h4>
-		<p>Het nummer van welke mask er wordt gebruikt staat in binair genoteerd over drie specifieke vakjes in het blauwe gebied, dit blauwe gebied is het <i>formating</i> gebied. Dit gebied bestaat uit twee vakjes die de hoeveelheid error correctie aangeven en daarna de drie vakjes die aangeven welke mask er wordt gebruikt, de overige vakjes zijn error correctie van deze eerste vijf vakjes.</p>
-		<p>Net als bij de rest van de data uit de QR-Code, zit er ook een mask over de formating info. Deze mask is wel altijd hetzelfde, voor de eerste vijf vakjes namelijk 10101, wat betekend dat het eerste, derde en vijfde vakje zijn omgekeerd.</p>
+		<p>Het nummer van welke mask er wordt gebruikt staat in binair genoteerd over drie specifieke vakjes in het
+			blauwe gebied, dit blauwe gebied is het <i>formating</i> gebied. Dit gebied bestaat uit twee vakjes die de
+			hoeveelheid error correctie aangeven en daarna de drie vakjes die aangeven welke mask er wordt gebruikt, de
+			overige vakjes zijn error correctie van deze eerste vijf vakjes.</p>
+		<p>Net als bij de rest van de data uit de QR-Code, zit er ook een mask over de formating info. Deze mask is wel
+			altijd hetzelfde, voor de eerste vijf vakjes namelijk 10101, wat betekend dat het eerste, derde en vijfde
+			vakje zijn omgekeerd.</p>
 		<div class="wrapper">
-			<div class="collumn">
-				<p>Net zoals de version info staat de format info ook twee keer in de QR-Code, zodat de scanner zeker weet dat hij deze goed gescanned heeft, want deze gebieden zijn cruciaal voor het lezen van de QR-Code.</p>
-				<p>Vul de eerste vijf vakjes van de Format Info hiernaast in om er achter te komen welke mask er gebruikt wordt.</p>
+			<div class="column">
+				<p>Net zoals de version info staat de format info ook twee keer in de QR-Code, zodat de scanner zeker
+					weet dat hij deze goed gescanned heeft, want deze gebieden zijn cruciaal voor het lezen van de
+					QR-Code.</p>
+				<p>Vul de eerste vijf vakjes van de Format Info hiernaast in om er achter te komen welke mask er
+					gebruikt wordt.</p>
 				<p>Er staat nu de code voor:</p>
 				<ul>
 					<li>Error correctie level: <b id="errCorElement">M (15%)</b></li>
 					<li>Mask nummer: <b id="maskNumberElement">0</b></li>
 				</ul>
-				<p id="formatInfoNumberAddon"><i>Klik op de vakjes links onder in het stuk van de code hiernaast om ze aan te passen.</i></p>
+				<p id="formatInfoNumberAddon"><i>Klik op de vakjes links onder in het stuk van de code hiernaast om ze
+						aan te passen.</i></p>
 				<!-- TO DO: meer info over error correctie level? -->
 			</div>
-			<div class="collumn">
-				<div id="FormatInfo" class="QRCodes" title="Klik op de vakjes hier linksonder om ze aan te passen..."></div>
+			<div class="column">
+				<div id="FormatInfo" class="QRCodes" title="Klik op de vakjes hier linksonder om ze aan te passen...">
+				</div>
 				<script src="./scripts/formatInfo.js"></script>
 			</div>
 		</div>
@@ -123,10 +164,14 @@
 
 		<h3>Stap 3: Waar staat de data?</h3>
 		<h4>Data Blocks</h4>
-		<p>Een belangrijk feit waar je rekening mee moet houden als je een QR-Code probeert te lezen is dat de data soms in meerdere data blocks verdeelt kan zijn. Als dit zo is, dan staat de data niet meer op de logische volgorde zoals je dat zou verwachten, maar worden de datablokken steeds afgewisseld waardoor je eerst een byte van het eerste datablok hebt, dan een byte van het tweede datablok, enzovoort.</p>
-		<p>Het aantal datablokken en de lengte van ieder blok hangt af van QR-Code versie en van de hoeveelheid error correctie. Hieronder kan je zien hoeveel datablokken je hebt:</p>
+		<p>Een belangrijk feit waar je rekening mee moet houden als je een QR-Code probeert te lezen is dat de data soms
+			in meerdere data blocks verdeelt kan zijn. Als dit zo is, dan staat de data niet meer op de logische
+			volgorde zoals je dat zou verwachten, maar worden de datablokken steeds afgewisseld waardoor je eerst een
+			byte van het eerste datablok hebt, dan een byte van het tweede datablok, enzovoort.</p>
+		<p>Het aantal datablokken en de lengte van ieder blok hangt af van QR-Code versie en van de hoeveelheid error
+			correctie. Hieronder kan je zien hoeveel datablokken je hebt:</p>
 		<div class="wrapper">
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 1</h4>
 				<ul>
 					<li><b>L:</b> 1 x 19</li>
@@ -135,27 +180,27 @@
 					<li><b>H:</b> 1 x 9</li>
 				</ul>
 			</div>
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 2</h4>
-  			<ul>
+				<ul>
 					<li><b>L:</b> 1 x 34</li>
 					<li><b>M:</b> 1 x 28</li>
 					<li><b>Q:</b> 1 x 22</li>
 					<li><b>H:</b> 1 x 16</li>
 				</ul>
 			</div>
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 3</h4>
-  			<ul>
+				<ul>
 					<li><b>L:</b> 1 x 55</li>
 					<li><b>M:</b> 1 x 44</li>
 					<li><b>Q:</b> 2 x 17</li>
 					<li><b>H:</b> 2 x 13</li>
 				</ul>
 			</div>
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 4</h4>
-  			<ul>
+				<ul>
 					<li><b>L:</b> 1 x 80</li>
 					<li><b>M:</b> 2 x 32</li>
 					<li><b>Q:</b> 2 x 24</li>
@@ -164,36 +209,36 @@
 			</div>
 		</div>
 		<div class="wrapper">
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 5</h4>
-	  		<ul>
+				<ul>
 					<li><b>L:</b> 1 x 108</li>
 					<li><b>M:</b> 2 x 43</li>
 					<li><b>Q:</b> 2 x 15 + 2 x 16</li>
 					<li><b>H:</b> 2 x 11 + 2 x 12</li>
 				</ul>
 			</div>
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 6</h4>
-	  		<ul>
+				<ul>
 					<li><b>L:</b> 2 x 68</li>
 					<li><b>M:</b> 4 x 27</li>
 					<li><b>Q:</b> 4 x 19</li>
 					<li><b>H:</b> 4 x 15</li>
 				</ul>
 			</div>
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 7</h4>
-	  		<ul>
+				<ul>
 					<li><b>L:</b> 2 x 78</li>
 					<li><b>M:</b> 4 x 31</li>
 					<li><b>Q:</b> 2 x 14 + 4 x 15</li>
 					<li><b>H:</b> 4 x 13 + 1 x 14</li>
 				</ul>
 			</div>
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 8</h4>
-	  		<ul>
+				<ul>
 					<li><b>L:</b> 2 x 97</li>
 					<li><b>M:</b> 2 x 38 + 2 x 39</li>
 					<li><b>Q:</b> 4 x 18 + 2 x 19</li>
@@ -202,16 +247,16 @@
 			</div>
 		</div>
 		<div class="wrapper">
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 9</h4>
-	  		<ul>
+				<ul>
 					<li><b>L:</b> 2 x 116</li>
 					<li><b>M:</b> 3 x 36 + 2 x 37</li>
 					<li><b>Q:</b> 4 x 16 + 4 x 17</li>
 					<li><b>H:</b> 4 x 12 + 4 x 13</li>
 				</ul>
 			</div>
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 10</h4>
 				<ul>
 					<li><b>L:</b> 2 x 68 + 2 x 69</li>
@@ -220,7 +265,7 @@
 					<li><b>H:</b> 6 x 15 + 2 x 16</li>
 				</ul>
 			</div>
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 11</h4>
 				<ul>
 					<li><b>L:</b> 4 x 81</li>
@@ -229,7 +274,7 @@
 					<li><b>H:</b> 3 x 12 + 8 x 13</li>
 				</ul>
 			</div>
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 12</h4>
 				<ul>
 					<li><b>L:</b> 2 x 92 + 2 x 93</li>
@@ -240,7 +285,7 @@
 			</div>
 		</div>
 		<div class="wrapper">
-			<div class="collumn4">
+			<div class="column4">
 				<h4>Version 13</h4>
 				<ul>
 					<li><b>L:</b> 4 x 107</li>
@@ -250,27 +295,43 @@
 				</ul>
 			</div>
 		</div>
-		<p id="dataBlocksText" class="centered" style="background-color: #EEEEEE; padding: 10px 40px 10px 40px; margin-left: -40px; margin-right: -40px;">
-			<i>Jij hebt <b>Version 7</b> en <b>Error Correctie Level M</b>, dus jij hebt <b>4 datablokken</b> van <b>31 bytes</b> lang.</i>
+		<p id="dataBlocksText" class="centered"
+			style="background-color: #EEEEEE; padding: 10px 40px 10px 40px; margin-left: -40px; margin-right: -40px;">
+			<i>Jij hebt <b>Version 7</b> en <b>Error Correctie Level M</b>, dus jij hebt <b>4 datablokken</b> van <b>31
+					bytes</b> lang.</i>
 		</p>
 		<img src="./images/data-blocks.png" style="width: 230px;" title="Deze richting houdt de data aan...">
 		<h4>Data Volgorde</h4>
-		<p>De data in een QR-Code staat volgens een aantal regels verdeelt over de QR-Code. De data staat verdeelt over kolommen van 2 vakjes breed, het begint rechts onder in de QR-Code en gaat daar naar boven, wanneer je boven aan bent gekomen ga je in de
-		kollom daarnaast weer naar beneden (zie het plaatje hiernaast).</p>
-		<p>De data is verdeeld in bytes, elk gebied hiernaast met een rode rand er omheen is een byte die bestaat uit acht vakjes, elk vakje is één bit van een byte. De bits (de losse enen en nullen) moet je in de bytes altijd van rechts naar links lezen, en
-		vertikaal moet je de richting van de data (zie de pijlen hiernaast) volgen.</p>
+		<p>De data in een QR-Code staat volgens een aantal regels verdeelt over de QR-Code. De data staat verdeelt over
+			kolommen van 2 vakjes breed, het begint rechts onder in de QR-Code en gaat daar naar boven, wanneer je boven
+			aan bent gekomen ga je in de
+			kollom daarnaast weer naar beneden (zie het plaatje hiernaast).</p>
+		<p>De data is verdeeld in bytes, elk gebied hiernaast met een rode rand er omheen is een byte die bestaat uit
+			acht vakjes, elk vakje is één bit van een byte. De bits (de losse enen en nullen) moet je in de bytes altijd
+			van rechts naar links lezen, en
+			vertikaal moet je de richting van de data (zie de pijlen hiernaast) volgen.</p>
 		<br>
 
 		<h4>Meerdere Data Blokken</h4>
 		<img src="./images/data-blocks2.png" style="width: 260px;" title="Zo zijn de bytes verdeeld over de QR-Code...">
-		<p>Zoals eerder gezegd moet je als je meerdere data blokken hebt er op letten dat de bytes niet op volgorde staan. Hiernaast hebben we een voorbeeld plaatje staan van een QR-Code van Version 7 en error correctie level L, hij heeft dus 2 datablokken van 78 bytes lang. De eerste byte staat zoals altijd rechts onder in de QR-Code, voor de tweede byte staat eerst de 79'ste byte, dit is de eerste byte van het tweede datablok, en als je zo verder kijkt zie je dat op deze manier de twee datablokken steeds om en om staan.</p>
-		<p>Stel dat je meer dan twee datablokken hebt dan worden op een soort gelijke manier door elkaar gezet, je krijgt eerst een byte van het eerste datablok, dan een byte van het tweede datablok, gevolgd door een byte van het derde datablok, enzovoort totdat je van alle datablokken de eerste byte hebt gehad, dan ga je verder met de tweede byte van ieder datablok.</p>
-		<p>Stel dat je in tabel hierboven hebt gezien dat je datablokken van verschillende lengtes hebt, bijvoorbeeld 2 van 15 byte en 2 van 16 byte, dan staan ze alsnog op dezelfde manier afgewisseld in de QR-Code, zoals bijvoorbeeld met 4 datablokken als je twee keer 2 datablokken hebt. Het enige wat anders is, is dat de eerste paar blokken één byte korter zijn.</p>
+		<p>Zoals eerder gezegd moet je als je meerdere data blokken hebt er op letten dat de bytes niet op volgorde
+			staan. Hiernaast hebben we een voorbeeld plaatje staan van een QR-Code van Version 7 en error correctie
+			level L, hij heeft dus 2 datablokken van 78 bytes lang. De eerste byte staat zoals altijd rechts onder in de
+			QR-Code, voor de tweede byte staat eerst de 79'ste byte, dit is de eerste byte van het tweede datablok, en
+			als je zo verder kijkt zie je dat op deze manier de twee datablokken steeds om en om staan.</p>
+		<p>Stel dat je meer dan twee datablokken hebt dan worden op een soort gelijke manier door elkaar gezet, je
+			krijgt eerst een byte van het eerste datablok, dan een byte van het tweede datablok, gevolgd door een byte
+			van het derde datablok, enzovoort totdat je van alle datablokken de eerste byte hebt gehad, dan ga je verder
+			met de tweede byte van ieder datablok.</p>
+		<p>Stel dat je in tabel hierboven hebt gezien dat je datablokken van verschillende lengtes hebt, bijvoorbeeld 2
+			van 15 byte en 2 van 16 byte, dan staan ze alsnog op dezelfde manier afgewisseld in de QR-Code, zoals
+			bijvoorbeeld met 4 datablokken als je twee keer 2 datablokken hebt. Het enige wat anders is, is dat de
+			eerste paar blokken één byte korter zijn.</p>
 		<div class="wrapper">
-			<div class="collumn">
+			<div class="column">
 
 			</div>
-			<div class="collumn">
+			<div class="column">
 				<div id="DataBlocks" class="QRCodes"></div>
 				<script src="./scripts/dataBlocks.js"></script>
 			</div>
@@ -284,7 +345,10 @@
 		<h3>Stap 4: Welk datatype wordt er gebruikt?</h3>
 		<img src="./images/data-type.png" style="width: 180px;" title="Hier vind je het datatype...">
 		<h4>Mode Indicator</h4>
-		<p>Nu we weten waar we onze data kunnen vinden kunnen we eindelijk gaan kijken naar wat er in de data staat. Er zijn een aantal verschillende datatypes die gebruikt kunnen worden in een QR-Code, om te weten welk datatype er gebruikt wordt moet je kijken naar de eerste 4 bits van de eerste byte rechts onder in de QR-Code, deze 4 bits wordt de Mode Indicator genoemd.</p>
+		<p>Nu we weten waar we onze data kunnen vinden kunnen we eindelijk gaan kijken naar wat er in de data staat. Er
+			zijn een aantal verschillende datatypes die gebruikt kunnen worden in een QR-Code, om te weten welk datatype
+			er gebruikt wordt moet je kijken naar de eerste 4 bits van de eerste byte rechts onder in de QR-Code, deze 4
+			bits wordt de Mode Indicator genoemd.</p>
 		<p>Dit zijn de verschillende datatypes met bijbehoorende code:</p>
 		<ul>
 			<li>0001: Numeric Mode</li>
@@ -295,28 +359,41 @@
 		</ul>
 
 		<h4>Numeric Mode</h4>
-		<p>Met Numeric Mode bestaat de data uit alleen cijfers, dit heeft als voordeel dat er maar 10 verschillende mogelijke tekens zijn (nummer 0 t/m 9) waardoor deze modus het grootste aantal tekens in een QR-Code kan opslaan.</p>
+		<p>Met Numeric Mode bestaat de data uit alleen cijfers, dit heeft als voordeel dat er maar 10 verschillende
+			mogelijke tekens zijn (nummer 0 t/m 9) waardoor deze modus het grootste aantal tekens in een QR-Code kan
+			opslaan.</p>
 		<h4>Alphanumeric Mode</h4>
-		<p>Deze modus kan niet alleen getallen gebruiken, maar ook hoofdletters en een aantal andere tekens zoals een spatie of een plusteken, maar bijvoorbeeld niet een vraagteken. De Alphanumeric Mode neemt door de extra mogelijke tekens iets meer ruimte in per teken dan de Numeric Mode.</p>
+		<p>Deze modus kan niet alleen getallen gebruiken, maar ook hoofdletters en een aantal andere tekens zoals een
+			spatie of een plusteken, maar bijvoorbeeld niet een vraagteken. De Alphanumeric Mode neemt door de extra
+			mogelijke tekens iets meer ruimte in per teken dan de Numeric Mode.</p>
 		<h4>Byte Mode</h4>
-		<p>Byte Mode is de meest gebruikte data type in QR-Codes, omdat deze modus bijna alle tekens kan opslaan, maar hierdoor neemt hij wel meer ruimte per teken in. Byte Mode maakt gebruik van ASCII (en ook UTF-8) codes, ASCII bevat nummers, hoofd- en kleine letters en alle leestekens. ASCII en UTF-8 zijn de meest voorkomende manieren om text op te slaan in bytes.</p>
+		<p>Byte Mode is de meest gebruikte data type in QR-Codes, omdat deze modus bijna alle tekens kan opslaan, maar
+			hierdoor neemt hij wel meer ruimte per teken in. Byte Mode maakt gebruik van ASCII (en ook UTF-8) codes,
+			ASCII bevat nummers, hoofd- en kleine letters en alle leestekens. ASCII en UTF-8 zijn de meest voorkomende
+			manieren om text op te slaan in bytes.</p>
 		<h4>Kanji Mode</h4>
-		<p>Kanji Mode wordt gebruikt voor Japanse Kanji tekens. Deze is nog minder ruimte efficiënt dan de Byte Mode omdat er meer Kanji tekens zijn dan ASCII-tekens. Deze Japanse tekens hebben hun eigen QR-Code modus omdat QR-Codes oorspronkelijk uit Japan komen.</p>
+		<p>Kanji Mode wordt gebruikt voor Japanse Kanji tekens. Deze is nog minder ruimte efficiënt dan de Byte Mode
+			omdat er meer Kanji tekens zijn dan ASCII-tekens. Deze Japanse tekens hebben hun eigen QR-Code modus omdat
+			QR-Codes oorspronkelijk uit Japan komen.</p>
 		<h4>ECI Mode</h4>
-		<p>Als laatste heb je nog ECI Mode, deze wordt gebruikt wanneer je een andere teken set wil gebruiken dan deze hierboven, zo kan je met ECI Mode bijvoorbeeld Arabische of Chinese tekens opslaan in je QR-Code.</p>
+		<p>Als laatste heb je nog ECI Mode, deze wordt gebruikt wanneer je een andere teken set wil gebruiken dan deze
+			hierboven, zo kan je met ECI Mode bijvoorbeeld Arabische of Chinese tekens opslaan in je QR-Code.</p>
 
 		<h4>Welk datatype wordt er gebruikt?</h4>
-		<p>Omdat de 4 vakjes met het datatype nummer in het datagebied staan moet je eerst de mask van de vakjes afhalen voordat je kan weten welk datatype er gebruikt wordt. Als je in het gedeelte hierboven de juiste versie nummer hebt ingevuld en de formating info hebt in gevuld zoals hij op jouw QR-Code staat, dan kan je nu hieronder de 4 vakjes waaruit je het gebruikte datatype kan aflezen invullen:</p>
+		<p>Omdat de 4 vakjes met het datatype nummer in het datagebied staan moet je eerst de mask van de vakjes afhalen
+			voordat je kan weten welk datatype er gebruikt wordt. Als je in het gedeelte hierboven de juiste versie
+			nummer hebt ingevuld en de formating info hebt in gevuld zoals hij op jouw QR-Code staat, dan kan je nu
+			hieronder de 4 vakjes waaruit je het gebruikte datatype kan aflezen invullen:</p>
 		<div class="wrapper">
-			<div class="collumn3">
+			<div class="column3">
 				<h4>Met Mask</h4>
 				<div id="DataType1" title="Vul hier de vakjes van het datatype in..."></div>
 			</div>
-			<div class="collumn3">
+			<div class="column3">
 				<h4>Mask</h4>
 				<div id="DataType2" title="Zo ziet de mask eruit op de plek van het datatype..."></div>
 			</div>
-			<div class="collumn3">
+			<div class="column3">
 				<h4>Zonder Mask</h4>
 				<div id="DataType3" title="Zo ziet de data zonder mask eruit..."></div>
 			</div>
@@ -334,10 +411,14 @@
 		<h3>Stap 5: Hoe lang is de data?</h3>
 		<img src="./images/data-length.png" style="width: 180px;">
 		<h4>Character Count Indicator</h4>
-		<p>Na het datatype is het eerst volgende stuk dat in de data van de QR-Code staat de Character Count Indicator, deze geeft aan uit hoeveel tekens de rest van de data in de QR-Code bestaat. De lengte van de Character Count Indicator hangt af van het datatype en de grootte van de QR-Code, want een datatype dat minder bits per teken gebruikt kan dus meer tekens in de code opslaan, waardoor hij ook een langere Character Count Indicator nodig heeft.</p>
+		<p>Na het datatype is het eerst volgende stuk dat in de data van de QR-Code staat de Character Count Indicator,
+			deze geeft aan uit hoeveel tekens de rest van de data in de QR-Code bestaat. De lengte van de Character
+			Count Indicator hangt af van het datatype en de grootte van de QR-Code, want een datatype dat minder bits
+			per teken gebruikt kan dus meer tekens in de code opslaan, waardoor hij ook een langere Character Count
+			Indicator nodig heeft.</p>
 		<p>Hieronder kan je zien hoelang de Character Count Indicator is:</p>
 		<div class="wrapper" style="width: 75%;">
-			<div class="collumn">
+			<div class="column">
 				<h4>Versions 1 t/m 9</h4>
 				<ul>
 					<li>Numeric Mode: 10 bits</li>
@@ -346,7 +427,7 @@
 					<li>Kanji Mode: 8 bits</li>
 				</ul>
 			</div>
-			<div class="collumn">
+			<div class="column">
 				<h4>Versions 10 t/m 26</h4>
 				<ul>
 					<li>Numeric Mode: 12 bits</li>
@@ -356,21 +437,24 @@
 				</ul>
 			</div>
 		</div>
-		<p id="dataLengthBits" class="centered" style="background-color: #EEEEEE; padding: 10px 40px 10px 40px; margin-left: -40px; margin-right: -40px;">
-			<i>Jij hebt <b>Version 1</b> en je gebruikt <b>Byte Mode</b>, dus is de Character Count Indicator <b>8 bits</b> lang.</i>
+		<p id="dataLengthBits" class="centered"
+			style="background-color: #EEEEEE; padding: 10px 40px 10px 40px; margin-left: -40px; margin-right: -40px;">
+			<i>Jij hebt <b>Version 1</b> en je gebruikt <b>Byte Mode</b>, dus is de Character Count Indicator <b>8
+					bits</b> lang.</i>
 		</p>
 		<p class="centered">(de versie en het datatype zijn overgenomen uit de stappen hiervoor)</p>
-		<p>We zullen in de volgende stap gaan bekijken wat voor nummer er uit de character count indicator komt, ga dus nu verder naar stap 6 waar we de QR-Code byte voor byte zullen gaan analyseren.</p>
+		<p>We zullen in de volgende stap gaan bekijken wat voor nummer er uit de character count indicator komt, ga dus
+			nu verder naar stap 6 waar we de QR-Code byte voor byte zullen gaan analyseren.</p>
 		<!-- <div class="wrapper">
-			<div class="collumn3">
+			<div class="column3">
 				<h4>Met Mask</h4>
 				<div id="DataLength1"></div>
 			</div>
-			<div class="collumn3">
+			<div class="column3">
 				<h4>Mask</h4>
 				<div id="DataLength2"></div>
 			</div>
-			<div class="collumn3">
+			<div class="column3">
 				<h4>Zonder Mask</h4>
 				<div id="DataLength3"></div>
 			</div>
@@ -381,49 +465,69 @@
 
 
 		<h3>Stap 6: Wat staat er nou eigenlijk?</h3>
-		<p>Zoals je bij stap 3 hebt gezien staat de data in de QR-Code volgens een bepaald patroon verdeeld over de QR-Code. Wij zullen nu hier deze data byte voor byte aflezen om er achter te komen wat er nou eigenlijk in de QR-Code staat!</p>
-		<p>Vul hieronder in het meest linker vak de vakjes in die samen één byte vormen. In de QR-Code rechts kan je zien welke vakjes je moet invullen. Na elke byte die je hebt ingevuld kan je de informatie die de byte bevat daaronder zien verschijnen. Gebruik de knoppen in de Byte Navigatiebalk om één byte voor- of achteruit te gaan. Je kan ook de slider in het midden van de navigatiebalk gebruiken om sneller van bytes te verwisselen.</p>
+		<p>Zoals je bij stap 3 hebt gezien staat de data in de QR-Code volgens een bepaald patroon verdeeld over de
+			QR-Code. Wij zullen nu hier deze data byte voor byte aflezen om er achter te komen wat er nou eigenlijk in
+			de QR-Code staat!</p>
+		<p>Vul hieronder in het meest linker vak de vakjes in die samen één byte vormen. In de QR-Code rechts kan je
+			zien welke vakjes je moet invullen. Na elke byte die je hebt ingevuld kan je de informatie die de byte bevat
+			daaronder zien verschijnen. Gebruik de knoppen in de Byte Navigatiebalk om één byte voor- of achteruit te
+			gaan. Je kan ook de slider in het midden van de navigatiebalk gebruiken om sneller van bytes te verwisselen.
+		</p>
 		<div id="QR-Code-Reader">
-			<div id="QR-Code-Reader-Header" style="background-color: #444444; color: #EEEEEE; text-shadow: 2px 2px black; margin: 0px -40px 10px -40px; 20px; padding: 10px 40px 10px 40px;">
+			<div id="QR-Code-Reader-Header"
+				style="background-color: #444444; color: #EEEEEE; text-shadow: 2px 2px black; margin: 0px -40px 10px -40px; padding: 10px 40px 10px 40px;">
 				<div class="wrapper">
-					<div class="collumn4">
-						<input type="button" id="QR-Code-Reader-PreviousByte" value="Vorige Byte" style="width: 100%; height: 2.6em; white-space: normal; margin: 14px 0 5px 0;" onclick="changeBytes(-1)">
+					<div class="column4">
+						<input type="button" id="QR-Code-Reader-PreviousByte" value="Vorige Byte"
+							style="width: 100%; height: 2.6em; white-space: normal; margin: 14px 0 5px 0;"
+							onclick="changeBytes(-1)">
 					</div>
-					<div class="collumn2">
+					<div class="column2">
 						<h4 style="font-size: 1.2em;">Byte Navigatie</h4>
-						<input type="range" id="QR-Code-Reader-Slider" style="width: 100%" min=1 max=15 onchange="changeBytes(0)" oninput="changeBytes(0)" value="1" title="Versleep om van byte te veranderen!">
-						<p id="QR-Code-Reader-ByteNumber" title="Hier zie je welke byte je nu bekijkt..." style="padding: 0px; margin: 0px; font-size: 0.9em;"><b><i>Byte 1/15</i></b></p>
+						<input type="range" id="QR-Code-Reader-Slider" style="width: 100%" min=1 max=15
+							onchange="changeBytes(0)" oninput="changeBytes(0)" value="1"
+							title="Versleep om van byte te veranderen!">
+						<p id="QR-Code-Reader-ByteNumber" title="Hier zie je welke byte je nu bekijkt..."
+							style="padding: 0px; margin: 0px; font-size: 0.9em;"><b><i>Byte 1/15</i></b></p>
 					</div>
-					<div class="collumn4">
-						<input type="button" id="QR-Code-Reader-NextByte" value="Volgende Byte" style="width: 100%; height: 2.6em; white-space: normal; margin: 14px 0 5px 0;" onclick="changeBytes(1)">
+					<div class="column4">
+						<input type="button" id="QR-Code-Reader-NextByte" value="Volgende Byte"
+							style="width: 100%; height: 2.6em; white-space: normal; margin: 14px 0 5px 0;"
+							onclick="changeBytes(1)">
 					</div>
 				</div>
 			</div>
 			<div id="QR-Code-Reader-Content">
 				<div "wrapper" style="min-height: 380;" id="DataReaderInputOuterWrapper">
-					<div class="collumn">
+					<div class="column">
 						<div class="wrapper">
-							<div class="collumn2" id="DataReaderInputCollumn1">
+							<div class="column2" id="DataReaderInputColumn1">
 								<h4>Met Mask</h4>
-								<div id="DataReaderInput1" title="Vul hier de vakjes van de byte die hier rechts in roze is aangegeven in..."></div>
+								<div id="DataReaderInput1"
+									title="Vul hier de vakjes van de byte die hier rechts in roze is aangegeven in...">
+								</div>
 							</div>
-							<div class="collumn2" id="DataReaderInputCollumn2">
+							<div class="column2" id="DataReaderInputColumn2">
 								<h4>Mask</h4>
-								<div id="DataReaderInput2" title="Zo ziet de mask er uit op de plek van de byte die hier rechts in roze is aangegeven..."></div>
+								<div id="DataReaderInput2"
+									title="Zo ziet de mask er uit op de plek van de byte die hier rechts in roze is aangegeven...">
+								</div>
 							</div>
-							<div class="collumn2" id="DataReaderInputCollumn3">
+							<div class="column2" id="DataReaderInputColumn3">
 								<h4>Zonder Mask</h4>
 								<div id="DataReaderInput3" title="Zo ziet de data zonder mask eruit..."></div>
 								<script src="./scripts/dataReaderInput.js"></script>
 							</div>
 						</div>
 					</div>
-					<div class="collumn">
-						<div id="QRCodeBytePosition" class="QRCodes" title="In het roze gebied staat de byte die je nu aan het bekijken bent..."></div>
+					<div class="column">
+						<div id="QRCodeBytePosition" class="QRCodes"
+							title="In het roze gebied staat de byte die je nu aan het bekijken bent..."></div>
 						<script src="./scripts/dataReader.js"></script>
 					</div>
 				</div>
-				<div style="background-color: #CCCCCC; margin: 20px -40px 20px -40px; padding: 10px 40px 10px 40px;" title="Hier zie je meer informatie over de byte die je hierboven aan het bekijken bent...">
+				<div style="background-color: #CCCCCC; margin: 20px -40px 20px -40px; padding: 10px 40px 10px 40px;"
+					title="Hier zie je meer informatie over de byte die je hierboven aan het bekijken bent...">
 					<h4>Informatie over deze byte:</h4>
 					<ul style="list-style-position: inside; margin: 0;">
 						<li id="QR-Code-Reader-Byte-Position">Dit is byte nummer 1 van datablock 1</li>
@@ -432,18 +536,26 @@
 				</div>
 				<div>
 					<h4 style="margin-bottom: 2px;">Data verwerking</h4>
-					<p style="margin-bottom: 0;" id="DataReaderTextAreaEx">Hier zie je alle binaire data van de bytes die je hebt ingevoerd:</p>
-					<textarea id="DataReaderRawDataTextArea" rows="3" readonly=true style="width: 100%; max-width: 100%; margin-bottom: 1em;" title="Dit is alle data met de mask er al afgehaald uit de bytes die je hebt ingevoerd..."></textarea>
-					<p style="text-align: center;">We zullen nu de data in stukjes opsplitsen om er stukje voor stukje achter te komen wat er nou eigenlijk staat.</p>
+					<p style="margin-bottom: 0;" id="DataReaderTextAreaEx">Hier zie je alle binaire data van de bytes
+						die je hebt ingevoerd:</p>
+					<textarea id="DataReaderRawDataTextArea" rows="3" readonly=true
+						style="width: 100%; max-width: 100%; margin-bottom: 1em;"
+						title="Dit is alle data met de mask er al afgehaald uit de bytes die je hebt ingevoerd..."></textarea>
+					<p style="text-align: center;">We zullen nu de data in stukjes opsplitsen om er stukje voor stukje
+						achter te komen wat er nou eigenlijk staat.</p>
 					<div>
-						<p id="DataReaderBitAnalyser" style="background-color: #CCCCCC; margin: 20px -40px 20px -40px; padding: 10px 40px 10px 40px;">
+						<p id="DataReaderBitAnalyser"
+							style="background-color: #CCCCCC; margin: 20px -40px 20px -40px; padding: 10px 40px 10px 40px;">
 							<!-- THIS WILL BE CHANGED BY updateDataReaderHTML(); -->
 							<b>0100</b>: Mode Indicator, jij hebt hier <b>Byte Mode</b>, zie stap 4.<br>
 							<b>00001100</b>: Character Count Indicator, jij hebt hier lengte <b>12</b>, zie stap 5.
 						</p>
 					</div>
-					<p style="margin-bottom: 0;" id="DataReaderTextAreaEx">Hier zie je alle gedecodeerde data van de bytes die je hebt ingevoerd:</p>
-					<textarea id="DataReaderDecodedDataTextArea" rows="3" readonly=true style="width: 100%; max-width: 100%; margin-bottom: 1em;" title="Dit is alle gedecodeerde data uit de bytes die je hebt ingevoerd..."></textarea>
+					<p style="margin-bottom: 0;" id="DataReaderTextAreaEx">Hier zie je alle gedecodeerde data van de
+						bytes die je hebt ingevoerd:</p>
+					<textarea id="DataReaderDecodedDataTextArea" rows="3" readonly=true
+						style="width: 100%; max-width: 100%; margin-bottom: 1em;"
+						title="Dit is alle gedecodeerde data uit de bytes die je hebt ingevoerd..."></textarea>
 				</div>
 			</div>
 		</div>
@@ -451,19 +563,18 @@
 
 
 
- 		<!-- <div id="QRCode3">
-			<h4>QR-Code Zonder Mask</h4>
-			<div id="QRCode3" class="QRCodes"></div>
-			<script src="./scripts/qrcodeNoMask.js"></script>
-			<br>
-		</div> -->
-		<br><br><br>
 		<h4>Bronnenlijst:</h4>
 		<ul>
-			<li><a href="http://www.thonky.com/qr-code-tutorial/" title="Een tutorial die beschrijft hoe QR-Codes gegenereerd worden">http://www.thonky.com/qr-code-tutorial/</a></li>
-			<li><a href="http://www.esponce.com/resources/about-qr-codes" title="Pagina met informatie over QR-Codes">http://www.esponce.com/resources/about-qr-codes</a></li>
-			<li>ISO/IEC 18004 (officiële QR-Code requirements)</li>
+			<li><a href="http://www.thonky.com/qr-code-tutorial/"
+					title="Een tutorial die beschrijft hoe QR-Codes gegenereerd worden">http://www.thonky.com/qr-code-tutorial/</a>
+			</li>
+			<li><a href="http://www.esponce.com/resources/about-qr-codes"
+					title="Pagina met informatie over QR-Codes">http://www.esponce.com/resources/about-qr-codes</a></li>
+			<li>ISO/IEC 18004 (de officiële QR-Code specificatie)</li>
 		</ul>
+
+		<footer>© Britt &amp; Michiel 2017</footer>
 	</div>
 </body>
+
 </html>

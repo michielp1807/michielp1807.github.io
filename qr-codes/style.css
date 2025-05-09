@@ -1,7 +1,7 @@
 body {
 	font-family: Arial;
 	text-align: center;
-	background-color: #FFFFC1;
+	background-color: #D9D5B7;
 }
 
 #content {
@@ -87,14 +87,14 @@ ul {
 	width: 100%;
 }
 
-.collumn {
+.column {
 	display: inline-block;
 	position: relative;
 	float: left;
 	width: 50%;
 }
 
-.collumn2 {
+.column2 {
 	display: inline-block;
 	position: relative;
 	float: left;
@@ -102,7 +102,7 @@ ul {
 	text-align: center;
 }
 
-.collumn3 {
+.column3 {
 	display: inline-block;
 	position: relative;
 	float: left;
@@ -110,14 +110,14 @@ ul {
 	text-align: center;
 }
 
-.collumn4 {
+.column4 {
 	display: inline-block;
 	position: relative;
 	float: left;
 	width: 25%;
 }
 
-.collumnNo {
+.columnNo {
 	display: inline-block;
 	position: relative;
 	float: left;
@@ -130,9 +130,10 @@ ul {
 	padding: 0px 40px 20px 40px;
 	margin-left: -40px;
 	margin-right: -40px;
+	margin-bottom: 3em;
 }
 
-#QR-Code-Reader-Header .collumn2 {
+#QR-Code-Reader-Header .column2 {
 	display: inline-block;
 	position: relative;
 	float: left;
@@ -141,7 +142,7 @@ ul {
 	text-align: center;
 }
 
-#QR-Code-Reader-Header .collumn4 {
+#QR-Code-Reader-Header .column4 {
 	display: inline-block;
 	position: relative;
 	float: left;
@@ -152,4 +153,10 @@ ul {
 
 .QRCodes {
 	text-align: right;
+}
+
+footer {
+	text-align: center;
+	font-size: 0.75em;
+	margin-top: 3em;
 }

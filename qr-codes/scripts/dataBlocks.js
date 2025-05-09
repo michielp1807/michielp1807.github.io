@@ -5,7 +5,7 @@ var totalBytes = 9;       // total amount of data bytes (without error correctio
 
 
 function updateDataBlocksHTML() {
-  switch(version + errCorLevel) {
+  switch (version + errCorLevel) {
     case "1L":
       totalDataBlocks = 1;
       group2DataBlocks = 0;
@@ -271,28 +271,28 @@ function updateDataBlocksHTML() {
       break;
   }
 
-  totalBytes = (totalDataBlocks-group2DataBlocks)*dataBlockLength + group2DataBlocks*(dataBlockLength+1);
+  totalBytes = (totalDataBlocks - group2DataBlocks) * dataBlockLength + group2DataBlocks * (dataBlockLength + 1);
   document.getElementById("QR-Code-Reader-Slider").max = totalBytes;
   changeBytes(0);
 
 
-  let htmlText =  "<i>Jij hebt <b>Version "+version+"</b> en <b>Error Correctie Level "+errCorLevel+"</b>, dus jij hebt <b>";
+  let htmlText = "<i>Jij hebt <b>Version " + version + "</b> en <b>Error Correctie Level " + errCorLevel + "</b>, dus jij hebt <b>";
   if (group2DataBlocks > 0) {
-    if (totalDataBlocks-group2DataBlocks === 1) {
-      htmlText += "1 datablok</b> van <b>"+dataBlockLength+" bytes</b> lang en <b>";
+    if (totalDataBlocks - group2DataBlocks === 1) {
+      htmlText += "1 datablok</b> van <b>" + dataBlockLength + " bytes</b> lang en <b>";
     } else {
-      htmlText += (totalDataBlocks-group2DataBlocks)+" datablokken</b> van <b>"+dataBlockLength+" bytes</b> lang en <b>";
+      htmlText += (totalDataBlocks - group2DataBlocks) + " datablokken</b> van <b>" + dataBlockLength + " bytes</b> lang en <b>";
     }
     if (group2DataBlocks === 1) {
-      htmlText += "1 datablok</b> van <b>"+(dataBlockLength+1)+" bytes</b> lang.</i>";
+      htmlText += "1 datablok</b> van <b>" + (dataBlockLength + 1) + " bytes</b> lang.</i>";
     } else {
-      htmlText += group2DataBlocks+" datablokken</b> van <b>"+(dataBlockLength+1)+" bytes</b> lang.</i>";
+      htmlText += group2DataBlocks + " datablokken</b> van <b>" + (dataBlockLength + 1) + " bytes</b> lang.</i>";
     }
   } else {
     if (totalDataBlocks === 1) {
-      htmlText += "1 datablok</b> van <b>"+dataBlockLength+" bytes</b> lang.</i>";
+      htmlText += "1 datablok</b> van <b>" + dataBlockLength + " bytes</b> lang.</i>";
     } else {
-      htmlText += totalDataBlocks+" datablokken</b> van <b>"+dataBlockLength+" bytes</b> lang.</i>";
+      htmlText += totalDataBlocks + " datablokken</b> van <b>" + dataBlockLength + " bytes</b> lang.</i>";
     }
   }
   document.getElementById("dataBlocksText").innerHTML = htmlText;
