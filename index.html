@@ -1,21 +1,72 @@
 <html>
 <head>
-	<title>Michiel's Web Projects</title>
+	<title>Hello, I'm Michiel!</title>
 	<style>
-		body {
-			margin: 32px;
-			font-family: Arial, Helvetica, sans-serif;
+		html {
+			background-color: #c8dbff;
 		}
 
+		body {
+			font-family: Arial, Helvetica, sans-serif;
+			margin: 0;
+			min-height: 100vh;
+			--max-width: min(60rem, 100% - 2rem);
+			background-color: white;
+		}
+
+		header {
+			background-color: #c8dbff;
+			box-shadow: 0 0 .4rem black;
+			padding-inline: calc((100% - var(--max-width)) * .5);
+			height: 8rem;
+			display: flex;
+			align-items: center;
+  			justify-content: space-between;
+
+			a {
+				height: 100%;
+				opacity: .9;
+				display: flex;
+				align-items: flex-end;
+
+				&:hover {
+					opacity: 1;
+				}
+
+				img {
+					height: 85%;
+				}
+			}
+		}
+		
 		h1 {
-			text-align: center;
-			margin: -16px -32px 0px -32px;
-			padding: 8px 32px;
-			background-color: #eee;
+			padding-block: 2rem;
+			color: #2b3e67;
+			font-weight: normal;
+			margin: 0;
+
+			b {
+				display: inline-block;
+				transition: transform .1s;
+				font-size: 1.2em;
+			}
+		}
+
+		main {
+			box-sizing: border-box;
+			max-width: var(--max-width);
+			margin: auto;
+  			padding-block: 5rem;
+		}
+
+		h4 {
+			margin-top: 4rem;
+			margin-bottom: 2rem;
 		}
 
 		table {
 			border-collapse: collapse;
+			width: 100%;
 		}
 		
 		tr, td {
@@ -29,72 +80,91 @@
 		.bold {
 			font-weight: bold;
 		}
+
+		p {
+			margin-top: 3rem;
+			margin-bottom: 0;
+		}
 	</style>
+	<script>
+		window.addEventListener('scroll', () => {
+			// fix over-scrolling background color
+			document.documentElement.style.backgroundColor = window.scrollY === 0 ? '#c8dbff' : 'white';
+		}, { passive: true });
+	</script>
 </head>
 <body>
-	<h1>Michiel's Web Projects</h1>
-	<h2>Here's a list of all my web projects that are currently online on my GitHub page:</h2>
-	<h4>🇬🇧 English:</h4>
-	<table>
-		<tr>
-			<td><a class="bold" href="/infinite-sudoku/">Infinite Sudoku</a></td>
-			<td>-</td>
-			<td>An infinite sudoku solvable in a finite amount of time</td>
-		</tr>
-		<tr>
-			<td><a class="bold" href="/numpad-says/">Numpad Says</a></td>
-			<td>-</td>
-			<td>A memory game about number constants, learn π, τ, e and other constants by muscle memory!</td>
-		</tr>
-		<tr>
-			<td><a class="bold" href="/hex-colors/"># Hex Color Guesser</a></td>
-			<td>-</td>
-			<td>Can you guess which color the hex code represents?</td>
-		</tr>
-		<tr>
-			<td><a class="bold" href="/brainfuck/">Brainfuck IDE</a></td>
-			<td>-</td>
-			<td>An interpreter and debugger for the esoteric programming language <a target="_blank" href="https://en.wikipedia.org/wiki/Brainfuck">Brainfuck</a></td>
-		</tr>
-		<tr>
-			<td><a class="bold" href="/lottie-editor/">Lottie/TGS Editor</a></td>
-			<td>-</td>
-			<td>For playing around with Lottie animations (which are used for <a target="_blank" href="https://telegram.org/blog/animated-stickers">animated Telegram stickers</a>)</td>
-		</tr>
-		<tr>
-			<td><a class="bold" href="/haxor/">H4X0R</a></td>
-			<td>-</td>
-			<td>A cool looking console interface with various ciphers</td>
-		</tr>
-		<tr>
-			<td><a class="bold" href="/polygon-spirals/">Polygon Spirals</a></td>
-			<td>-</td>
-			<td>A visualisation of various regular polygon spirals, based on <a target="_blank" href="https://www.reddit.com/r/GeometryIsNeat/comments/awh6rt/similar_figures/ehn3e7l/">this</a> Reddit post.</td>
-		</tr>
-		<tr>
-			<td><a class="bold" href="/osc/">Javascript Oscillator</a></td>
-			<td>-</td>
-			<td>Playground for the <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">Web Audio API</a> to generate sound</td>
-		</tr>
-		<tr>
-			<td><a class="bold" href="/ants/">Langton's Ants</a></td>
-			<td>-</td>
-			<td>A visual interactive simulation based on <a target="_blank" href="https://en.wikipedia.org/wiki/Langton%27s_ant">Langton's Ant</a></td>
-		</tr>
-	</table>
-	<h4>🇳🇱 Dutch:</h4>
-	<table>
-		<tr>
-			<td><a class="bold" href="/chemie-ihe/">Chemie In Het Echt</a></td>
-			<td>-</td>
-			<td>Random rare plaatjes zonder context uit het scheikunde boek "Chemie Overal"</td>
-		</tr>
-		<tr>
-			<td><a class="bold" href="/qr-codes/">Hoe Lees Je QR-Codes</a></td>
-			<td>-</td>
-			<td>Leer hoe QR-Codes werken, interactieve digitale handleiding door Britt en Michiel</td>
-		</tr>
-	</table>
-	<p><a target="_blank" href="https://github.com/MichielP1807/michielp1807.github.io">View the source code on GitHub</a></p>
+	<header>
+		<h1>Hello, I'm <b>Michiel</b>!</h1>
+		<script>
+			const b = document.querySelector("h1>b");
+			setInterval(() => {
+				b.style.transform = `scaleY(${Math.random()*4+1}) skew(${Math.random()*120-60}deg)`;
+				setTimeout(() => {
+					b.style.transform = "";
+				}, 200);
+			}, 1500);
+		</script>
+		<a href="https://github.com/michielp1807">
+			<img src="/index/logo-trans.svg">
+		</a>
+	</header>
+
+	<main>
+		Check out these things I made:
+
+		<h4>🇬🇧 English:</h4>
+		<table>
+			<tr>
+				<td><a class="bold" href="/infinite-sudoku/">Infinite Sudoku</a></td>
+				<td>An infinite sudoku solvable in a finite amount of time</td>
+			</tr>
+			<tr>
+				<td><a class="bold" href="/numpad-says/">Numpad Says</a></td>
+				<td>A memory game about number constants, learn π, τ, e and other constants by muscle memory!</td>
+			</tr>
+			<tr>
+				<td><a class="bold" href="/hex-colors/"># Hex Color Guesser</a></td>
+				<td>Can you guess which color the hex code represents?</td>
+			</tr>
+			<tr>
+				<td><a class="bold" href="/brainfuck/">Brainfuck IDE</a></td>
+				<td>An interpreter and debugger for the esoteric programming language <a target="_blank" href="https://en.wikipedia.org/wiki/Brainfuck">Brainfuck</a></td>
+			</tr>
+			<tr>
+				<td><a class="bold" href="/lottie-editor/">Lottie/TGS Editor</a></td>
+				<td>For playing around with Lottie animations (which are used for <a target="_blank" href="https://telegram.org/blog/animated-stickers">animated Telegram stickers</a>)</td>
+			</tr>
+			<tr>
+				<td><a class="bold" href="/haxor/">H4X0R</a></td>
+				<td>A cool looking console interface with various ciphers</td>
+			</tr>
+			<tr>
+				<td><a class="bold" href="/polygon-spirals/">Polygon Spirals</a></td>
+				<td>A visualisation of various regular polygon spirals, based on <a target="_blank" href="https://www.reddit.com/r/GeometryIsNeat/comments/awh6rt/similar_figures/ehn3e7l/">this</a> Reddit post.</td>
+			</tr>
+			<tr>
+				<td><a class="bold" href="/osc/">Javascript Oscillator</a></td>
+				<td>Playground for the <a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API">Web Audio API</a> to generate sound</td>
+			</tr>
+			<tr>
+				<td><a class="bold" href="/ants/">Langton's Ants</a></td>
+				<td>A visual interactive simulation based on <a target="_blank" href="https://en.wikipedia.org/wiki/Langton%27s_ant">Langton's Ant</a></td>
+			</tr>
+		</table>
+
+		<h4>🇳🇱 Dutch:</h4>
+		<table>
+			<tr>
+				<td><a class="bold" href="/chemie-ihe/">Chemie In Het Echt</a></td>
+				<td>Random rare plaatjes zonder context uit het scheikunde boek "Chemie Overal"</td>
+			</tr>
+			<tr>
+				<td><a class="bold" href="/qr-codes/">Hoe Lees Je QR-Codes</a></td>
+				<td>Leer hoe QR-Codes werken, interactieve digitale handleiding door Britt en Michiel</td>
+			</tr>
+		</table>
+		<p style="text-align: right;"><a target="_blank" href="https://github.com/michielp1807/michielp1807.github.io">View source on GitHub</a></p>
+	</main>
 </body>
 </html>
