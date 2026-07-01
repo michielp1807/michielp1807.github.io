@@ -4,10 +4,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="theme-color" content="#c8dbff">
 	<style>
-		html {
-			background-color: #c8dbff;
-		}
-
 		body {
 			font-family: Arial, Helvetica, sans-serif;
 			margin: 0;
@@ -17,8 +13,8 @@
 		}
 
 		header {
-			background-color: #c8dbff;
-			box-shadow: 0 0 .4rem black;
+			background: linear-gradient( 45deg, #c8dbff 50%, #9dbffc 75%);
+			box-shadow: 0 0 .5rem #2a497eb5;
 			padding-inline: calc((100% - var(--max-width)) * .5);
 			height: 8rem;
 			display: flex;
@@ -88,12 +84,6 @@
 			margin-bottom: 0;
 		}
 	</style>
-	<script>
-		window.addEventListener('scroll', () => {
-			// fix over-scrolling background color
-			document.documentElement.style.backgroundColor = window.scrollY === 0 ? '#c8dbff' : 'white';
-		}, { passive: true });
-	</script>
 </head>
 <body>
 	<header>
@@ -115,7 +105,14 @@
 	<main>
 		Check out these things I made:
 
-		<h4>🇬🇧 English:</h4>
+		<h4><span id="english-flag">🇬🇧</span> English:</h4>
+		<script>
+			const english = ["🇦🇬", "🇦🇺", "🇧🇸", "🇧🇧", "🇧🇿", "🇨🇦", "🇩🇲", "🇬🇩", "🇬🇾", "🇮🇪", "🇯🇲", "🇲🇹", "🇳🇿", "🇰🇳", "🇱🇨", "🇻🇨", "🇹🇹", "🇬🇧", "🇺🇸"];
+			const flag = document.querySelector("#english-flag");
+			setInterval(() => {
+				flag.innerText = english[Math.floor(Math.random() * english.length)];
+			}, 1500);
+		</script>
 		<table>
 			<tr>
 				<td><a class="bold" href="/infinite-sudoku/">Infinite Sudoku</a></td>
